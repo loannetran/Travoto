@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PhotoCollectionViewCell.h"
+#import "AlbumHeaderCollectionReusableView.h"
 
 @interface AlbumViewController : UIViewController <UICollectionViewDataSource,UICollectionViewDelegate>
 

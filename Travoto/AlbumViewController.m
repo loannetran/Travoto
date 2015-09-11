@@ -8,7 +8,10 @@
 
 #import "AlbumViewController.h"
 
-@interface AlbumViewController ()
+@interface AlbumViewController (){
+    
+    NSArray *arrayOfImages;
+}
 
 @end
 
@@ -19,21 +22,58 @@
     // Do any additional setup after loading the view.
     NSLog(@"%@",self.country);
     NSLog(@"%@",self.city);
+    
+    [self setTitle:self.country];
+//    [self.cityLbl setText:[self.city objectForKey:@"name"]];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     
-    return 0;
+    arrayOfImages = [self.city objectForKey:@"images"];
+    
+    return arrayOfImages.count;
 }
 
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    UICollectionViewCell *cell = [[UICollectionViewCell alloc] init];
+    PhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"photo" forIndexPath:indexPath];
     
+    for (int i=0; i<arrayOfImages.count; i++) {
+        
+        if (indexPath.row == i) {
+            cell.photoImgView.image = [arrayOfImages objectAtIndex:i];
+        
+        }
+        
+    }
+    
+    [cell.layer setBorderWidth:1];
+    [cell.layer setBorderColor:[UIColor darkGrayColor].CGColor];
+
     return cell;
 }
 
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionReusableView *reusableview = nil;
+    
+    if (kind == UICollectionElementKindSectionHeader) {
+        AlbumHeaderCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"cityHeader" forIndexPath:indexPath];
+
+        [headerView.cityLbl setText:[self.city objectForKey:@"name"]];
+        [headerView.cityLbl setShadowColor: [UIColor blackColor]];
+        [headerView.cityLbl setShadowOffset: CGSizeMake(0, -1.0)];
+
+        reusableview = headerView;
+    }
+
+    //if footer is used
+//    if (kind == UICollectionElementKindSectionFooter) {
+//    }
+    
+    return reusableview;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

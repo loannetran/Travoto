@@ -84,6 +84,8 @@
     //set label for each cell according to each section and row
     cell.textLabel.text = [[[[self.countries objectForKey:[sortedCountryNames objectAtIndex:indexPath.section]] objectForKey:@"cities"] objectForKey:[tempArray objectAtIndex:indexPath.row]] objectForKey:@"name"];
     
+    [cell.textLabel setFont:[UIFont fontWithName:@"Avenir-Roman" size:17]];
+    
     return cell;
 }
 
@@ -96,12 +98,11 @@
 {
     // Background color
     view.tintColor = [UIColor colorWithRed:54.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:0.8];
-    view.layer.borderWidth = 0.5;
-    view.layer.borderColor = [UIColor darkGrayColor].CGColor;
     
     // Text Color
     UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
     [header.textLabel setTextColor:[UIColor blackColor]];
+    [header.textLabel setFont:[UIFont fontWithName:@"Avenir-Heavy" size:19]];
     [header.textLabel setShadowColor: [UIColor whiteColor]];
     [header.textLabel setShadowOffset: CGSizeMake(0, -1.0)];
     
