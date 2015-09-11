@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  PhotoCollectionViewCell.h
 //  Travoto
 //
 //  Created by Loanne Tran on 9/10/15.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface PhotoCollectionViewCell : UICollectionViewCell
 
 @end
-

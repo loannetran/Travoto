@@ -9,11 +9,15 @@
 /* Begin PBXBuildFile section */
 		69E514A41BA2843B007F52D6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E514A31BA2843B007F52D6 /* main.m */; };
 		69E514A71BA2843B007F52D6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E514A61BA2843B007F52D6 /* AppDelegate.m */; };
-		69E514AA1BA2843B007F52D6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E514A91BA2843B007F52D6 /* ViewController.m */; };
 		69E514AD1BA2843B007F52D6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69E514AB1BA2843B007F52D6 /* Main.storyboard */; };
 		69E514AF1BA2843B007F52D6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 69E514AE1BA2843B007F52D6 /* Images.xcassets */; };
 		69E514B21BA2843B007F52D6 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 69E514B01BA2843B007F52D6 /* LaunchScreen.xib */; };
 		69E514BE1BA2843B007F52D6 /* TravotoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E514BD1BA2843B007F52D6 /* TravotoTests.m */; };
+		69E514C91BA28459007F52D6 /* PhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E514C81BA28459007F52D6 /* PhotoCollectionViewCell.m */; };
+		69E514CC1BA28475007F52D6 /* AlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E514CB1BA28475007F52D6 /* AlbumViewController.m */; };
+		69E514CF1BA28492007F52D6 /* LocationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E514CE1BA28492007F52D6 /* LocationTableViewController.m */; };
+		69E514D31BA2857A007F52D6 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69E514D21BA2857A007F52D6 /* AssetsLibrary.framework */; };
+		69E514D61BA285C0007F52D6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69E514D51BA285C0007F52D6 /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,14 +36,20 @@
 		69E514A31BA2843B007F52D6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		69E514A51BA2843B007F52D6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		69E514A61BA2843B007F52D6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		69E514A81BA2843B007F52D6 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		69E514A91BA2843B007F52D6 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		69E514AC1BA2843B007F52D6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		69E514AE1BA2843B007F52D6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		69E514B11BA2843B007F52D6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		69E514B71BA2843B007F52D6 /* TravotoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TravotoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		69E514BC1BA2843B007F52D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		69E514BD1BA2843B007F52D6 /* TravotoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TravotoTests.m; sourceTree = "<group>"; };
+		69E514C71BA28459007F52D6 /* PhotoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCollectionViewCell.h; sourceTree = "<group>"; };
+		69E514C81BA28459007F52D6 /* PhotoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCollectionViewCell.m; sourceTree = "<group>"; };
+		69E514CA1BA28475007F52D6 /* AlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumViewController.h; sourceTree = "<group>"; };
+		69E514CB1BA28475007F52D6 /* AlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumViewController.m; sourceTree = "<group>"; };
+		69E514CD1BA28492007F52D6 /* LocationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationTableViewController.h; sourceTree = "<group>"; };
+		69E514CE1BA28492007F52D6 /* LocationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationTableViewController.m; sourceTree = "<group>"; };
+		69E514D21BA2857A007F52D6 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		69E514D51BA285C0007F52D6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +57,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69E514D61BA285C0007F52D6 /* MapKit.framework in Frameworks */,
+				69E514D31BA2857A007F52D6 /* AssetsLibrary.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				69E514A01BA2843B007F52D6 /* Travoto */,
+				69E514D41BA2857F007F52D6 /* Frameworks */,
 				69E514BA1BA2843B007F52D6 /* TravotoTests */,
 				69E5149F1BA2843B007F52D6 /* Products */,
 			);
@@ -83,8 +96,12 @@
 			children = (
 				69E514A51BA2843B007F52D6 /* AppDelegate.h */,
 				69E514A61BA2843B007F52D6 /* AppDelegate.m */,
-				69E514A81BA2843B007F52D6 /* ViewController.h */,
-				69E514A91BA2843B007F52D6 /* ViewController.m */,
+				69E514C71BA28459007F52D6 /* PhotoCollectionViewCell.h */,
+				69E514C81BA28459007F52D6 /* PhotoCollectionViewCell.m */,
+				69E514CA1BA28475007F52D6 /* AlbumViewController.h */,
+				69E514CB1BA28475007F52D6 /* AlbumViewController.m */,
+				69E514CD1BA28492007F52D6 /* LocationTableViewController.h */,
+				69E514CE1BA28492007F52D6 /* LocationTableViewController.m */,
 				69E514AB1BA2843B007F52D6 /* Main.storyboard */,
 				69E514AE1BA2843B007F52D6 /* Images.xcassets */,
 				69E514B01BA2843B007F52D6 /* LaunchScreen.xib */,
@@ -117,6 +134,16 @@
 				69E514BC1BA2843B007F52D6 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		69E514D41BA2857F007F52D6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				69E514D51BA285C0007F52D6 /* MapKit.framework */,
+				69E514D21BA2857A007F52D6 /* AssetsLibrary.framework */,
+			);
+			name = Frameworks;
+			path = Travoto;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -168,6 +195,11 @@
 				TargetAttributes = {
 					69E5149D1BA2843B007F52D6 = {
 						CreatedOnToolsVersion = 6.4;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					69E514B61BA2843B007F52D6 = {
 						CreatedOnToolsVersion = 6.4;
@@ -219,8 +251,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				69E514AA1BA2843B007F52D6 /* ViewController.m in Sources */,
+				69E514CC1BA28475007F52D6 /* AlbumViewController.m in Sources */,
 				69E514A71BA2843B007F52D6 /* AppDelegate.m in Sources */,
+				69E514C91BA28459007F52D6 /* PhotoCollectionViewCell.m in Sources */,
+				69E514CF1BA28492007F52D6 /* LocationTableViewController.m in Sources */,
 				69E514A41BA2843B007F52D6 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
