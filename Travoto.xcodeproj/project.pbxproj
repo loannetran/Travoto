@@ -14,6 +14,8 @@
 		693115261BA3E05B00ADF1F3 /* pin_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 693115251BA3E05B00ADF1F3 /* pin_blue.png */; };
 		693115281BA3E36C00ADF1F3 /* defaultPerson.png in Resources */ = {isa = PBXBuildFile; fileRef = 693115271BA3E36C00ADF1F3 /* defaultPerson.png */; };
 		69330D7F1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69330D7E1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m */; };
+		69738AB91BA3E948003EA7C5 /* home-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 69738AB81BA3E948003EA7C5 /* home-7.png */; };
+		69738ABB1BA3E972003EA7C5 /* paper-map-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 69738ABA1BA3E972003EA7C5 /* paper-map-7.png */; };
 		69E514A41BA2843B007F52D6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E514A31BA2843B007F52D6 /* main.m */; };
 		69E514A71BA2843B007F52D6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E514A61BA2843B007F52D6 /* AppDelegate.m */; };
 		69E514AD1BA2843B007F52D6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69E514AB1BA2843B007F52D6 /* Main.storyboard */; };
@@ -50,6 +52,8 @@
 		693115271BA3E36C00ADF1F3 /* defaultPerson.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultPerson.png; sourceTree = "<group>"; };
 		69330D7D1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumHeaderCollectionReusableView.h; sourceTree = "<group>"; };
 		69330D7E1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumHeaderCollectionReusableView.m; sourceTree = "<group>"; };
+		69738AB81BA3E948003EA7C5 /* home-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home-7.png"; sourceTree = "<group>"; };
+		69738ABA1BA3E972003EA7C5 /* paper-map-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paper-map-7.png"; sourceTree = "<group>"; };
 		69E5149E1BA2843B007F52D6 /* Travoto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Travoto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		69E514A21BA2843B007F52D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		69E514A31BA2843B007F52D6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -142,6 +146,8 @@
 		69E514A11BA2843B007F52D6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				69738ABA1BA3E972003EA7C5 /* paper-map-7.png */,
+				69738AB81BA3E948003EA7C5 /* home-7.png */,
 				693115271BA3E36C00ADF1F3 /* defaultPerson.png */,
 				693115251BA3E05B00ADF1F3 /* pin_blue.png */,
 				69E514A21BA2843B007F52D6 /* Info.plist */,
@@ -262,9 +268,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69738AB91BA3E948003EA7C5 /* home-7.png in Resources */,
 				693115281BA3E36C00ADF1F3 /* defaultPerson.png in Resources */,
 				69E514AD1BA2843B007F52D6 /* Main.storyboard in Resources */,
 				69E514B21BA2843B007F52D6 /* LaunchScreen.xib in Resources */,
+				69738ABB1BA3E972003EA7C5 /* paper-map-7.png in Resources */,
 				69E514AF1BA2843B007F52D6 /* Images.xcassets in Resources */,
 				693115261BA3E05B00ADF1F3 /* pin_blue.png in Resources */,
 			);

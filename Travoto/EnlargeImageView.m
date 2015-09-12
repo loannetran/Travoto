@@ -29,10 +29,12 @@
         self.closeBtn = [[UIButton alloc] initWithFrame:CGRectMake(265, 0, 25, 24)];
         
         [self.bigImgView.layer setCornerRadius:10];
-        [self.bigImgView.layer setBorderWidth:1];
-        [self.bigImgView.layer setBorderColor:[UIColor blackColor].CGColor];
+//        [self.bigImgView.layer setBorderWidth:1];
+//        [self.bigImgView.layer setBorderColor:[UIColor blackColor].CGColor];
         [self.bigImgView setClipsToBounds:YES];
         [self.bigImgView setAlpha:0];
+//        [self.bigImgView setBackgroundColor:[UIColor blackColor]];
+        [self.bigImgView setContentMode:UIViewContentModeScaleAspectFit];
         
         [self.commentView setBackgroundColor:[UIColor clearColor]];
         [self.commentView setEditable:NO];

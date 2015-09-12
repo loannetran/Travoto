@@ -36,6 +36,11 @@
         [self.manager startUpdatingLocation];
     }
     
+    UITapGestureRecognizer *lblGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changePhoto)];
+    
+    [self.changePhotoLbl addGestureRecognizer:lblGesture];
+    UITapGestureRecognizer *photoGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changePhoto)];
+    [self.userImg addGestureRecognizer:photoGesture];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -47,6 +52,31 @@
             [self drawThisOnMapAt:place];
         }
     }
+
+}
+
+-(void)blah{
+    UIImagePickerController *imgControl = [[UIImagePickerController alloc] init];
+    imgControl.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    imgControl.delegate = self;
+    
+    [self presentViewController:imgControl animated:YES completion:nil];
+}
+
+- (void)changePhoto{
+    
+    UIImagePickerController *imgControl = [[UIImagePickerController alloc] init];
+    imgControl.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    imgControl.delegate = self;
+    
+    [self presentViewController:imgControl animated:YES completion:nil];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    
+    self.userImg.image = info[UIImagePickerControllerOriginalImage];
+    [self.changePhotoLbl setHidden:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void) drawThisOnMapAt:(CLPlacemark *) place {

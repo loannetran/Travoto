@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14C2043" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Wup-UN-aEa">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Wup-UN-aEa">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -41,7 +41,7 @@
             </objects>
             <point key="canvasLocation" x="748" y="403"/>
         </scene>
-        <!--Item-->
+        <!--Home-->
         <scene sceneID="1Dy-RF-tSN">
             <objects>
                 <viewController id="WRQ-hz-F5h" customClass="MapViewController" sceneMemberID="viewController">
@@ -59,21 +59,28 @@
                                     <outlet property="delegate" destination="WRQ-hz-F5h" id="QQv-qf-70g"/>
                                 </connections>
                             </mapView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="defaultPerson.png" translatesAutoresizingMaskIntoConstraints="NO" id="L3Q-2h-WvG">
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="defaultPerson.png" translatesAutoresizingMaskIntoConstraints="NO" id="L3Q-2h-WvG">
                                 <rect key="frame" x="16" y="79" width="130" height="130"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Welcome" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F5r-SF-R78">
                                 <rect key="frame" x="0.0" y="20" width="320" height="40"/>
                                 <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="20"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tap to insert profile picture" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pzf-Tt-JFI">
+                                <rect key="frame" x="29" y="85" width="105" height="118"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="4fd-Ie-MUJ"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="home-7.png" id="4fd-Ie-MUJ"/>
                     <navigationItem key="navigationItem" id="Pxq-eY-TfD"/>
                     <connections>
+                        <outlet property="changePhotoLbl" destination="Pzf-Tt-JFI" id="9Bk-0N-fNo"/>
                         <outlet property="mapView" destination="p62-pG-8c1" id="Jhd-J2-72D"/>
                         <outlet property="userImg" destination="L3Q-2h-WvG" id="bMs-X0-bxD"/>
                     </connections>
@@ -154,12 +161,11 @@
             </objects>
             <point key="canvasLocation" x="1205" y="403"/>
         </scene>
-        <!--Item-->
+        <!--Location-->
         <scene sceneID="Frn-ss-6cb">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8bF-6n-mBW" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Gdm-Bn-WTK" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="5dc-mL-kct"/>
+                    <tabBarItem key="tabBarItem" title="Location" image="paper-map-7.png" id="5dc-mL-kct"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="isM-AY-NqU">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -170,6 +176,7 @@
                         <segue destination="DZ3-MQ-yIS" kind="relationship" relationship="rootViewController" id="ALc-33-1bq"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8bF-6n-mBW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="216" y="403"/>
         </scene>
@@ -196,6 +203,8 @@
     </scenes>
     <resources>
         <image name="defaultPerson.png" width="208" height="208"/>
+        <image name="home-7.png" width="30" height="30"/>
+        <image name="paper-map-7.png" width="30" height="30"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

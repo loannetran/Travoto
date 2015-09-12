@@ -12,12 +12,13 @@
 #import "MapAnnotation.h"
 #import "CustomPinView.h"
 
-@interface MapViewController : UIViewController <MKMapViewDelegate,CLLocationManagerDelegate>
+@interface MapViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate,MKMapViewDelegate,CLLocationManagerDelegate>
 
 @property (nonatomic,strong) CLLocationManager *manager;
 @property (nonatomic, strong) CLGeocoder *coder;
 @property (nonatomic, strong) NSArray *places;
 @property (weak, nonatomic) IBOutlet UIImageView *userImg;
+@property (weak, nonatomic) IBOutlet UILabel *changePhotoLbl;
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @end
