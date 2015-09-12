@@ -30,6 +30,7 @@
     NSArray *sortedCityNames; //sorted city names
     NSString *selectedCountry;
     NSDictionary *selectedCity;
+    UIAlertView *countryAlert;
     
 }
 
@@ -40,7 +41,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.countries = [[NSMutableDictionary alloc] init];
+    self.savedLocations = [[NSMutableArray alloc] init];
+    self.coder = [[CLGeocoder alloc]init];
     //    dateDict = [[NSMutableDictionary alloc] init];
+
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [self.tabBarController.tabBar setHidden:NO];
     
 }
 
@@ -236,7 +244,7 @@
     
     NSURL *url = [info objectForKey:@"UIImagePickerControllerReferenceURL"];
     
-    UIAlertView *countryAlert = [[UIAlertView alloc] initWithTitle:@"Location" message:@"" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Confirm", nil];
+    countryAlert = [[UIAlertView alloc] initWithTitle:@"Location" message:@"" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Confirm", nil];
     
     countryAlert.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
     [countryAlert textFieldAtIndex:0].placeholder = @"Country";
@@ -255,6 +263,39 @@
             
             [countryAlert show];
             img = info[UIImagePickerControllerOriginalImage];
+        }else{
+            
+            
+                [self.coder reverseGeocodeLocation:location
+                                 completionHandler:^(NSArray *placemarks, NSError *error) {
+                                     if(!error){
+                                         
+                                         CLPlacemark *placemark = [placemarks objectAtIndex:0];
+                                         
+                                         [self.savedLocations addObject:placemark];
+                                         
+                                         currentCountry = placemark.country;
+                                         currentCity = placemark.locality;
+                                         
+                                         displayCountry = [currentCountry capitalizedString];
+                                         displayCity = [currentCity capitalizedString];
+                                         
+                                         keyCountry = [[currentCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                                         keyCity = [[currentCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                                         
+                                         img = info[UIImagePickerControllerOriginalImage];
+                                         
+                                         [self setUpTableValues];
+                                         [self reinitializeCountriesAndCities];
+
+//                                         NSLog(@"%@",[placemarks objectAtIndex:0]);
+                                         
+                                         
+                                     } else {
+                                         NSLog(@"%@",[error description]);
+                                     }
+                                 }];
+
         }
         
         
@@ -287,40 +328,85 @@
         currentCountry = [alertView textFieldAtIndex:0].text;
         currentCity = [alertView textFieldAtIndex:1].text;
         
+        
+
         //        NSLog(@"%@ %@", currentCountry, currentCity);
         
-        displayCountry = [currentCountry capitalizedString];
-        displayCity = [currentCity capitalizedString];
         
-        keyCountry = [[currentCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
-        keyCity = [[currentCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
-        
-        //        NSLog(@"%@ %@", keyCountry, keyCity);
-        
-        [self setUpTableValues];
-        
-        countryNames = [[NSMutableArray alloc] init];
-        cityNames = [[NSMutableArray alloc] init];
-        
-        for (NSString *country in self.countries) {
-            [countryNames addObject:country];
-            for (NSString *city in [[self.countries objectForKey:country] objectForKey:@"cities"]) {
-                [cityNames addObject:city];
-            }
-        }
-        
-        sortedCountryNames = [countryNames sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
-        sortedCityNames = [cityNames sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
-        
-        //        NSLog(@"%@", sortedCountryNames);
-        //        NSLog(@"%@", sortedCityNames);
-        
-        [self.tableView reloadData];
-        
-        //        NSLog(@"%@", self.countries);
-        
-        //        NSLog(@"ok");
     }
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        if ([[countryAlert textFieldAtIndex:0].text length] > 0 && [[countryAlert textFieldAtIndex:1].text length] > 0)
+        {
+            NSString *place = [NSString stringWithFormat:@"%@ %@",currentCity, currentCountry];
+            
+            [self.coder geocodeAddressString:place
+                           completionHandler:^(NSArray *placemarks, NSError *error) {
+                               if(!error){
+                                   
+                                   CLPlacemark *placemark = [placemarks objectAtIndex:0];
+                                   [self.savedLocations addObject:placemark];
+                                   //                               NSLog(@"%lu",(unsigned long)placemarks.count);
+                                   NSLog(@"%@",placemark);
+                                   displayCountry = [currentCountry capitalizedString];
+                                   displayCity = [currentCity capitalizedString];
+                                   
+                                   keyCountry = [[currentCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                                   keyCity = [[currentCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                                   
+                                   //        NSLog(@"%@ %@", keyCountry, keyCity);
+                                   
+                                   [self setUpTableValues];
+                                   [self reinitializeCountriesAndCities];
+                                   
+                                   //        NSLog(@"%@", self.countries);
+                                   
+                                   //        NSLog(@"ok");
+                                   
+                               } else {
+                                   
+                                   NSLog(@"%@",[error description]);
+                                   countryAlert.message = @"Invalid location please re-enter location";
+                                   [countryAlert show];
+                                   
+                        }
+                }];
+
+        }
+        else
+        {
+            
+        }
+    }
+}
+
+-(void)reinitializeCountriesAndCities{
+    
+    countryNames = [[NSMutableArray alloc] init];
+    cityNames = [[NSMutableArray alloc] init];
+    
+    for (NSString *country in self.countries) {
+        [countryNames addObject:country];
+        for (NSString *city in [[self.countries objectForKey:country] objectForKey:@"cities"]) {
+            [cityNames addObject:city];
+        }
+    }
+    
+    sortedCountryNames = [countryNames sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+    sortedCityNames = [cityNames sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+    
+    //        NSLog(@"%@", sortedCountryNames);
+    //        NSLog(@"%@", sortedCityNames);
+    
+    MapViewController *mVc = [[self.tabBarController viewControllers] objectAtIndex:0];
+    
+    mVc.places = self.savedLocations;
+    
+    [self.tableView reloadData];
+
+    
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{

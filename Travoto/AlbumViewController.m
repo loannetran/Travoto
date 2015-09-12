@@ -24,6 +24,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    [self.tabBarController.tabBar setHidden:YES];
     [self setUpDisplayView];
     
     NSLog(@"%@",self.country);

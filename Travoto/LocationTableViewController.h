@@ -10,10 +10,15 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <MapKit/MapKit.h>
 #import "AlbumViewController.h"
+#import <MapKit/MKAnnotation.h>
+#import "MapAnnotation.h"
+#import "MapViewController.h"
 
-@interface LocationTableViewController : UITableViewController <UIAlertViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface LocationTableViewController : UITableViewController <UIAlertViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,MKMapViewDelegate,CLLocationManagerDelegate>
 
 @property (nonatomic,strong) NSMutableDictionary *countries;
+@property (nonatomic,strong) CLGeocoder *coder;
+@property (nonatomic,strong) NSMutableArray *savedLocations;
 
 - (IBAction)addPhotos:(id)sender;
 

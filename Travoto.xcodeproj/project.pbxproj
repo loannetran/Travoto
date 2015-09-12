@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		693115191BA39F5400ADF1F3 /* EnlargeImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 693115181BA39F5400ADF1F3 /* EnlargeImageView.m */; };
+		6931151C1BA3B70500ADF1F3 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6931151B1BA3B70500ADF1F3 /* MapViewController.m */; };
+		6931151F1BA3C44A00ADF1F3 /* MapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6931151E1BA3C44A00ADF1F3 /* MapAnnotation.m */; };
+		693115241BA3DE4100ADF1F3 /* CustomPinView.m in Sources */ = {isa = PBXBuildFile; fileRef = 693115231BA3DE4100ADF1F3 /* CustomPinView.m */; };
+		693115261BA3E05B00ADF1F3 /* pin_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 693115251BA3E05B00ADF1F3 /* pin_blue.png */; };
+		693115281BA3E36C00ADF1F3 /* defaultPerson.png in Resources */ = {isa = PBXBuildFile; fileRef = 693115271BA3E36C00ADF1F3 /* defaultPerson.png */; };
 		69330D7F1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69330D7E1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m */; };
 		69E514A41BA2843B007F52D6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E514A31BA2843B007F52D6 /* main.m */; };
 		69E514A71BA2843B007F52D6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E514A61BA2843B007F52D6 /* AppDelegate.m */; };
@@ -35,6 +40,14 @@
 /* Begin PBXFileReference section */
 		693115171BA39F5400ADF1F3 /* EnlargeImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnlargeImageView.h; sourceTree = "<group>"; };
 		693115181BA39F5400ADF1F3 /* EnlargeImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnlargeImageView.m; sourceTree = "<group>"; };
+		6931151A1BA3B70500ADF1F3 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		6931151B1BA3B70500ADF1F3 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		6931151D1BA3C44A00ADF1F3 /* MapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapAnnotation.h; sourceTree = "<group>"; };
+		6931151E1BA3C44A00ADF1F3 /* MapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapAnnotation.m; sourceTree = "<group>"; };
+		693115221BA3DE4100ADF1F3 /* CustomPinView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomPinView.h; sourceTree = "<group>"; };
+		693115231BA3DE4100ADF1F3 /* CustomPinView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomPinView.m; sourceTree = "<group>"; };
+		693115251BA3E05B00ADF1F3 /* pin_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_blue.png; sourceTree = "<group>"; };
+		693115271BA3E36C00ADF1F3 /* defaultPerson.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultPerson.png; sourceTree = "<group>"; };
 		69330D7D1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumHeaderCollectionReusableView.h; sourceTree = "<group>"; };
 		69330D7E1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumHeaderCollectionReusableView.m; sourceTree = "<group>"; };
 		69E5149E1BA2843B007F52D6 /* Travoto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Travoto.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,10 +121,16 @@
 				69E514CB1BA28475007F52D6 /* AlbumViewController.m */,
 				693115171BA39F5400ADF1F3 /* EnlargeImageView.h */,
 				693115181BA39F5400ADF1F3 /* EnlargeImageView.m */,
+				693115221BA3DE4100ADF1F3 /* CustomPinView.h */,
+				693115231BA3DE4100ADF1F3 /* CustomPinView.m */,
 				69330D7D1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.h */,
 				69330D7E1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m */,
 				69E514CD1BA28492007F52D6 /* LocationTableViewController.h */,
 				69E514CE1BA28492007F52D6 /* LocationTableViewController.m */,
+				6931151D1BA3C44A00ADF1F3 /* MapAnnotation.h */,
+				6931151E1BA3C44A00ADF1F3 /* MapAnnotation.m */,
+				6931151A1BA3B70500ADF1F3 /* MapViewController.h */,
+				6931151B1BA3B70500ADF1F3 /* MapViewController.m */,
 				69E514AB1BA2843B007F52D6 /* Main.storyboard */,
 				69E514AE1BA2843B007F52D6 /* Images.xcassets */,
 				69E514B01BA2843B007F52D6 /* LaunchScreen.xib */,
@@ -123,6 +142,8 @@
 		69E514A11BA2843B007F52D6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				693115271BA3E36C00ADF1F3 /* defaultPerson.png */,
+				693115251BA3E05B00ADF1F3 /* pin_blue.png */,
 				69E514A21BA2843B007F52D6 /* Info.plist */,
 				69E514A31BA2843B007F52D6 /* main.m */,
 			);
@@ -241,9 +262,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				693115281BA3E36C00ADF1F3 /* defaultPerson.png in Resources */,
 				69E514AD1BA2843B007F52D6 /* Main.storyboard in Resources */,
 				69E514B21BA2843B007F52D6 /* LaunchScreen.xib in Resources */,
 				69E514AF1BA2843B007F52D6 /* Images.xcassets in Resources */,
+				693115261BA3E05B00ADF1F3 /* pin_blue.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,8 +285,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				693115191BA39F5400ADF1F3 /* EnlargeImageView.m in Sources */,
+				693115241BA3DE4100ADF1F3 /* CustomPinView.m in Sources */,
 				69330D7F1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m in Sources */,
+				6931151F1BA3C44A00ADF1F3 /* MapAnnotation.m in Sources */,
 				69E514CC1BA28475007F52D6 /* AlbumViewController.m in Sources */,
+				6931151C1BA3B70500ADF1F3 /* MapViewController.m in Sources */,
 				69E514A71BA2843B007F52D6 /* AppDelegate.m in Sources */,
 				69E514C91BA28459007F52D6 /* PhotoCollectionViewCell.m in Sources */,
 				69E514CF1BA28492007F52D6 /* LocationTableViewController.m in Sources */,
