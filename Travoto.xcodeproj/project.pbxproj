@@ -102,6 +102,62 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		697055A51BA420FB00B5ACCF /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				693115221BA3DE4100ADF1F3 /* CustomPinView.h */,
+				693115231BA3DE4100ADF1F3 /* CustomPinView.m */,
+				6931151D1BA3C44A00ADF1F3 /* MapAnnotation.h */,
+				6931151E1BA3C44A00ADF1F3 /* MapAnnotation.m */,
+				6931151A1BA3B70500ADF1F3 /* MapViewController.h */,
+				6931151B1BA3B70500ADF1F3 /* MapViewController.m */,
+			);
+			name = Home;
+			sourceTree = "<group>";
+		};
+		697055A61BA4210B00B5ACCF /* LocationAlbums */ = {
+			isa = PBXGroup;
+			children = (
+				69E514CD1BA28492007F52D6 /* LocationTableViewController.h */,
+				69E514CE1BA28492007F52D6 /* LocationTableViewController.m */,
+			);
+			name = LocationAlbums;
+			sourceTree = "<group>";
+		};
+		697055A71BA4211D00B5ACCF /* AlbumView */ = {
+			isa = PBXGroup;
+			children = (
+				69E514CA1BA28475007F52D6 /* AlbumViewController.h */,
+				69E514CB1BA28475007F52D6 /* AlbumViewController.m */,
+				69330D7D1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.h */,
+				69330D7E1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m */,
+				69E514C71BA28459007F52D6 /* PhotoCollectionViewCell.h */,
+				69E514C81BA28459007F52D6 /* PhotoCollectionViewCell.m */,
+				693115171BA39F5400ADF1F3 /* EnlargeImageView.h */,
+				693115181BA39F5400ADF1F3 /* EnlargeImageView.m */,
+			);
+			name = AlbumView;
+			sourceTree = "<group>";
+		};
+		697055A81BA4213300B5ACCF /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				69E514A51BA2843B007F52D6 /* AppDelegate.h */,
+				69E514A61BA2843B007F52D6 /* AppDelegate.m */,
+				69E514AB1BA2843B007F52D6 /* Main.storyboard */,
+			);
+			name = Main;
+			sourceTree = "<group>";
+		};
+		697055A91BA4217D00B5ACCF /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				6970559F1BA3FFFE00B5ACCF /* CameraImageViewController.h */,
+				697055A01BA3FFFE00B5ACCF /* CameraImageViewController.m */,
+			);
+			name = Camera;
+			sourceTree = "<group>";
+		};
 		69E514951BA2843B007F52D6 = {
 			isa = PBXGroup;
 			children = (
@@ -124,27 +180,11 @@
 		69E514A01BA2843B007F52D6 /* Travoto */ = {
 			isa = PBXGroup;
 			children = (
-				69E514A51BA2843B007F52D6 /* AppDelegate.h */,
-				69E514A61BA2843B007F52D6 /* AppDelegate.m */,
-				69E514C71BA28459007F52D6 /* PhotoCollectionViewCell.h */,
-				69E514C81BA28459007F52D6 /* PhotoCollectionViewCell.m */,
-				69E514CA1BA28475007F52D6 /* AlbumViewController.h */,
-				69E514CB1BA28475007F52D6 /* AlbumViewController.m */,
-				693115171BA39F5400ADF1F3 /* EnlargeImageView.h */,
-				693115181BA39F5400ADF1F3 /* EnlargeImageView.m */,
-				693115221BA3DE4100ADF1F3 /* CustomPinView.h */,
-				693115231BA3DE4100ADF1F3 /* CustomPinView.m */,
-				69330D7D1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.h */,
-				69330D7E1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m */,
-				69E514CD1BA28492007F52D6 /* LocationTableViewController.h */,
-				69E514CE1BA28492007F52D6 /* LocationTableViewController.m */,
-				6931151D1BA3C44A00ADF1F3 /* MapAnnotation.h */,
-				6931151E1BA3C44A00ADF1F3 /* MapAnnotation.m */,
-				6931151A1BA3B70500ADF1F3 /* MapViewController.h */,
-				6931151B1BA3B70500ADF1F3 /* MapViewController.m */,
-				69E514AB1BA2843B007F52D6 /* Main.storyboard */,
-				6970559F1BA3FFFE00B5ACCF /* CameraImageViewController.h */,
-				697055A01BA3FFFE00B5ACCF /* CameraImageViewController.m */,
+				697055A91BA4217D00B5ACCF /* Camera */,
+				697055A81BA4213300B5ACCF /* Main */,
+				697055A71BA4211D00B5ACCF /* AlbumView */,
+				697055A61BA4210B00B5ACCF /* LocationAlbums */,
+				697055A51BA420FB00B5ACCF /* Home */,
 				69E514AE1BA2843B007F52D6 /* Images.xcassets */,
 				69E514B01BA2843B007F52D6 /* LaunchScreen.xib */,
 				69E514A11BA2843B007F52D6 /* Supporting Files */,

@@ -166,8 +166,6 @@
                              [self setUpTableValues];
                              [self reinitializeCountriesAndCities];
                              
-                             self.cameraImage = nil;
-                             self.cameraLocation = nil;
                              //                                         NSLog(@"%@",[placemarks objectAtIndex:0]);
                              
                              
@@ -175,6 +173,10 @@
                              NSLog(@"%@",[error description]);
                          }
                      }];
+    
+    self.cameraImage = nil;
+    self.cameraLocation = nil;
+    
     
 }
 
@@ -200,6 +202,7 @@
                 [self.countries setObject:tempDict forKey:keyCountry];
             }else{
                 
+                //if city does not exist for country
                 NSMutableArray *tempArray = [[NSMutableArray alloc] init];
                 [tempArray addObject:img];
                 
@@ -208,6 +211,7 @@
                 [tempAttrDict setObject:tempArray forKey:@"images"];
                 
                 [[tempDict objectForKey:@"cities"] setValue:tempAttrDict forKey:keyCity];
+                
                 
             }
             
@@ -233,6 +237,10 @@
             //set dictionary with changes
             [self.countries setObject:tempDict forKey:keyCountry];
             
+            UIAlertView *alertLoc = [[UIAlertView alloc] initWithTitle:@"New Location!" message:[NSString stringWithFormat:@"Country: %@\nCity: %@", displayCountry, displayCity] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            
+            [alertLoc show];
+            
         }
         
     }else{
@@ -255,6 +263,10 @@
         [countryAttr setObject:cityDict forKey:@"cities"];
         
         [self.countries setObject:countryAttr forKey:keyCountry];
+        
+        UIAlertView *alertLoc = [[UIAlertView alloc] initWithTitle:@"New Location!" message:[NSString stringWithFormat:@"Country: %@\nCity: %@", displayCountry, displayCity] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        
+        [alertLoc show];
     }
     
     
@@ -295,7 +307,7 @@
     [countryAlert textFieldAtIndex:0].placeholder = @"Country";
     [countryAlert textFieldAtIndex:0].autocorrectionType = UITextAutocorrectionTypeYes;
     [countryAlert textFieldAtIndex:1].autocorrectionType = UITextAutocorrectionTypeYes;
-    [countryAlert textFieldAtIndex:1].placeholder = @"City";
+    [countryAlert textFieldAtIndex:1].placeholder = @"City, (optional: Address)";
     [countryAlert textFieldAtIndex:1].secureTextEntry = NO;
 
     
@@ -322,8 +334,8 @@
                                          currentCountry = placemark.country;
                                          currentCity = placemark.locality;
                                          
-                                         displayCountry = [currentCountry capitalizedString];
-                                         displayCity = [currentCity capitalizedString];
+                                         displayCountry = currentCountry;
+                                         displayCity = currentCity;
                                          
                                          keyCountry = [[currentCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
                                          keyCity = [[currentCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
@@ -395,11 +407,11 @@
                                    [self.savedLocations addObject:placemark];
                                    //                               NSLog(@"%lu",(unsigned long)placemarks.count);
                                    NSLog(@"%@",placemark);
-                                   displayCountry = [currentCountry capitalizedString];
-                                   displayCity = [currentCity capitalizedString];
+                                   displayCountry = placemark.country;
+                                   displayCity = placemark.locality;
                                    
-                                   keyCountry = [[currentCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
-                                   keyCity = [[currentCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                                   keyCountry = [[displayCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                                   keyCity = [[displayCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
                                    
                                    //        NSLog(@"%@ %@", keyCountry, keyCity);
                                    
