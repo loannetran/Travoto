@@ -19,6 +19,8 @@
 @property (nonatomic,strong) NSMutableDictionary *countries;
 @property (nonatomic,strong) CLGeocoder *coder;
 @property (nonatomic,strong) NSMutableArray *savedLocations;
+@property (nonatomic,strong) UIImage *cameraImage;
+@property (nonatomic,strong) CLLocation *cameraLocation;
 
 - (IBAction)addPhotos:(id)sender;
 

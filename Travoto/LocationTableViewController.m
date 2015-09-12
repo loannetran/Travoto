@@ -43,12 +43,21 @@
     self.countries = [[NSMutableDictionary alloc] init];
     self.savedLocations = [[NSMutableArray alloc] init];
     self.coder = [[CLGeocoder alloc]init];
+    
+    NSLog(@"current image: %@",self.cameraImage);
+    NSLog(@"current location: %@",self.cameraLocation);
+    
+    NSLog(@"view loaded");
     //    dateDict = [[NSMutableDictionary alloc] init];
 
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     [self.tabBarController.tabBar setHidden:NO];
+    if (self.cameraImage != nil) {
+        [self setUpImage:self.cameraImage andLocation:self.cameraLocation];
+    }
+
     
 }
 
@@ -131,6 +140,42 @@
     }
     
     return @"section";
+}
+
+-(void)setUpImage:(UIImage *)image andLocation:(CLLocation *)loc{
+
+    [self.coder reverseGeocodeLocation:loc
+                     completionHandler:^(NSArray *placemarks, NSError *error) {
+                         if(!error){
+                             
+                             CLPlacemark *placemark = [placemarks objectAtIndex:0];
+                             
+                             [self.savedLocations addObject:placemark];
+                             
+                             currentCountry = placemark.country;
+                             currentCity = placemark.locality;
+                             
+                             displayCountry = [currentCountry capitalizedString];
+                             displayCity = [currentCity capitalizedString];
+                             
+                             keyCountry = [[currentCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                             keyCity = [[currentCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                             
+                             img = image;
+                             
+                             [self setUpTableValues];
+                             [self reinitializeCountriesAndCities];
+                             
+                             self.cameraImage = nil;
+                             self.cameraLocation = nil;
+                             //                                         NSLog(@"%@",[placemarks objectAtIndex:0]);
+                             
+                             
+                         } else {
+                             NSLog(@"%@",[error description]);
+                         }
+                     }];
+    
 }
 
 -(void)setUpTableValues{

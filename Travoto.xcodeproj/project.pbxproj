@@ -14,6 +14,9 @@
 		693115261BA3E05B00ADF1F3 /* pin_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 693115251BA3E05B00ADF1F3 /* pin_blue.png */; };
 		693115281BA3E36C00ADF1F3 /* defaultPerson.png in Resources */ = {isa = PBXBuildFile; fileRef = 693115271BA3E36C00ADF1F3 /* defaultPerson.png */; };
 		69330D7F1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69330D7E1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m */; };
+		6970559A1BA3F93C00B5ACCF /* photo-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 697055981BA3F93C00B5ACCF /* photo-7.png */; };
+		6970559B1BA3F93C00B5ACCF /* camera-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 697055991BA3F93C00B5ACCF /* camera-7.png */; };
+		697055A11BA3FFFE00B5ACCF /* CameraImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 697055A01BA3FFFE00B5ACCF /* CameraImageViewController.m */; };
 		69738AB91BA3E948003EA7C5 /* home-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 69738AB81BA3E948003EA7C5 /* home-7.png */; };
 		69738ABB1BA3E972003EA7C5 /* paper-map-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 69738ABA1BA3E972003EA7C5 /* paper-map-7.png */; };
 		69E514A41BA2843B007F52D6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E514A31BA2843B007F52D6 /* main.m */; };
@@ -52,6 +55,10 @@
 		693115271BA3E36C00ADF1F3 /* defaultPerson.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultPerson.png; sourceTree = "<group>"; };
 		69330D7D1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumHeaderCollectionReusableView.h; sourceTree = "<group>"; };
 		69330D7E1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumHeaderCollectionReusableView.m; sourceTree = "<group>"; };
+		697055981BA3F93C00B5ACCF /* photo-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo-7.png"; sourceTree = "<group>"; };
+		697055991BA3F93C00B5ACCF /* camera-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-7.png"; sourceTree = "<group>"; };
+		6970559F1BA3FFFE00B5ACCF /* CameraImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraImageViewController.h; sourceTree = "<group>"; };
+		697055A01BA3FFFE00B5ACCF /* CameraImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraImageViewController.m; sourceTree = "<group>"; };
 		69738AB81BA3E948003EA7C5 /* home-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home-7.png"; sourceTree = "<group>"; };
 		69738ABA1BA3E972003EA7C5 /* paper-map-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paper-map-7.png"; sourceTree = "<group>"; };
 		69E5149E1BA2843B007F52D6 /* Travoto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Travoto.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -136,6 +143,8 @@
 				6931151A1BA3B70500ADF1F3 /* MapViewController.h */,
 				6931151B1BA3B70500ADF1F3 /* MapViewController.m */,
 				69E514AB1BA2843B007F52D6 /* Main.storyboard */,
+				6970559F1BA3FFFE00B5ACCF /* CameraImageViewController.h */,
+				697055A01BA3FFFE00B5ACCF /* CameraImageViewController.m */,
 				69E514AE1BA2843B007F52D6 /* Images.xcassets */,
 				69E514B01BA2843B007F52D6 /* LaunchScreen.xib */,
 				69E514A11BA2843B007F52D6 /* Supporting Files */,
@@ -146,6 +155,8 @@
 		69E514A11BA2843B007F52D6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				697055981BA3F93C00B5ACCF /* photo-7.png */,
+				697055991BA3F93C00B5ACCF /* camera-7.png */,
 				69738ABA1BA3E972003EA7C5 /* paper-map-7.png */,
 				69738AB81BA3E948003EA7C5 /* home-7.png */,
 				693115271BA3E36C00ADF1F3 /* defaultPerson.png */,
@@ -272,6 +283,8 @@
 				693115281BA3E36C00ADF1F3 /* defaultPerson.png in Resources */,
 				69E514AD1BA2843B007F52D6 /* Main.storyboard in Resources */,
 				69E514B21BA2843B007F52D6 /* LaunchScreen.xib in Resources */,
+				6970559B1BA3F93C00B5ACCF /* camera-7.png in Resources */,
+				6970559A1BA3F93C00B5ACCF /* photo-7.png in Resources */,
 				69738ABB1BA3E972003EA7C5 /* paper-map-7.png in Resources */,
 				69E514AF1BA2843B007F52D6 /* Images.xcassets in Resources */,
 				693115261BA3E05B00ADF1F3 /* pin_blue.png in Resources */,
@@ -297,6 +310,7 @@
 				69330D7F1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m in Sources */,
 				6931151F1BA3C44A00ADF1F3 /* MapAnnotation.m in Sources */,
 				69E514CC1BA28475007F52D6 /* AlbumViewController.m in Sources */,
+				697055A11BA3FFFE00B5ACCF /* CameraImageViewController.m in Sources */,
 				6931151C1BA3B70500ADF1F3 /* MapViewController.m in Sources */,
 				69E514A71BA2843B007F52D6 /* AppDelegate.m in Sources */,
 				69E514C91BA28459007F52D6 /* PhotoCollectionViewCell.m in Sources */,

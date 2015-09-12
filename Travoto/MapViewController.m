@@ -55,14 +55,6 @@
 
 }
 
--(void)blah{
-    UIImagePickerController *imgControl = [[UIImagePickerController alloc] init];
-    imgControl.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    imgControl.delegate = self;
-    
-    [self presentViewController:imgControl animated:YES completion:nil];
-}
-
 - (void)changePhoto{
     
     UIImagePickerController *imgControl = [[UIImagePickerController alloc] init];
@@ -130,13 +122,13 @@
     //    return view;
     
 }
-
-- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hello" message:@"Hello Again" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles: nil];
-    [alert show];
-    
-}
+//
+//- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
+//    
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hello" message:@"Hello Again" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+//    [alert show];
+//    
+//}
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
     if (status == kCLAuthorizationStatusAuthorizedWhenInUse) {
