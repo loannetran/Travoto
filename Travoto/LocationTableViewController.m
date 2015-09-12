@@ -240,8 +240,11 @@
     
     countryAlert.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
     [countryAlert textFieldAtIndex:0].placeholder = @"Country";
+    [countryAlert textFieldAtIndex:0].autocorrectionType = UITextAutocorrectionTypeYes;
+    [countryAlert textFieldAtIndex:1].autocorrectionType = UITextAutocorrectionTypeYes;
     [countryAlert textFieldAtIndex:1].placeholder = @"City";
     [countryAlert textFieldAtIndex:1].secureTextEntry = NO;
+
     
     ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset)
     {

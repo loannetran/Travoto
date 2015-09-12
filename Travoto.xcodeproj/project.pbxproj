@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		693115191BA39F5400ADF1F3 /* EnlargeImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 693115181BA39F5400ADF1F3 /* EnlargeImageView.m */; };
 		69330D7F1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69330D7E1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m */; };
 		69E514A41BA2843B007F52D6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E514A31BA2843B007F52D6 /* main.m */; };
 		69E514A71BA2843B007F52D6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E514A61BA2843B007F52D6 /* AppDelegate.m */; };
@@ -32,6 +33,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		693115171BA39F5400ADF1F3 /* EnlargeImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnlargeImageView.h; sourceTree = "<group>"; };
+		693115181BA39F5400ADF1F3 /* EnlargeImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnlargeImageView.m; sourceTree = "<group>"; };
 		69330D7D1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumHeaderCollectionReusableView.h; sourceTree = "<group>"; };
 		69330D7E1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumHeaderCollectionReusableView.m; sourceTree = "<group>"; };
 		69E5149E1BA2843B007F52D6 /* Travoto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Travoto.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,6 +106,8 @@
 				69E514C81BA28459007F52D6 /* PhotoCollectionViewCell.m */,
 				69E514CA1BA28475007F52D6 /* AlbumViewController.h */,
 				69E514CB1BA28475007F52D6 /* AlbumViewController.m */,
+				693115171BA39F5400ADF1F3 /* EnlargeImageView.h */,
+				693115181BA39F5400ADF1F3 /* EnlargeImageView.m */,
 				69330D7D1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.h */,
 				69330D7E1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m */,
 				69E514CD1BA28492007F52D6 /* LocationTableViewController.h */,
@@ -256,6 +261,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				693115191BA39F5400ADF1F3 /* EnlargeImageView.m in Sources */,
 				69330D7F1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m in Sources */,
 				69E514CC1BA28475007F52D6 /* AlbumViewController.m in Sources */,
 				69E514A71BA2843B007F52D6 /* AppDelegate.m in Sources */,
@@ -390,6 +396,7 @@
 				INFOPLIST_FILE = Travoto/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -400,6 +407,7 @@
 				INFOPLIST_FILE = Travoto/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
