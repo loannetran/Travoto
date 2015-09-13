@@ -8,37 +8,7 @@
 
 #import "LocationTableViewController.h"
 
-@interface LocationTableViewController (){
-    
-    CLLocation *location; //location of image
-    NSDate *creationDate; //creation date of image
-    NSString *currentCountry; //original text of entered country
-    NSString *currentCity; //original text of entered city
-    NSString *displayCountry; //how country name should be displayed formatted
-    NSString *displayCity; //how city name should be displayed formatted
-    NSString *keyCountry; //dictionary key of country
-    NSString *keyCity; //dictionary key of city
-    UIImage *img; //current image selected
-    //    NSMutableDictionary *dateDict;
-    NSMutableDictionary *cityDict; //dictionary of cities
-    NSMutableArray *images; //dictionary of images
-    NSMutableDictionary *countryAttr; //country attributes
-    NSMutableDictionary *cityAttr; //city attributes
-    NSMutableArray *countryNames; //country names
-    NSMutableArray *cityNames; //city names
-    NSArray *sortedCountryNames; //sorted country names
-    NSArray *sortedCityNames; //sorted city names
-    NSString *selectedCountry;
-    NSDictionary *selectedCity;
-    UIAlertView *countryAlert;
-    CoreDataStack *cds;
-    NSString *imgFileName;
-    NSMutableArray *reqCountries;
-    NSMutableArray *reqCities;
-    NSMutableArray *reqImages;
-
-    
-}
+@interface LocationTableViewController ()
 
 @end
 
@@ -51,13 +21,14 @@
     self.coder = [[CLGeocoder alloc]init];
     
     cds = [CoreDataStack dataStack];
-    
+//    [self removeEverythingFromDB];
 //    NSLog(@"current image: %@",self.cameraImage);
 //    NSLog(@"current location: %@",self.cameraLocation);
     
     NSLog(@"view loaded");
     //    dateDict = [[NSMutableDictionary alloc] init];
     [self getAllNamesFromDB];
+//    [self setPlacemarks];
     [self reinitializeCountriesAndCities];
 //    [self removeEverythingFromDB];
 }
@@ -89,6 +60,20 @@
             
         }
 //        NSLog(@"%@",fetchedObjects);
+    }
+    
+    req = [cds.managedObjectModel fetchRequestTemplateForName:@"allMapLocations"];
+    
+    fetchedObjects = [cds.managedObjectContext executeFetchRequest:req error:&error];
+    if (fetchedObjects == nil) {
+        NSLog(@"Error");
+    } else {
+        for (NSManagedObject *c in fetchedObjects) {
+            
+            [cds.managedObjectContext deleteObject:c];
+            
+        }
+        //        NSLog(@"%@",fetchedObjects);
     }
     
     req = [cds.managedObjectModel fetchRequestTemplateForName:@"allImages"];
@@ -213,23 +198,9 @@
                     [tempCity setObject:tempCityAttr forKey:city.cityKey];
                 }
             }
-            
-            [self.coder geocodeAddressString:[NSString stringWithFormat:@"%@ %@", country.countryKey, c]
-                           completionHandler:^(NSArray *placemarks, NSError *error) {
-                               if(!error){
-                                   
-                                   CLPlacemark *placemark = [placemarks objectAtIndex:0];
-                                   [self.savedLocations addObject:placemark];
-                                   
-                               } else {
-                                   
-                                   NSLog(@"%@",[error description]);
-
-                                   
-                               }
-                           }];
 
         }
+        
         
         [tempAttr setObject:tempCity forKey:@"cities"];
         [self.countries setObject:tempAttr forKey:country.countryKey];
@@ -238,7 +209,6 @@
     
     [self.tableView reloadData];
 }
-
 
 -(void)viewDidAppear:(BOOL)animated{
     [self.tabBarController.tabBar setHidden:NO];
@@ -289,6 +259,8 @@
                              
                              displayCountry = currentCountry;
                              displayCity = currentCity;
+                             
+                             [self insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:loc.coordinate.latitude andLongitude:loc.coordinate.longitude];
                              
                              keyCountry = [[currentCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
                              keyCity = [[currentCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
@@ -391,6 +363,9 @@
                                    if (displayCity == nil) {
                                        displayCity = placemark.administrativeArea;
                                    }
+                                   
+                                   [self insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:placemark.location.coordinate.latitude andLongitude:placemark.location.coordinate.longitude];
+                                   
                                    keyCountry = [[displayCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
                                    keyCity = [[displayCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
                                    [self setUpTableValues];
@@ -449,7 +424,7 @@
                     [cds saveContext];
                 }
                 
-                [self setUpImageForDb:img withName:imgFileName];
+                [self insertImageForDb:img withName:imgFileName];
                 
             }
         }
@@ -478,7 +453,7 @@
 //                NSLog(@"%@", countryGrabbed.cities);
             }
             
-            [self setUpImageForDb:img withName:imgFileName];
+            [self insertImageForDb:img withName:imgFileName];
             
             //get dictionary for current country
             NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithDictionary:[self getDictForCountry:keyCountry]];
@@ -525,7 +500,7 @@
         
         [self.countries setObject:countryAttr forKey:keyCountry];
         
-        [self setUpImageForDb:img withName:imgFileName];
+        [self insertImageForDb:img withName:imgFileName];
         
         Country *insertCountry = [NSEntityDescription insertNewObjectForEntityForName:@"Country" inManagedObjectContext:cds.managedObjectContext];
         insertCountry.countryKey = keyCountry;
@@ -550,7 +525,7 @@
 }
 
 
--(void)setUpImageForDb:(UIImage *)imgToInsert withName:(NSString *)name{
+-(void)insertImageForDb:(UIImage *)imgToInsert withName:(NSString *)name{
     
     Image *image = [NSEntityDescription insertNewObjectForEntityForName:@"Image" inManagedObjectContext:cds.managedObjectContext];
     
@@ -560,6 +535,20 @@
     [cds saveContext];
     
 }
+
+-(void)insertMapLocationForCountry:(NSString *)country andCity:(NSString *)city withLatitude:(CLLocationDegrees)lat andLongitude:(CLLocationDegrees)lo{
+    
+    MapLocation *loc = [NSEntityDescription insertNewObjectForEntityForName:@"MapLocation" inManagedObjectContext:cds.managedObjectContext];
+    
+    loc.countryName = country;
+    loc.cityName = city;
+    loc.latitude = [NSNumber numberWithDouble:lat];
+    loc.longitude = [NSNumber numberWithDouble:lo];
+    
+    [cds saveContext];
+}
+
+
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -635,29 +624,6 @@
     
     //51 204 204
 
-    
-//        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-//        [fetchRequest setEntity:[NSEntityDescription entityForName:@"Country" inManagedObjectContext:cds.managedObjectContext]];
-//            
-//        NSError *error = nil;
-//            
-//        NSArray *fetchedObjects = [cds.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-//        if (fetchedObjects == nil) {
-//                NSLog(@"%@", error);
-//        }else{
-//            NSMutableArray *arrayOfCountries;
-//        for (Country *c in fetchedObjects) {
-//
-//            arrayOfCountries = [[NSMutableArray alloc] init];
-//            [arrayOfCountries addObject:c.name];
-//            
-//        }
-//            
-//        NSArray *sortedTemp = [arrayOfCountries sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
-//        
-//            return [sortedTemp objectAtIndex:section];
-
-    
             return [[self.countries objectForKey:[sortedCountryNames objectAtIndex:section]] objectForKey:@"name"];
     
 //    return @"section";
@@ -682,6 +648,8 @@
                              
                              displayCountry = currentCountry;
                              displayCity = currentCity;
+                             
+                             [self insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:placemark.location.coordinate.latitude andLongitude:placemark.location.coordinate.longitude];
                              
                              keyCountry = [[currentCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
                              keyCity = [[currentCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];

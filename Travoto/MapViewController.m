@@ -20,6 +20,8 @@
     
     self.manager = [[CLLocationManager alloc] init];
     self.coder = [[CLGeocoder alloc]init];
+    cds = [CoreDataStack dataStack];
+    
     self.manager.delegate = self;
     [self.userImg.layer setCornerRadius:60];
     [self.userImg setClipsToBounds:YES];
@@ -64,6 +66,24 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
+
+    NSFetchRequest *req = [cds.managedObjectModel fetchRequestTemplateForName:@"allMapLocations"];
+    
+    NSError *error = nil;
+    NSArray *fetchedObjects = [cds.managedObjectContext executeFetchRequest:req error:&error];
+    if (fetchedObjects == nil) {
+        NSLog(@"Error");
+    } else {
+        for (MapLocation *loc in fetchedObjects) {
+            
+//            NSLog(@"%@",loc.countryName);
+                        CLLocation *location = [[CLLocation alloc] initWithLatitude:[loc.latitude doubleValue] longitude:[loc.longitude doubleValue]];
+            
+                        [self previousLocations:location atCountry:loc.countryName andCity:loc.cityName];
+            
+        }
+    }
+
     
     if (self.places != 0) {
         
@@ -97,18 +117,40 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+-(void)previousLocations:(CLLocation *)place atCountry:(NSString *)country andCity:(NSString *)city{
+    
+//    MKCoordinateSpan span;
+//    span.latitudeDelta = 0.02;
+//    span.longitudeDelta = 0.02;
+//    
+//    MKCoordinateRegion region;
+//    region.center = place.coordinate;
+//    region.span = span;
+//    
+//    [self.mapView setRegion:region];
+    
+    MapAnnotation *ann = [[MapAnnotation alloc] init];
+    ann.coordinate = place.coordinate;
+    ann.title = country;
+    ann.subtitle = city;
+    [self.mapView addAnnotation:ann];
+    
+    NSLog(@"set location");
+
+}
+
 -(void) drawThisOnMapAt:(CLPlacemark *) place {
     
     
-    MKCoordinateSpan span;
-    span.latitudeDelta = 0.02;
-    span.longitudeDelta = 0.02;
-    
-    MKCoordinateRegion region;
-    region.center = place.location.coordinate;
-    region.span = span;
-    
-    [self.mapView setRegion:region];
+//    MKCoordinateSpan span;
+//    span.latitudeDelta = 0.02;
+//    span.longitudeDelta = 0.02;
+//    
+//    MKCoordinateRegion region;
+//    region.center = place.location.coordinate;
+//    region.span = span;
+//    
+//    [self.mapView setRegion:region];
     
     MapAnnotation *ann = [[MapAnnotation alloc] init];
     ann.coordinate = place.location.coordinate;
@@ -159,23 +201,17 @@
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
     if (status == kCLAuthorizationStatusAuthorizedWhenInUse) {
 
-        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.manager.location.coordinate, 800, 800);
-        [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
+//        MKCoordinateSpan span;
+//        span.latitudeDelta = 1;
+//        span.longitudeDelta = 1;
+//        
+//        MKCoordinateRegion region;
+//        region.center = self.manager.location.coordinate;
+//        region.span = span;
+//
+//        [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
         
-//        [self.coder geocodeAddressString:@"toronto"
-//                       completionHandler:^(NSArray *placemarks, NSError *error) {
-//                           if(!error){
-//                               
-//                               CLPlacemark *placemark = [placemarks objectAtIndex:0];
-//                               [self drawThisOnMapAt:placemark];
-//                               NSLog(@"%lu",(unsigned long)placemarks.count);
-////                               NSLog(@"%@",placemark);
-//                               
-//                           } else {
-//                               NSLog(@"%@",[error description]);
-//                           }
-//                       }];
-
+        [self.manager setDistanceFilter:10.0f];
         [self.manager startUpdatingLocation];
     }
     

@@ -11,8 +11,13 @@
 #import <MapKit/MKAnnotation.h>
 #import "MapAnnotation.h"
 #import "CustomPinView.h"
+#import "CoreDataStack.h"
+#import "MapLocation.h"
 
-@interface MapViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate,MKMapViewDelegate,CLLocationManagerDelegate>
+@interface MapViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate,MKMapViewDelegate,CLLocationManagerDelegate>{
+    
+        CoreDataStack *cds;
+}
 
 @property (weak, nonatomic) IBOutlet UILabel *welcomeLbl;
 @property (nonatomic,strong) CLLocationManager *manager;

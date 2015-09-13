@@ -17,8 +17,37 @@
 #import "Country.h"
 #import "City.h"
 #import "Image.h"
+#import "MapLocation.h"
 
-@interface LocationTableViewController : UITableViewController <UIAlertViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,MKMapViewDelegate,CLLocationManagerDelegate>
+@interface LocationTableViewController : UITableViewController <UIAlertViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,MKMapViewDelegate,CLLocationManagerDelegate>{
+    
+    CLLocation *location; //location of image
+    NSDate *creationDate; //creation date of image
+    NSString *currentCountry; //original text of entered country
+    NSString *currentCity; //original text of entered city
+    NSString *displayCountry; //how country name should be displayed formatted
+    NSString *displayCity; //how city name should be displayed formatted
+    NSString *keyCountry; //dictionary key of country
+    NSString *keyCity; //dictionary key of city
+    UIImage *img; //current image selected
+    //    NSMutableDictionary *dateDict;
+    NSMutableDictionary *cityDict; //dictionary of cities
+    NSMutableArray *images; //dictionary of images
+    NSMutableDictionary *countryAttr; //country attributes
+    NSMutableDictionary *cityAttr; //city attributes
+    NSMutableArray *countryNames; //country names
+    NSMutableArray *cityNames; //city names
+    NSArray *sortedCountryNames; //sorted country names
+    NSArray *sortedCityNames; //sorted city names
+    NSString *selectedCountry;
+    NSDictionary *selectedCity;
+    UIAlertView *countryAlert;
+    CoreDataStack *cds;
+    NSString *imgFileName;
+    NSMutableArray *reqCountries;
+    NSMutableArray *reqCities;
+    NSMutableArray *reqImages;
+}
 
 @property (nonatomic,strong) NSMutableDictionary *countries;
 @property (nonatomic,strong) CLGeocoder *coder;
