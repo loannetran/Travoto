@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		691EDC471BA4A4AB00BF17F4 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 691EDC461BA4A4AB00BF17F4 /* CoreData.framework */; };
+		691EDC861BA4A98700BF17F4 /* Travoto.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 691EDC841BA4A98700BF17F4 /* Travoto.xcdatamodeld */; };
+		691EDC891BA4AB3300BF17F4 /* CoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 691EDC881BA4AB3300BF17F4 /* CoreDataStack.m */; };
+		691EDC901BA4D00E00BF17F4 /* City.m in Sources */ = {isa = PBXBuildFile; fileRef = 691EDC8F1BA4D00E00BF17F4 /* City.m */; };
+		691EDC931BA4D00E00BF17F4 /* Country.m in Sources */ = {isa = PBXBuildFile; fileRef = 691EDC921BA4D00E00BF17F4 /* Country.m */; };
+		691EDC961BA4D89800BF17F4 /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 691EDC951BA4D89800BF17F4 /* Image.m */; };
 		693115191BA39F5400ADF1F3 /* EnlargeImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 693115181BA39F5400ADF1F3 /* EnlargeImageView.m */; };
 		6931151C1BA3B70500ADF1F3 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6931151B1BA3B70500ADF1F3 /* MapViewController.m */; };
 		6931151F1BA3C44A00ADF1F3 /* MapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6931151E1BA3C44A00ADF1F3 /* MapAnnotation.m */; };
@@ -43,6 +49,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		691EDC461BA4A4AB00BF17F4 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		691EDC851BA4A98700BF17F4 /* Travoto.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Travoto.xcdatamodel; sourceTree = "<group>"; };
+		691EDC871BA4AB3300BF17F4 /* CoreDataStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataStack.h; sourceTree = "<group>"; };
+		691EDC881BA4AB3300BF17F4 /* CoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataStack.m; sourceTree = "<group>"; };
+		691EDC8E1BA4D00E00BF17F4 /* City.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = City.h; path = ../City.h; sourceTree = "<group>"; };
+		691EDC8F1BA4D00E00BF17F4 /* City.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = City.m; path = ../City.m; sourceTree = "<group>"; };
+		691EDC911BA4D00E00BF17F4 /* Country.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Country.h; path = ../Country.h; sourceTree = "<group>"; };
+		691EDC921BA4D00E00BF17F4 /* Country.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Country.m; path = ../Country.m; sourceTree = "<group>"; };
+		691EDC941BA4D89800BF17F4 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Image.h; path = ../Image.h; sourceTree = "<group>"; };
+		691EDC951BA4D89800BF17F4 /* Image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Image.m; path = ../Image.m; sourceTree = "<group>"; };
 		693115171BA39F5400ADF1F3 /* EnlargeImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnlargeImageView.h; sourceTree = "<group>"; };
 		693115181BA39F5400ADF1F3 /* EnlargeImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnlargeImageView.m; sourceTree = "<group>"; };
 		6931151A1BA3B70500ADF1F3 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
@@ -87,6 +103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				691EDC471BA4A4AB00BF17F4 /* CoreData.framework in Frameworks */,
 				69E514D61BA285C0007F52D6 /* MapKit.framework in Frameworks */,
 				69E514D31BA2857A007F52D6 /* AssetsLibrary.framework in Frameworks */,
 			);
@@ -102,6 +119,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		691EDC8A1BA4AC7300BF17F4 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				691EDC911BA4D00E00BF17F4 /* Country.h */,
+				691EDC921BA4D00E00BF17F4 /* Country.m */,
+				691EDC8E1BA4D00E00BF17F4 /* City.h */,
+				691EDC8F1BA4D00E00BF17F4 /* City.m */,
+				691EDC941BA4D89800BF17F4 /* Image.h */,
+				691EDC951BA4D89800BF17F4 /* Image.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		697055A51BA420FB00B5ACCF /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -180,6 +210,7 @@
 		69E514A01BA2843B007F52D6 /* Travoto */ = {
 			isa = PBXGroup;
 			children = (
+				691EDC8A1BA4AC7300BF17F4 /* Models */,
 				697055A91BA4217D00B5ACCF /* Camera */,
 				697055A81BA4213300B5ACCF /* Main */,
 				697055A71BA4211D00B5ACCF /* AlbumView */,
@@ -188,6 +219,9 @@
 				69E514AE1BA2843B007F52D6 /* Images.xcassets */,
 				69E514B01BA2843B007F52D6 /* LaunchScreen.xib */,
 				69E514A11BA2843B007F52D6 /* Supporting Files */,
+				691EDC841BA4A98700BF17F4 /* Travoto.xcdatamodeld */,
+				691EDC871BA4AB3300BF17F4 /* CoreDataStack.h */,
+				691EDC881BA4AB3300BF17F4 /* CoreDataStack.m */,
 			);
 			path = Travoto;
 			sourceTree = "<group>";
@@ -227,6 +261,7 @@
 		69E514D41BA2857F007F52D6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				691EDC461BA4A4AB00BF17F4 /* CoreData.framework */,
 				69E514D51BA285C0007F52D6 /* MapKit.framework */,
 				69E514D21BA2857A007F52D6 /* AssetsLibrary.framework */,
 			);
@@ -347,9 +382,14 @@
 			files = (
 				693115191BA39F5400ADF1F3 /* EnlargeImageView.m in Sources */,
 				693115241BA3DE4100ADF1F3 /* CustomPinView.m in Sources */,
+				691EDC891BA4AB3300BF17F4 /* CoreDataStack.m in Sources */,
 				69330D7F1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m in Sources */,
+				691EDC861BA4A98700BF17F4 /* Travoto.xcdatamodeld in Sources */,
+				691EDC961BA4D89800BF17F4 /* Image.m in Sources */,
+				691EDC901BA4D00E00BF17F4 /* City.m in Sources */,
 				6931151F1BA3C44A00ADF1F3 /* MapAnnotation.m in Sources */,
 				69E514CC1BA28475007F52D6 /* AlbumViewController.m in Sources */,
+				691EDC931BA4D00E00BF17F4 /* Country.m in Sources */,
 				697055A11BA3FFFE00B5ACCF /* CameraImageViewController.m in Sources */,
 				6931151C1BA3B70500ADF1F3 /* MapViewController.m in Sources */,
 				69E514A71BA2843B007F52D6 /* AppDelegate.m in Sources */,
@@ -564,6 +604,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		691EDC841BA4A98700BF17F4 /* Travoto.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				691EDC851BA4A98700BF17F4 /* Travoto.xcdatamodel */,
+			);
+			currentVersion = 691EDC851BA4A98700BF17F4 /* Travoto.xcdatamodel */;
+			path = Travoto.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 69E514961BA2843B007F52D6 /* Project object */;
 }

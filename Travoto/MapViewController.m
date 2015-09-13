@@ -24,6 +24,15 @@
     [self.userImg.layer setCornerRadius:60];
     [self.userImg setClipsToBounds:YES];
     
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    
+    if ([def objectForKey:@"userImage"]) {
+        
+        NSData* imageData = [def objectForKey:@"userImage"];
+        self.userImg.image = [UIImage imageWithData:imageData];
+        [self.changePhotoLbl setHidden:YES];
+    }
+    
     if([self.manager respondsToSelector:@selector(requestWhenInUseAuthorization)]){
         [[UIApplication sharedApplication] sendAction:@selector(requestWhenInUseAuthorization)
                                                    to:self.manager
@@ -41,6 +50,8 @@
     [self.changePhotoLbl addGestureRecognizer:lblGesture];
     UITapGestureRecognizer *photoGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changePhoto)];
     [self.userImg addGestureRecognizer:photoGesture];
+    
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -68,6 +79,11 @@
     
     self.userImg.image = info[UIImagePickerControllerOriginalImage];
     [self.changePhotoLbl setHidden:YES];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [defaults setObject:UIImagePNGRepresentation(self.userImg.image) forKey:@"userImage"];
+    [defaults synchronize];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

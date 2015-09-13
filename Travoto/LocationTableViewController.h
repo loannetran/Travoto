@@ -13,6 +13,10 @@
 #import <MapKit/MKAnnotation.h>
 #import "MapAnnotation.h"
 #import "MapViewController.h"
+#import "CoreDataStack.h"
+#import "Country.h"
+#import "City.h"
+#import "Image.h"
 
 @interface LocationTableViewController : UITableViewController <UIAlertViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,MKMapViewDelegate,CLLocationManagerDelegate>
 
