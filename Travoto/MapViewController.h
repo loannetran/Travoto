@@ -14,6 +14,7 @@
 
 @interface MapViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate,MKMapViewDelegate,CLLocationManagerDelegate>
 
+@property (weak, nonatomic) IBOutlet UILabel *welcomeLbl;
 @property (nonatomic,strong) CLLocationManager *manager;
 @property (nonatomic, strong) CLGeocoder *coder;
 @property (nonatomic, strong) NSArray *places;

@@ -26,11 +26,20 @@
     
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     
+//    if (![[def objectForKey:@"login"] isEqualToString:@"done"]) {
+//        
+//        [self performSegueWithIdentifier:@"login" sender:self];
+//    }
+    
     if ([def objectForKey:@"userImage"]) {
         
         NSData* imageData = [def objectForKey:@"userImage"];
         self.userImg.image = [UIImage imageWithData:imageData];
         [self.changePhotoLbl setHidden:YES];
+    }
+    
+    if ([def objectForKey:@"name"]) {
+        self.welcomeLbl.text = [NSString stringWithFormat:@"Welcome %@",[def objectForKey:@"name"]];
     }
     
     if([self.manager respondsToSelector:@selector(requestWhenInUseAuthorization)]){
@@ -63,6 +72,7 @@
             [self drawThisOnMapAt:place];
         }
     }
+
 
 }
 

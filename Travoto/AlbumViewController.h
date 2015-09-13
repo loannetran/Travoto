@@ -10,6 +10,7 @@
 #import "PhotoCollectionViewCell.h"
 #import "AlbumHeaderCollectionReusableView.h"
 #import "EnlargeImageView.h"
+#import "ScrollImagesViewController.h"
 
 @interface AlbumViewController : UIViewController <UICollectionViewDataSource,UICollectionViewDelegate>
 

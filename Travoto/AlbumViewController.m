@@ -13,6 +13,7 @@
     NSArray *arrayOfImages;
     UIImage *currentImage;
     EnlargeImageView *enlargeImg;
+    int currentPath;
 
 }
 
@@ -47,8 +48,10 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
     currentImage = [arrayOfImages objectAtIndex:indexPath.row];
+    currentPath = indexPath.row;
+    [self performSegueWithIdentifier:@"slideshow" sender:self];
     
-    [self animateView];
+//    [self animateView];
     
 }
 
@@ -138,14 +141,14 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
+     
+     ScrollImagesViewController *sVc = segue.destinationViewController;
+     
+     sVc.imageArray = arrayOfImages;
+     sVc.currentImage = currentPath;
+     
  }
- */
+
 
 @end

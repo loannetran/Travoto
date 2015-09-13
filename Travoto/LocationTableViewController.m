@@ -59,6 +59,7 @@
     //    dateDict = [[NSMutableDictionary alloc] init];
     [self getAllNamesFromDB];
     [self reinitializeCountriesAndCities];
+//    [self removeEverythingFromDB];
 }
 
 -(void)removeEverythingFromDB{
@@ -183,13 +184,27 @@
                     NSArray *tempImgArray = [city.images componentsSeparatedByString:@","];
                     NSMutableArray *tempImages = [[NSMutableArray alloc] init];
                     
+                    BOOL imgExists = NO;
+                    
                     for (NSString *imgName in tempImgArray) {
                         
                         for (Image *i in reqImages) {
                             
                             if ([i.imageName isEqualToString:imgName]) {
                                 
-                                [tempImages addObject:i.image];
+                                for (UIImage *im in tempImages) {
+                                    
+                                    if (i.image == im) {
+                                        imgExists = YES;
+                                    }else{
+                                        imgExists = NO;
+                                    }
+                                }
+                                
+                                if (!imgExists) {
+                                    [tempImages addObject:i.image];
+                                }
+
                             }
                         }
                     }
@@ -198,6 +213,22 @@
                     [tempCity setObject:tempCityAttr forKey:city.cityKey];
                 }
             }
+            
+            [self.coder geocodeAddressString:[NSString stringWithFormat:@"%@ %@", country.countryKey, c]
+                           completionHandler:^(NSArray *placemarks, NSError *error) {
+                               if(!error){
+                                   
+                                   CLPlacemark *placemark = [placemarks objectAtIndex:0];
+                                   [self.savedLocations addObject:placemark];
+                                   
+                               } else {
+                                   
+                                   NSLog(@"%@",[error description]);
+
+                                   
+                               }
+                           }];
+
         }
         
         [tempAttr setObject:tempCity forKey:@"cities"];
@@ -251,6 +282,10 @@
                              
                              currentCountry = placemark.country;
                              currentCity = placemark.locality;
+                             
+                             if (currentCity == nil) {
+                                 currentCity = placemark.administrativeArea;
+                             }
                              
                              displayCountry = currentCountry;
                              displayCity = currentCity;
@@ -343,7 +378,33 @@
         {
             NSString *place = [NSString stringWithFormat:@"%@ %@",currentCity, currentCountry];
             
-            [self lookUpLocationWithString:place];
+            [self.coder geocodeAddressString:place
+                           completionHandler:^(NSArray *placemarks, NSError *error) {
+                               if(!error){
+                                   
+                                   CLPlacemark *placemark = [placemarks objectAtIndex:0];
+                                   [self.savedLocations addObject:placemark];
+                                   NSLog(@"%@", placemark);
+                                   displayCountry = placemark.country;
+                                   displayCity = placemark.locality;
+                                   
+                                   if (displayCity == nil) {
+                                       displayCity = placemark.administrativeArea;
+                                   }
+                                   keyCountry = [[displayCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                                   keyCity = [[displayCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                                   [self setUpTableValues];
+                                   [self reinitializeCountriesAndCities];
+                                   
+                               } else {
+                                   
+                                   NSLog(@"%@",[error description]);
+                                   countryAlert.message = @"Invalid location please re-enter location";
+                                   [countryAlert show];
+                                   
+                               }
+                           }];
+
         }else{
             
             countryAlert.message = @"Please enter a location";
@@ -353,31 +414,6 @@
     }
 }
 
--(void)lookUpLocationWithString:(NSString *)locString{
-    
-    [self.coder geocodeAddressString:locString
-                   completionHandler:^(NSArray *placemarks, NSError *error) {
-                       if(!error){
-                           
-                           CLPlacemark *placemark = [placemarks objectAtIndex:0];
-                           [self.savedLocations addObject:placemark];
-                           displayCountry = placemark.country;
-                           displayCity = placemark.locality;
-                           keyCountry = [[displayCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
-                           keyCity = [[displayCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
-                           [self setUpTableValues];
-                           [self reinitializeCountriesAndCities];
-                           
-                       } else {
-                           
-                           NSLog(@"%@",[error description]);
-                           countryAlert.message = @"Invalid location please re-enter location";
-                           [countryAlert show];
-                           
-                       }
-                   }];
-
-}
 
 -(void)setUpTableValues{
     
@@ -640,8 +676,12 @@
                              currentCountry = placemark.country;
                              currentCity = placemark.locality;
                              
-                             displayCountry = [currentCountry capitalizedString];
-                             displayCity = [currentCity capitalizedString];
+                             if (currentCity == nil) {
+                                 currentCity = placemark.administrativeArea;
+                             }
+                             
+                             displayCountry = currentCountry;
+                             displayCity = currentCity;
                              
                              keyCountry = [[currentCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
                              keyCity = [[currentCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];

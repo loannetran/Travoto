@@ -13,6 +13,9 @@
 		691EDC901BA4D00E00BF17F4 /* City.m in Sources */ = {isa = PBXBuildFile; fileRef = 691EDC8F1BA4D00E00BF17F4 /* City.m */; };
 		691EDC931BA4D00E00BF17F4 /* Country.m in Sources */ = {isa = PBXBuildFile; fileRef = 691EDC921BA4D00E00BF17F4 /* Country.m */; };
 		691EDC961BA4D89800BF17F4 /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 691EDC951BA4D89800BF17F4 /* Image.m */; };
+		691EDC991BA52DE200BF17F4 /* ScrollImagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 691EDC981BA52DE200BF17F4 /* ScrollImagesViewController.m */; };
+		691EDC9C1BA5405E00BF17F4 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 691EDC9B1BA5405E00BF17F4 /* LoginViewController.m */; };
+		691EDC9F1BA54E6600BF17F4 /* MainTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 691EDC9E1BA54E6600BF17F4 /* MainTabBarViewController.m */; };
 		693115191BA39F5400ADF1F3 /* EnlargeImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 693115181BA39F5400ADF1F3 /* EnlargeImageView.m */; };
 		6931151C1BA3B70500ADF1F3 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6931151B1BA3B70500ADF1F3 /* MapViewController.m */; };
 		6931151F1BA3C44A00ADF1F3 /* MapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6931151E1BA3C44A00ADF1F3 /* MapAnnotation.m */; };
@@ -59,6 +62,12 @@
 		691EDC921BA4D00E00BF17F4 /* Country.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Country.m; path = ../Country.m; sourceTree = "<group>"; };
 		691EDC941BA4D89800BF17F4 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Image.h; path = ../Image.h; sourceTree = "<group>"; };
 		691EDC951BA4D89800BF17F4 /* Image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Image.m; path = ../Image.m; sourceTree = "<group>"; };
+		691EDC971BA52DE200BF17F4 /* ScrollImagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollImagesViewController.h; sourceTree = "<group>"; };
+		691EDC981BA52DE200BF17F4 /* ScrollImagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollImagesViewController.m; sourceTree = "<group>"; };
+		691EDC9A1BA5405E00BF17F4 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		691EDC9B1BA5405E00BF17F4 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		691EDC9D1BA54E6600BF17F4 /* MainTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTabBarViewController.h; sourceTree = "<group>"; };
+		691EDC9E1BA54E6600BF17F4 /* MainTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTabBarViewController.m; sourceTree = "<group>"; };
 		693115171BA39F5400ADF1F3 /* EnlargeImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnlargeImageView.h; sourceTree = "<group>"; };
 		693115181BA39F5400ADF1F3 /* EnlargeImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnlargeImageView.m; sourceTree = "<group>"; };
 		6931151A1BA3B70500ADF1F3 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
@@ -141,6 +150,8 @@
 				6931151E1BA3C44A00ADF1F3 /* MapAnnotation.m */,
 				6931151A1BA3B70500ADF1F3 /* MapViewController.h */,
 				6931151B1BA3B70500ADF1F3 /* MapViewController.m */,
+				691EDC9A1BA5405E00BF17F4 /* LoginViewController.h */,
+				691EDC9B1BA5405E00BF17F4 /* LoginViewController.m */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -157,8 +168,12 @@
 		697055A71BA4211D00B5ACCF /* AlbumView */ = {
 			isa = PBXGroup;
 			children = (
+				691EDC971BA52DE200BF17F4 /* ScrollImagesViewController.h */,
+				691EDC981BA52DE200BF17F4 /* ScrollImagesViewController.m */,
 				69E514CA1BA28475007F52D6 /* AlbumViewController.h */,
 				69E514CB1BA28475007F52D6 /* AlbumViewController.m */,
+				691EDC9D1BA54E6600BF17F4 /* MainTabBarViewController.h */,
+				691EDC9E1BA54E6600BF17F4 /* MainTabBarViewController.m */,
 				69330D7D1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.h */,
 				69330D7E1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m */,
 				69E514C71BA28459007F52D6 /* PhotoCollectionViewCell.h */,
@@ -388,11 +403,14 @@
 				691EDC961BA4D89800BF17F4 /* Image.m in Sources */,
 				691EDC901BA4D00E00BF17F4 /* City.m in Sources */,
 				6931151F1BA3C44A00ADF1F3 /* MapAnnotation.m in Sources */,
+				691EDC9F1BA54E6600BF17F4 /* MainTabBarViewController.m in Sources */,
 				69E514CC1BA28475007F52D6 /* AlbumViewController.m in Sources */,
 				691EDC931BA4D00E00BF17F4 /* Country.m in Sources */,
 				697055A11BA3FFFE00B5ACCF /* CameraImageViewController.m in Sources */,
 				6931151C1BA3B70500ADF1F3 /* MapViewController.m in Sources */,
+				691EDC991BA52DE200BF17F4 /* ScrollImagesViewController.m in Sources */,
 				69E514A71BA2843B007F52D6 /* AppDelegate.m in Sources */,
+				691EDC9C1BA5405E00BF17F4 /* LoginViewController.m in Sources */,
 				69E514C91BA28459007F52D6 /* PhotoCollectionViewCell.m in Sources */,
 				69E514CF1BA28492007F52D6 /* LocationTableViewController.m in Sources */,
 				69E514A41BA2843B007F52D6 /* main.m in Sources */,
@@ -522,6 +540,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Travoto/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -533,6 +552,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Travoto/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;

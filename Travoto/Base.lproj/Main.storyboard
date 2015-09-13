@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14C2043" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Wup-UN-aEa">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14C2043" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="oMR-Yp-eVA">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -11,7 +11,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="WAU-8W-tzM">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.83779198229999996" green="0.83779198229999996" blue="0.83779198229999996" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="city" id="sN8-Bo-U7e">
                                 <autoresizingMask key="autoresizingMask"/>
@@ -76,12 +76,12 @@
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="One day I'll travel the world..." translatesAutoresizingMaskIntoConstraints="NO" id="ejL-zt-o7V">
                                 <rect key="frame" x="154" y="79" width="150" height="130"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.91333254419191923" green="0.91333254419191923" blue="0.91333254419191923" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Home" image="paper-map-7.png" id="4fd-Ie-MUJ"/>
                     <navigationItem key="navigationItem" id="Pxq-eY-TfD"/>
@@ -89,11 +89,12 @@
                         <outlet property="changePhotoLbl" destination="Pzf-Tt-JFI" id="9Bk-0N-fNo"/>
                         <outlet property="mapView" destination="p62-pG-8c1" id="Jhd-J2-72D"/>
                         <outlet property="userImg" destination="L3Q-2h-WvG" id="bMs-X0-bxD"/>
+                        <outlet property="welcomeLbl" destination="F5r-SF-R78" id="Prq-rH-bvv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sCt-xN-62C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1563" y="1038"/>
+            <point key="canvasLocation" x="1541" y="1047"/>
         </scene>
         <!--Album View Controller-->
         <scene sceneID="WsJ-fc-OIr">
@@ -162,10 +163,56 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="3MA-dV-bt5"/>
+                    <connections>
+                        <segue destination="gMP-7y-O0y" kind="modal" identifier="slideshow" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="wr9-5Z-jWT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="La9-b7-IGB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1205" y="403"/>
+            <point key="canvasLocation" x="1137" y="392"/>
+        </scene>
+        <!--Scroll Images View Controller-->
+        <scene sceneID="RWq-en-adJ">
+            <objects>
+                <viewController id="gMP-7y-O0y" customClass="ScrollImagesViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vxr-QR-gcs"/>
+                        <viewControllerLayoutGuide type="bottom" id="hc2-lZ-sIM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Cuu-KQ-6Ld">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W94-v3-Uce">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="523"/>
+                                <connections>
+                                    <outlet property="delegate" destination="gMP-7y-O0y" id="cYj-Oo-u5g"/>
+                                </connections>
+                            </scrollView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="dzW-Le-Psg">
+                                <rect key="frame" x="141" y="531" width="39" height="37"/>
+                            </pageControl>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wvF-Mr-S0R">
+                                <rect key="frame" x="254" y="538" width="66" height="22"/>
+                                <state key="normal" title="Back">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="goBack:" destination="gMP-7y-O0y" eventType="touchUpInside" id="pvz-1a-GK9"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="yK5-hc-4I2"/>
+                    <connections>
+                        <outlet property="pageControl" destination="dzW-Le-Psg" id="kVA-nH-aZP"/>
+                        <outlet property="scrollView" destination="W94-v3-Uce" id="yVt-7k-UQL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pAX-f7-L7L" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1593" y="407"/>
         </scene>
         <!--Photo Albums-->
         <scene sceneID="Frn-ss-6cb">
@@ -187,10 +234,97 @@
             </objects>
             <point key="canvasLocation" x="216" y="403"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Login View Controller-->
+        <scene sceneID="9RQ-DA-c0A">
+            <objects>
+                <viewController storyboardIdentifier="LoginView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oMR-Yp-eVA" customClass="LoginViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="AiI-Y9-6Yy"/>
+                        <viewControllerLayoutGuide type="bottom" id="tIA-aS-lIB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="aH6-ut-ogW">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XCK-zQ-WS9">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3YN-pk-jbO">
+                                        <rect key="frame" x="179" y="401" width="79" height="30"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" title="Done">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="doneSetUp:" destination="oMR-Yp-eVA" eventType="touchUpInside" id="juQ-ox-7oT"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UTY-If-Rg8">
+                                        <rect key="frame" x="62" y="401" width="79" height="30"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" title="Skip">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="skipSetUp:" destination="oMR-Yp-eVA" eventType="touchUpInside" id="wpr-PD-hBv"/>
+                                        </connections>
+                                    </button>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rWK-ya-OnF">
+                                        <rect key="frame" x="62" y="349" width="196" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="oMR-Yp-eVA" id="PAP-gC-ywd"/>
+                                        </connections>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Set up your profile" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d0P-57-50c">
+                                        <rect key="frame" x="16" y="135" width="288" height="21"/>
+                                        <fontDescription key="fontDescription" name="STHeitiTC-Medium" family="Heiti TC" pointSize="17"/>
+                                        <color key="textColor" red="0.99176507745106446" green="1" blue="0.92777347713693514" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <color key="shadowColor" red="0.52006392050000005" green="0.52006392050000005" blue="0.52006392050000005" alpha="1" colorSpace="calibratedRGB"/>
+                                    </label>
+                                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="defaultPerson.png" translatesAutoresizingMaskIntoConstraints="NO" id="Jeq-8q-35x">
+                                        <rect key="frame" x="95" y="183" width="130" height="130"/>
+                                    </imageView>
+                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tap to insert profile picture" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gSV-KA-Zed">
+                                        <rect key="frame" x="108" y="189" width="105" height="118"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Welcome to Travoto!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kg7-cV-FuD">
+                                        <rect key="frame" x="16" y="8" width="288" height="119"/>
+                                        <fontDescription key="fontDescription" name="STHeitiTC-Medium" family="Heiti TC" pointSize="30"/>
+                                        <color key="textColor" red="0.52006392045454541" green="0.52006392045454541" blue="0.52006392045454541" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <color key="shadowColor" red="0.33199179292929293" green="0.33199179292929293" blue="0.33199179292929293" alpha="1" colorSpace="calibratedRGB"/>
+                                    </label>
+                                </subviews>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.20000000000000001" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <connections>
+                        <outlet property="doneBtn" destination="3YN-pk-jbO" id="XxQ-hi-NKp"/>
+                        <outlet property="imgLbl" destination="gSV-KA-Zed" id="7yl-a4-u1q"/>
+                        <outlet property="nameTxt" destination="rWK-ya-OnF" id="3CZ-VH-VHo"/>
+                        <outlet property="profileImgView" destination="Jeq-8q-35x" id="Hfo-Km-fzm"/>
+                        <outlet property="scrollView" destination="XCK-zQ-WS9" id="DiP-Rk-f2V"/>
+                        <outlet property="skipBtn" destination="UTY-If-Rg8" id="rUH-4a-F59"/>
+                        <segue destination="Wup-UN-aEa" kind="modal" identifier="profile" id="VGF-kw-ibZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qHt-8T-bcf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-250" y="1047"/>
+        </scene>
+        <!--Main Tab Bar View Controller-->
         <scene sceneID="Taq-SA-uWg">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Wup-UN-aEa" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="ProfileView" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Wup-UN-aEa" customClass="MainTabBarViewController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="2ew-4a-XNp"/>
                     <nil key="simulatedBottomBarMetrics"/>
@@ -280,6 +414,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="ALc-33-1bq"/>
+        <segue reference="xdr-s8-5Zl"/>
     </inferredMetricsTieBreakers>
 </document>

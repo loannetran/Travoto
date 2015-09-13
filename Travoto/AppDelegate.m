@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "LoginViewController.h"
+#import "MapViewController.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +18,33 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    
+    if (![[def objectForKey:@"login"] isEqualToString:@"done"]) {
+        
+        self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+        
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        
+        UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginView"];
+        
+        self.window.rootViewController = viewController;
+        [self.window makeKeyAndVisible];
+
+    }else{
+        self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+        
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        
+        UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"ProfileView"];
+        
+        self.window.rootViewController = viewController;
+        [self.window makeKeyAndVisible];
+    
+    }
+    
+    
     return YES;
 }
 
