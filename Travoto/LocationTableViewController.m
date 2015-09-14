@@ -168,6 +168,7 @@
 
 }
 
+
 - (IBAction)addPhotos:(id)sender {
     
     UIImagePickerController *controller = [[UIImagePickerController alloc] init];
@@ -193,7 +194,7 @@
         
         ALAssetRepresentation *imageRep = [myasset defaultRepresentation];
         //set image file name
-        imgFileName = [imageRep filename];
+        self.imgFileName = [imageRep filename];
         
         //        NSLog(@"[imageRep filename] : %@", [imageRep filename]);
         
@@ -404,6 +405,17 @@
                     //set dictionary with changes
                     [self.countries setObject:tempDict forKey:keyCountry];
                     
+                    long imgCount;
+                    NSArray *fetchedImages = [dbh fetchAllItemsFromEntityNamed:@"Image"];
+                    if (fetchedImages != nil) {
+                        
+                        imgCount = fetchedImages.count;
+                    }
+                    
+                    self.imgFileName = [NSString stringWithFormat:@"%@_%li",self.imgFileName,imgCount];
+                    
+                    [dbh insertImageForDb:img withName:self.imgFileName];
+                    
                     NSArray *fetchedObjects = [dbh updateEntity:@"City" whereAttribute:@"cityKey" isEqualTo:keyCity];
                     
                     if (fetchedObjects == nil) {
@@ -412,12 +424,13 @@
                         
                         City *cityGrabbed = [fetchedObjects objectAtIndex:0];
                         NSString *imgString = cityGrabbed.images;
-                        cityGrabbed.images = [imgString stringByAppendingString:[NSString stringWithFormat:@"%@,",imgFileName]];
+                        cityGrabbed.images = [imgString stringByAppendingString:[NSString stringWithFormat:@"%@,",self.imgFileName]];
                         
                         [dbh.cds saveContext];
                     }
                     
-                    [dbh insertImageForDb:img withName:imgFileName];
+                    
+                     
                 }else{
                     
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add Image" message:@"Image already exists within collection" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
@@ -434,7 +447,7 @@
             
             insertCity.name = displayCity;
             insertCity.cityKey = keyCity;
-            insertCity.images = [NSString stringWithFormat:@"%@,",imgFileName];
+            insertCity.images = [NSString stringWithFormat:@"%@,",self.imgFileName];
 
             NSError *error = nil;
             
@@ -452,7 +465,7 @@
 //                NSLog(@"%@", countryGrabbed.cities);
             }
             
-            [dbh insertImageForDb:img withName:imgFileName];
+            [dbh insertImageForDb:img withName:self.imgFileName];
             
             //get dictionary for current country
             NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithDictionary:[self getDictForCountry:keyCountry]];
@@ -499,7 +512,7 @@
         
         [self.countries setObject:countryAttr forKey:keyCountry];
         
-        [dbh insertImageForDb:img withName:imgFileName];
+        [dbh insertImageForDb:img withName:self.imgFileName];
         
         Country *insertCountry = [NSEntityDescription insertNewObjectForEntityForName:@"Country" inManagedObjectContext:dbh.cds.managedObjectContext];
         insertCountry.countryKey = keyCountry;
@@ -510,7 +523,7 @@
         
         insertCity.name = displayCity;
         insertCity.cityKey = keyCity;
-        insertCity.images = [NSString stringWithFormat:@"%@,",imgFileName];
+        insertCity.images = [NSString stringWithFormat:@"%@,",self.imgFileName];
         
         [dbh.cds saveContext];
         
@@ -566,6 +579,7 @@
     
     [cell.textLabel setFont:[UIFont fontWithName:@"HeitiTC" size:10]];
     [cell.textLabel setTextColor:[UIColor whiteColor]];
+    cell.multipleTouchEnabled = NO;
     
     return cell;
 
@@ -604,8 +618,8 @@
 
 -(void)setUpImage:(UIImage *)image andLocation:(CLLocation *)loc{
 
-    if (mVc.internetActive && mVc.locationAvail) {
-        
+//    if (mVc.internetActive && mVc.locationAvail) {
+    
         [self.coder reverseGeocodeLocation:loc
                          completionHandler:^(NSArray *placemarks, NSError *error) {
                              if(!error){
@@ -630,30 +644,34 @@
                                  keyCity = [[currentCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
                                  
                                  img = image;
-                                 
+                                 self.imgFileName = [NSString stringWithFormat:@"%@",keyCity];
                                  UIImageWriteToSavedPhotosAlbum(image,self,nil,nil);
                                  
+                                
                                  [self setUpTableValues];
                                  [self reinitializeCountriesAndCities];
                                  
                                  //                                         NSLog(@"%@",[placemarks objectAtIndex:0]);
                                  
-                                 
+                             
                              } else {
                                  NSLog(@"%@",[error description]);
                              }
                          }];
 
-    }else{
-
-        img = image;
-        
-        [countryAlert show];
-    }
+//    }else{
+//
+//        img = image;
+//        [self setUpTableValues];
+//        [self reinitializeCountriesAndCities];
+//        
+//        [countryAlert show];
+//    }
     
     
     self.cameraImage = nil;
     self.cameraLocation = nil;
+    self.imgFileName = nil;
     
     
 }
@@ -733,7 +751,6 @@
     
     
     //    NSLog(@"%@", selectedCity);
-    
     
     
     AlbumViewController *aVc = segue.destinationViewController;

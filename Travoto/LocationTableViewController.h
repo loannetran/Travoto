@@ -45,7 +45,6 @@
     UIAlertView *countryAlert;
     DBHandler *dbh;
     MapViewController *mVc;
-    NSString *imgFileName;
     NSMutableArray *reqCountries;
     NSMutableArray *reqCities;
     NSMutableArray *reqImages;
@@ -56,6 +55,7 @@
 @property (nonatomic,strong) NSMutableArray *savedLocations;
 @property (nonatomic,strong) UIImage *cameraImage;
 @property (nonatomic,strong) CLLocation *cameraLocation;
+@property (nonatomic,strong) NSString *imgFileName;
 
 - (IBAction)addPhotos:(id)sender;
 

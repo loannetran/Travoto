@@ -15,7 +15,7 @@
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="city" id="sN8-Bo-U7e">
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sN8-Bo-U7e" id="jGP-i9-TnK">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" tableViewCell="sN8-Bo-U7e" id="jGP-i9-TnK">
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.82141729797979801" green="0.8039468641841947" blue="0.79619837010526029" alpha="0.46000000000000002" colorSpace="calibratedRGB"/>

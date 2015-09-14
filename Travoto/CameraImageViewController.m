@@ -61,8 +61,10 @@
     currentLocation = self.manager.location;
     
     LocationTableViewController *lVc = (LocationTableViewController *)[[[self.tabBarController viewControllers] objectAtIndex:2] topViewController];
+    
     lVc.cameraImage = currentImage;
     lVc.cameraLocation = currentLocation;
+    
     [self.tabBarController setSelectedIndex:2];
 
     
