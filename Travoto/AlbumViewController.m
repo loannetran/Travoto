@@ -28,9 +28,9 @@
     [self.tabBarController.tabBar setHidden:YES];
     [self setUpDisplayView];
     
-    NSLog(@"%@",self.country);
-    NSLog(@"%@",self.city);
-    
+//    NSLog(@"%@",self.country);
+//    NSLog(@"%@",self.city);
+//    
 
 //    NSLog(@"%f",self.enlargeView.frame.origin.y);
 

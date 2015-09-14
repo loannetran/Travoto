@@ -8,7 +8,10 @@
 
 #import "LocationTableViewController.h"
 
-@interface LocationTableViewController ()
+@interface LocationTableViewController (){
+    
+    NSOperationQueue *theQueue;
+}
 
 @end
 
@@ -23,6 +26,11 @@
     self.coder = [[CLGeocoder alloc]init];
     dbh = [[DBHandler alloc] init];
     mVc = [[self.tabBarController viewControllers] objectAtIndex:0];
+    theQueue = [[NSOperationQueue alloc] init];
+    
+    //for sequential threading
+//    theQueue.maxConcurrentOperationCount = 1;
+
     [self setUpAlertForLocation];
     
 //    [self removeEverythingFromDB];
@@ -182,8 +190,8 @@
     
     NSURL *url = [info objectForKey:@"UIImagePickerControllerReferenceURL"];
     
-    [countryAlert textFieldAtIndex:0].text = @"";
-    [countryAlert textFieldAtIndex:1].text = @"";
+//    [countryAlert textFieldAtIndex:0].text = @"";
+//    [countryAlert textFieldAtIndex:1].text = @"";
     
     ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset)
     {
@@ -344,6 +352,7 @@
                                }];
             }else{
                 
+                self.imgFileName = [NSString stringWithFormat:@"%@",keyCity];
                 displayCountry = [currentCountry capitalizedString];
                 displayCity = [currentCity capitalizedString];
                 
@@ -618,7 +627,7 @@
 
 -(void)setUpImage:(UIImage *)image andLocation:(CLLocation *)loc{
 
-//    if (mVc.internetActive && mVc.locationAvail) {
+    if (mVc.internetActive && mVc.locationAvail) {
     
         [self.coder reverseGeocodeLocation:loc
                          completionHandler:^(NSArray *placemarks, NSError *error) {
@@ -659,20 +668,18 @@
                              }
                          }];
 
-//    }else{
-//
-//        img = image;
-//        [self setUpTableValues];
-//        [self reinitializeCountriesAndCities];
-//        
-//        [countryAlert show];
-//    }
+    }else{
+
+        img = image;
+        UIImageWriteToSavedPhotosAlbum(image,self,nil,nil);
+        [countryAlert show];
+        
+    }
     
     
     self.cameraImage = nil;
     self.cameraLocation = nil;
     self.imgFileName = nil;
-    
     
 }
 
