@@ -61,9 +61,8 @@
     [self.userImg addGestureRecognizer:photoGesture];
     
     //-------------------------------------
-    
-    //if internet is active, ask for user's location permission
-    
+
+    //request location services
     if([self.manager respondsToSelector:@selector(requestWhenInUseAuthorization)]){
         [[UIApplication sharedApplication] sendAction:@selector(requestWhenInUseAuthorization)
                                                    to:self.manager
@@ -77,10 +76,6 @@
         [self.manager startUpdatingLocation];
     }
     
-    if (self.internetActive) {
-
-    }
-
 }
 
 -(void)setUpMapView{
@@ -183,7 +178,7 @@
     ann.subtitle = city;
     [self.mapView addAnnotation:ann];
     
-    NSLog(@"set location");
+//    NSLog(@"set location");
 
 }
 

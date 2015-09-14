@@ -23,6 +23,7 @@
     [self.profileImgView setClipsToBounds:YES];
     [self.doneBtn.layer setCornerRadius:10];
     [self.skipBtn.layer setCornerRadius:10];
+    [self.nameTxt setAutocapitalizationType:UITextAutocapitalizationTypeWords];
     
     UITapGestureRecognizer *lblGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changePhoto)];
     [self.imgLbl addGestureRecognizer:lblGesture];

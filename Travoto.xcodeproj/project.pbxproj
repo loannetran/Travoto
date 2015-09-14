@@ -15,7 +15,6 @@
 		691EDC961BA4D89800BF17F4 /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 691EDC951BA4D89800BF17F4 /* Image.m */; };
 		691EDC991BA52DE200BF17F4 /* ScrollImagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 691EDC981BA52DE200BF17F4 /* ScrollImagesViewController.m */; };
 		691EDC9C1BA5405E00BF17F4 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 691EDC9B1BA5405E00BF17F4 /* LoginViewController.m */; };
-		691EDC9F1BA54E6600BF17F4 /* MainTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 691EDC9E1BA54E6600BF17F4 /* MainTabBarViewController.m */; };
 		693115191BA39F5400ADF1F3 /* EnlargeImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 693115181BA39F5400ADF1F3 /* EnlargeImageView.m */; };
 		6931151C1BA3B70500ADF1F3 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6931151B1BA3B70500ADF1F3 /* MapViewController.m */; };
 		6931151F1BA3C44A00ADF1F3 /* MapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6931151E1BA3C44A00ADF1F3 /* MapAnnotation.m */; };
@@ -43,6 +42,9 @@
 		69EE64671BA63A08003EF65A /* DBHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 69EE64661BA63A08003EF65A /* DBHandler.m */; };
 		69EE646A1BA64030003EF65A /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 69EE64691BA64030003EF65A /* Reachability.m */; };
 		69EE646E1BA651CF003EF65A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69EE646D1BA651CF003EF65A /* SystemConfiguration.framework */; };
+		69EE64751BA67584003EF65A /* MainTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69EE64741BA67584003EF65A /* MainTabBarViewController.m */; };
+		69EE64801BA68602003EF65A /* icon120.png in Resources */ = {isa = PBXBuildFile; fileRef = 69EE647E1BA68602003EF65A /* icon120.png */; };
+		69EE64811BA68602003EF65A /* icon180.png in Resources */ = {isa = PBXBuildFile; fileRef = 69EE647F1BA68602003EF65A /* icon180.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,8 +72,6 @@
 		691EDC981BA52DE200BF17F4 /* ScrollImagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollImagesViewController.m; sourceTree = "<group>"; };
 		691EDC9A1BA5405E00BF17F4 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		691EDC9B1BA5405E00BF17F4 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
-		691EDC9D1BA54E6600BF17F4 /* MainTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTabBarViewController.h; sourceTree = "<group>"; };
-		691EDC9E1BA54E6600BF17F4 /* MainTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTabBarViewController.m; sourceTree = "<group>"; };
 		693115171BA39F5400ADF1F3 /* EnlargeImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnlargeImageView.h; sourceTree = "<group>"; };
 		693115181BA39F5400ADF1F3 /* EnlargeImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnlargeImageView.m; sourceTree = "<group>"; };
 		6931151A1BA3B70500ADF1F3 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
@@ -116,6 +116,10 @@
 		69EE64681BA64030003EF65A /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		69EE64691BA64030003EF65A /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		69EE646D1BA651CF003EF65A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		69EE64731BA67584003EF65A /* MainTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainTabBarViewController.h; path = ../MainTabBarViewController.h; sourceTree = "<group>"; };
+		69EE64741BA67584003EF65A /* MainTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainTabBarViewController.m; path = ../MainTabBarViewController.m; sourceTree = "<group>"; };
+		69EE647E1BA68602003EF65A /* icon120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon120.png; sourceTree = "<group>"; };
+		69EE647F1BA68602003EF65A /* icon180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon180.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,14 +162,14 @@
 		697055A51BA420FB00B5ACCF /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				69EE64731BA67584003EF65A /* MainTabBarViewController.h */,
+				69EE64741BA67584003EF65A /* MainTabBarViewController.m */,
 				693115221BA3DE4100ADF1F3 /* CustomPinView.h */,
 				693115231BA3DE4100ADF1F3 /* CustomPinView.m */,
 				6931151D1BA3C44A00ADF1F3 /* MapAnnotation.h */,
 				6931151E1BA3C44A00ADF1F3 /* MapAnnotation.m */,
 				6931151A1BA3B70500ADF1F3 /* MapViewController.h */,
 				6931151B1BA3B70500ADF1F3 /* MapViewController.m */,
-				691EDC9A1BA5405E00BF17F4 /* LoginViewController.h */,
-				691EDC9B1BA5405E00BF17F4 /* LoginViewController.m */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -182,12 +186,9 @@
 		697055A71BA4211D00B5ACCF /* AlbumView */ = {
 			isa = PBXGroup;
 			children = (
-				691EDC971BA52DE200BF17F4 /* ScrollImagesViewController.h */,
-				691EDC981BA52DE200BF17F4 /* ScrollImagesViewController.m */,
+				69EE646F1BA67292003EF65A /* ScrollView */,
 				69E514CA1BA28475007F52D6 /* AlbumViewController.h */,
 				69E514CB1BA28475007F52D6 /* AlbumViewController.m */,
-				691EDC9D1BA54E6600BF17F4 /* MainTabBarViewController.h */,
-				691EDC9E1BA54E6600BF17F4 /* MainTabBarViewController.m */,
 				69330D7D1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.h */,
 				69330D7E1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m */,
 				69E514C71BA28459007F52D6 /* PhotoCollectionViewCell.h */,
@@ -201,6 +202,7 @@
 		697055A81BA4213300B5ACCF /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				69E514B01BA2843B007F52D6 /* LaunchScreen.xib */,
 				69E514A51BA2843B007F52D6 /* AppDelegate.h */,
 				69E514A61BA2843B007F52D6 /* AppDelegate.m */,
 				69E514AB1BA2843B007F52D6 /* Main.storyboard */,
@@ -221,6 +223,8 @@
 			isa = PBXGroup;
 			children = (
 				69E514A01BA2843B007F52D6 /* Travoto */,
+				69EE646B1BA64037003EF65A /* Connectivity */,
+				69EE646C1BA64040003EF65A /* Database */,
 				69E514D41BA2857F007F52D6 /* Frameworks */,
 				69E514BA1BA2843B007F52D6 /* TravotoTests */,
 				69E5149F1BA2843B007F52D6 /* Products */,
@@ -239,15 +243,12 @@
 		69E514A01BA2843B007F52D6 /* Travoto */ = {
 			isa = PBXGroup;
 			children = (
-				69EE646C1BA64040003EF65A /* Database */,
-				69EE646B1BA64037003EF65A /* Connectivity */,
-				697055A91BA4217D00B5ACCF /* Camera */,
 				697055A81BA4213300B5ACCF /* Main */,
-				697055A71BA4211D00B5ACCF /* AlbumView */,
-				697055A61BA4210B00B5ACCF /* LocationAlbums */,
+				69EE64701BA67315003EF65A /* Login */,
 				697055A51BA420FB00B5ACCF /* Home */,
-				69E514AE1BA2843B007F52D6 /* Images.xcassets */,
-				69E514B01BA2843B007F52D6 /* LaunchScreen.xib */,
+				697055A91BA4217D00B5ACCF /* Camera */,
+				697055A61BA4210B00B5ACCF /* LocationAlbums */,
+				697055A71BA4211D00B5ACCF /* AlbumView */,
 				69E514A11BA2843B007F52D6 /* Supporting Files */,
 			);
 			path = Travoto;
@@ -256,12 +257,8 @@
 		69E514A11BA2843B007F52D6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				697055981BA3F93C00B5ACCF /* photo-7.png */,
-				697055991BA3F93C00B5ACCF /* camera-7.png */,
-				69738ABA1BA3E972003EA7C5 /* paper-map-7.png */,
-				69738AB81BA3E948003EA7C5 /* home-7.png */,
-				693115271BA3E36C00ADF1F3 /* defaultPerson.png */,
-				693115251BA3E05B00ADF1F3 /* pin_blue.png */,
+				69EE64821BA68887003EF65A /* Images */,
+				69E514AE1BA2843B007F52D6 /* Images.xcassets */,
 				69E514A21BA2843B007F52D6 /* Info.plist */,
 				69E514A31BA2843B007F52D6 /* main.m */,
 			);
@@ -304,6 +301,7 @@
 				69EE64691BA64030003EF65A /* Reachability.m */,
 			);
 			name = Connectivity;
+			path = Travoto;
 			sourceTree = "<group>";
 		};
 		69EE646C1BA64040003EF65A /* Database */ = {
@@ -317,6 +315,40 @@
 				69EE64661BA63A08003EF65A /* DBHandler.m */,
 			);
 			name = Database;
+			path = Travoto;
+			sourceTree = "<group>";
+		};
+		69EE646F1BA67292003EF65A /* ScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				691EDC971BA52DE200BF17F4 /* ScrollImagesViewController.h */,
+				691EDC981BA52DE200BF17F4 /* ScrollImagesViewController.m */,
+			);
+			name = ScrollView;
+			sourceTree = "<group>";
+		};
+		69EE64701BA67315003EF65A /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				691EDC9A1BA5405E00BF17F4 /* LoginViewController.h */,
+				691EDC9B1BA5405E00BF17F4 /* LoginViewController.m */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		69EE64821BA68887003EF65A /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				69EE647E1BA68602003EF65A /* icon120.png */,
+				69EE647F1BA68602003EF65A /* icon180.png */,
+				697055981BA3F93C00B5ACCF /* photo-7.png */,
+				697055991BA3F93C00B5ACCF /* camera-7.png */,
+				69738ABA1BA3E972003EA7C5 /* paper-map-7.png */,
+				69738AB81BA3E948003EA7C5 /* home-7.png */,
+				693115271BA3E36C00ADF1F3 /* defaultPerson.png */,
+				693115251BA3E05B00ADF1F3 /* pin_blue.png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -407,11 +439,13 @@
 			files = (
 				69738AB91BA3E948003EA7C5 /* home-7.png in Resources */,
 				693115281BA3E36C00ADF1F3 /* defaultPerson.png in Resources */,
+				69EE64801BA68602003EF65A /* icon120.png in Resources */,
 				69E514AD1BA2843B007F52D6 /* Main.storyboard in Resources */,
 				69E514B21BA2843B007F52D6 /* LaunchScreen.xib in Resources */,
 				6970559B1BA3F93C00B5ACCF /* camera-7.png in Resources */,
 				6970559A1BA3F93C00B5ACCF /* photo-7.png in Resources */,
 				69738ABB1BA3E972003EA7C5 /* paper-map-7.png in Resources */,
+				69EE64811BA68602003EF65A /* icon180.png in Resources */,
 				69E514AF1BA2843B007F52D6 /* Images.xcassets in Resources */,
 				693115261BA3E05B00ADF1F3 /* pin_blue.png in Resources */,
 			);
@@ -432,6 +466,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				693115191BA39F5400ADF1F3 /* EnlargeImageView.m in Sources */,
+				69EE64751BA67584003EF65A /* MainTabBarViewController.m in Sources */,
 				693115241BA3DE4100ADF1F3 /* CustomPinView.m in Sources */,
 				691EDC891BA4AB3300BF17F4 /* CoreDataStack.m in Sources */,
 				69330D7F1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m in Sources */,
@@ -440,7 +475,6 @@
 				691EDC961BA4D89800BF17F4 /* Image.m in Sources */,
 				691EDC901BA4D00E00BF17F4 /* City.m in Sources */,
 				6931151F1BA3C44A00ADF1F3 /* MapAnnotation.m in Sources */,
-				691EDC9F1BA54E6600BF17F4 /* MainTabBarViewController.m in Sources */,
 				69E514CC1BA28475007F52D6 /* AlbumViewController.m in Sources */,
 				691EDC931BA4D00E00BF17F4 /* Country.m in Sources */,
 				69DF01D51BA6126900AD6746 /* MapLocation.m in Sources */,

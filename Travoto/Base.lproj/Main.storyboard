@@ -18,7 +18,7 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sN8-Bo-U7e" id="jGP-i9-TnK">
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" red="0.99607843139999996" green="0.97381164105970563" blue="0.96201685855263153" alpha="0.46000000000000002" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.82141729797979801" green="0.8039468641841947" blue="0.79619837010526029" alpha="0.46000000000000002" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <segue destination="Cq2-1z-iAT" kind="push" id="flU-Hr-oHD"/>
                                 </connections>

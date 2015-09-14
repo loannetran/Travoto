@@ -318,7 +318,7 @@
                                        
                                        CLPlacemark *placemark = [placemarks objectAtIndex:0];
                                        [self.savedLocations addObject:placemark];
-                                       NSLog(@"%@", placemark);
+//                                       NSLog(@"%@", placemark);
                                        displayCountry = placemark.country;
                                        displayCity = placemark.locality;
                                        
@@ -382,25 +382,48 @@
             //if there are images in city
             if ([[[self.countries objectForKey:keyCountry] objectForKey:@"cities"] objectForKey:keyCity] != 0) {
                 
-                [[[[tempDict objectForKey:@"cities"] objectForKey:keyCity] objectForKey:@"images"] addObject:img];
+
+                NSMutableArray *tempImages = [[[tempDict objectForKey:@"cities"] objectForKey:keyCity] objectForKey:@"images"];
                 
-                //set dictionary with changes
-                [self.countries setObject:tempDict forKey:keyCountry];
+                NSData *newImg = UIImagePNGRepresentation(img);
+                BOOL imgExists = NO;
                 
-                NSArray *fetchedObjects = [dbh updateEntity:@"City" whereAttribute:@"cityKey" isEqualTo:keyCity];
+                for (int i = 0; i<tempImages.count; i++) {
                 
-                if (fetchedObjects == nil) {
-                    NSLog(@"Error");
-                } else {
+                    NSData *oldImg = UIImagePNGRepresentation([tempImages objectAtIndex:i]);
                     
-                    City *cityGrabbed = [fetchedObjects objectAtIndex:0];
-                    NSString *imgString = cityGrabbed.images;
-                    cityGrabbed.images = [imgString stringByAppendingString:[NSString stringWithFormat:@"%@,",imgFileName]];
-                    
-                    [dbh.cds saveContext];
+                    if ([newImg isEqual:oldImg]) {
+                        
+                        imgExists = YES;
+                    }
                 }
                 
-                [dbh insertImageForDb:img withName:imgFileName];
+                if (!imgExists) {
+                    [[[[tempDict objectForKey:@"cities"] objectForKey:keyCity] objectForKey:@"images"] addObject:img];
+                    
+                    //set dictionary with changes
+                    [self.countries setObject:tempDict forKey:keyCountry];
+                    
+                    NSArray *fetchedObjects = [dbh updateEntity:@"City" whereAttribute:@"cityKey" isEqualTo:keyCity];
+                    
+                    if (fetchedObjects == nil) {
+                        NSLog(@"Error");
+                    } else {
+                        
+                        City *cityGrabbed = [fetchedObjects objectAtIndex:0];
+                        NSString *imgString = cityGrabbed.images;
+                        cityGrabbed.images = [imgString stringByAppendingString:[NSString stringWithFormat:@"%@,",imgFileName]];
+                        
+                        [dbh.cds saveContext];
+                    }
+                    
+                    [dbh insertImageForDb:img withName:imgFileName];
+                }else{
+                    
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add Image" message:@"Image already exists within collection" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+                    
+                    [alert show];
+                }
                 
             }
         }
@@ -541,7 +564,8 @@
     //set label for each cell according to each section and row
     cell.textLabel.text = [[[[self.countries objectForKey:[sortedCountryNames objectAtIndex:indexPath.section]] objectForKey:@"cities"] objectForKey:[tempArray objectAtIndex:indexPath.row]] objectForKey:@"name"];
     
-    [cell.textLabel setFont:[UIFont fontWithName:@"Avenir-Roman" size:17]];
+    [cell.textLabel setFont:[UIFont fontWithName:@"HeitiTC" size:10]];
+    [cell.textLabel setTextColor:[UIColor whiteColor]];
     
     return cell;
 
@@ -559,10 +583,10 @@
     
     // Text Color
     UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
-    [header.textLabel setTextColor:[UIColor blackColor]];
-    [header.textLabel setFont:[UIFont fontWithName:@"Avenir-Heavy" size:19]];
-    [header.textLabel setShadowColor: [UIColor whiteColor]];
-    [header.textLabel setShadowOffset: CGSizeMake(0, -1.0)];
+    [header.textLabel setTextColor:[UIColor darkGrayColor]];
+    [header.textLabel setFont:[UIFont fontWithName:@"HeitiTC-Medium" size:19]];
+//    [header.textLabel setShadowColor: [UIColor darkGrayColor]];
+//    [header.textLabel setShadowOffset: CGSizeMake(0, -1.0)];
     
     // Another way to set the background color
     // Note: does not preserve gradient effect of original header
