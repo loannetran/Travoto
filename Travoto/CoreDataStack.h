@@ -18,8 +18,5 @@
 +(CoreDataStack *)dataStack;
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
--(NSArray *)fetchAllItemsFromEntityNamed:(NSString *)entity sortByAttribute:(NSString *)attr;
--(NSArray *)updateEntity:(NSString *)entity whereAttribute:(NSString *)attr isEqualTo:(NSString *)value;
-
 
 @end

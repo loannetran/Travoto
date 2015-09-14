@@ -16,137 +16,85 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //----initializing variables
     self.countries = [[NSMutableDictionary alloc] init];
     self.savedLocations = [[NSMutableArray alloc] init];
     self.coder = [[CLGeocoder alloc]init];
+    dbh = [[DBHandler alloc] init];
+    mVc = [[self.tabBarController viewControllers] objectAtIndex:0];
+    [self setUpAlertForLocation];
     
-    cds = [CoreDataStack dataStack];
 //    [self removeEverythingFromDB];
 //    NSLog(@"current image: %@",self.cameraImage);
 //    NSLog(@"current location: %@",self.cameraLocation);
-    
-    NSLog(@"view loaded");
-    //    dateDict = [[NSMutableDictionary alloc] init];
-    [self getAllNamesFromDB];
-//    [self setPlacemarks];
-    [self reinitializeCountriesAndCities];
 //    [self removeEverythingFromDB];
+    NSLog(@"view loaded");
+//    dateDict = [[NSMutableDictionary alloc] init];
+
+    [self getAllNamesFromDB];
+    [self reinitializeCountriesAndCities];
+    
 }
+
 
 -(void)removeEverythingFromDB{
     
-    NSFetchRequest *req = [cds.managedObjectModel fetchRequestTemplateForName:@"allCountries"];
-    
-    NSError *error = nil;
-    NSArray *fetchedObjects = [cds.managedObjectContext executeFetchRequest:req error:&error];
-    if (fetchedObjects == nil) {
-        NSLog(@"Error");
-    } else {
-        for (NSManagedObject *c in fetchedObjects) {
-            [cds.managedObjectContext deleteObject:c];
-        }
-//        NSLog(@"%@", fetchedObjects);
-    }
-    
-    req = [cds.managedObjectModel fetchRequestTemplateForName:@"allCities"];
-    
-    fetchedObjects = [cds.managedObjectContext executeFetchRequest:req error:&error];
-    if (fetchedObjects == nil) {
-        NSLog(@"Error");
-    } else {
-        for (NSManagedObject *c in fetchedObjects) {
-            
-            [cds.managedObjectContext deleteObject:c];
-            
-        }
-//        NSLog(@"%@",fetchedObjects);
-    }
-    
-    req = [cds.managedObjectModel fetchRequestTemplateForName:@"allMapLocations"];
-    
-    fetchedObjects = [cds.managedObjectContext executeFetchRequest:req error:&error];
-    if (fetchedObjects == nil) {
-        NSLog(@"Error");
-    } else {
-        for (NSManagedObject *c in fetchedObjects) {
-            
-            [cds.managedObjectContext deleteObject:c];
-            
-        }
-        //        NSLog(@"%@",fetchedObjects);
-    }
-    
-    req = [cds.managedObjectModel fetchRequestTemplateForName:@"allImages"];
-    
-    fetchedObjects = [cds.managedObjectContext executeFetchRequest:req error:&error];
-    if (fetchedObjects == nil) {
-        NSLog(@"Error");
-    } else {
-        for (NSManagedObject *i in fetchedObjects) {
-            [cds.managedObjectContext deleteObject:i];
-        }
-//        NSLog(@"%@",fetchedObjects);
-    }
-    
-    [cds saveContext];
+    [dbh deleteAllObjectsIn:@"Country"];
+    [dbh deleteAllObjectsIn:@"City"];
+    [dbh deleteAllObjectsIn:@"Image"];
+    [dbh deleteAllObjectsIn:@"MapLocation"];
 
 }
 
 -(void)getAllNamesFromDB{
     
+    //get all data from database and put in array
     reqCountries = [[NSMutableArray alloc] init];
     reqCities = [[NSMutableArray alloc] init];
     reqImages = [[NSMutableArray alloc] init];
     
-    
-    NSFetchRequest *req = [cds.managedObjectModel fetchRequestTemplateForName:@"allCountries"];
-    
-    NSError *error = nil;
-    NSArray *fetchedObjects = [cds.managedObjectContext executeFetchRequest:req error:&error];
+    NSArray *fetchedObjects = [dbh fetchAllItemsFromEntityNamed:@"Country"];
     if (fetchedObjects == nil) {
         NSLog(@"Error");
     } else {
         for (Country *c in fetchedObjects) {
             
             [reqCountries addObject:c];
-            NSLog(@"%@",c.name);
+//            NSLog(@"%@",c.name);
         }
     }
     
-    req = [cds.managedObjectModel fetchRequestTemplateForName:@"allCities"];
-    
-    fetchedObjects = [cds.managedObjectContext executeFetchRequest:req error:&error];
+    fetchedObjects = [dbh fetchAllItemsFromEntityNamed:@"City"];
     if (fetchedObjects == nil) {
         NSLog(@"Error");
     } else {
         for (City *c in fetchedObjects) {
             
             [reqCities addObject:c];
-        NSLog(@"%@",c.name);
+//        NSLog(@"%@",c.name);
             
         }
 
     }
     
-    req = [cds.managedObjectModel fetchRequestTemplateForName:@"allImages"];
-    
-    fetchedObjects = [cds.managedObjectContext executeFetchRequest:req error:&error];
+    fetchedObjects = [dbh fetchAllItemsFromEntityNamed:@"Image"];
     if (fetchedObjects == nil) {
         NSLog(@"Error");
     } else {
         for (Image *i in fetchedObjects) {
             
             [reqImages addObject:i];
-        NSLog(@"%@",i.imageName);
+//        NSLog(@"%@",i.imageName);
         }
 
     }
     
-    [self allocateValuesFromDB];
+    [self allocateValuesFromDBToDictionary];
     
 }
 
--(void)allocateValuesFromDB{
+-(void)allocateValuesFromDBToDictionary{
     
     for (Country *country in reqCountries) {
         
@@ -211,8 +159,10 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
+    
     [self.tabBarController.tabBar setHidden:NO];
     if (self.cameraImage != nil) {
+        
         [self setUpImage:self.cameraImage andLocation:self.cameraLocation];
     }
 
@@ -227,63 +177,12 @@
     [self presentViewController:controller animated:YES completion:nil];
 }
 
--(void)alertForLocation{
-    
-    countryAlert = [[UIAlertView alloc] initWithTitle:@"Location" message:@"" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Confirm", nil];
-    
-    countryAlert.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
-    [countryAlert textFieldAtIndex:0].placeholder = @"Country";
-    [countryAlert textFieldAtIndex:0].autocorrectionType = UITextAutocorrectionTypeYes;
-    [countryAlert textFieldAtIndex:1].autocorrectionType = UITextAutocorrectionTypeYes;
-    [countryAlert textFieldAtIndex:1].placeholder = @"City, (optional: Address)";
-    [countryAlert textFieldAtIndex:1].secureTextEntry = NO;
-
-}
-
--(void)lookUpLocationWithCLLocation:(CLLocation *)loc{
-    
-    [self.coder reverseGeocodeLocation:loc
-                     completionHandler:^(NSArray *placemarks, NSError *error) {
-                         if(!error){
-                             
-                             CLPlacemark *placemark = [placemarks objectAtIndex:0];
-                             
-                             [self.savedLocations addObject:placemark];
-                             
-                             currentCountry = placemark.country;
-                             currentCity = placemark.locality;
-                             
-                             if (currentCity == nil) {
-                                 currentCity = placemark.administrativeArea;
-                             }
-                             
-                             displayCountry = currentCountry;
-                             displayCity = currentCity;
-                             
-                             [self insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:loc.coordinate.latitude andLongitude:loc.coordinate.longitude];
-                             
-                             keyCountry = [[currentCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
-                             keyCity = [[currentCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
-                             
-                             //                                     NSData* imageData = [NSData dataWithData:UIImageJPEGRepresentation(img, .8)];
-//                             [self setUpImageForDb:img withName:imgFileName];
-                             [self setUpTableValues];
-                             [self reinitializeCountriesAndCities];
-                             
-                             //                                         NSLog(@"%@",[placemarks objectAtIndex:0]);
-                             
-                         } else {
-                             NSLog(@"%@",[error description]);
-                         }
-                     }];
-    
-}
-
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
     
     NSURL *url = [info objectForKey:@"UIImagePickerControllerReferenceURL"];
     
-    [self alertForLocation];
+    [countryAlert textFieldAtIndex:0].text = @"";
+    [countryAlert textFieldAtIndex:1].text = @"";
     
     ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset)
     {
@@ -291,12 +190,12 @@
         location = [myasset valueForProperty:ALAssetPropertyLocation];
         //set image to be original image
         img = info[UIImagePickerControllerOriginalImage];
-
+        
         ALAssetRepresentation *imageRep = [myasset defaultRepresentation];
         //set image file name
         imgFileName = [imageRep filename];
-
-//        NSLog(@"[imageRep filename] : %@", [imageRep filename]);
+        
+        //        NSLog(@"[imageRep filename] : %@", [imageRep filename]);
         
         //if location is not detected in image
         if (location == nil) {
@@ -304,7 +203,7 @@
             //show manual entry for location
             [countryAlert show];
             
-//            [self setUpImageForDb:img withName:imgFileName];
+            //            [self setUpImageForDb:img withName:imgFileName];
             
         }else{
             
@@ -312,7 +211,7 @@
             [self lookUpLocationWithCLLocation:location];
         }
         
-//        NSLog(@"%@", [myasset valueForProperty:ALAssetPropertyLocation]);
+        //        NSLog(@"%@", [myasset valueForProperty:ALAssetPropertyLocation]);
     };
     // This block will handle errors:
     ALAssetsLibraryAccessFailureBlock failureblock  = ^(NSError *myerror)
@@ -329,6 +228,67 @@
                   failureBlock:failureblock];
     
     [self dismissViewControllerAnimated:YES completion:nil];
+    
+}
+
+
+-(void)setUpAlertForLocation{
+    
+    countryAlert = [[UIAlertView alloc] initWithTitle:@"Location" message:@"" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Confirm", nil];
+    
+    countryAlert.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
+    [countryAlert textFieldAtIndex:0].placeholder = @"Country";
+    [countryAlert textFieldAtIndex:0].autocorrectionType = UITextAutocorrectionTypeYes;
+    [countryAlert textFieldAtIndex:1].autocorrectionType = UITextAutocorrectionTypeYes;
+    [countryAlert textFieldAtIndex:1].placeholder = @"City";
+    [countryAlert textFieldAtIndex:1].secureTextEntry = NO;
+
+}
+
+-(void)lookUpLocationWithCLLocation:(CLLocation *)loc{
+    
+    
+    if (mVc.internetActive && mVc.locationAvail) {
+        
+        [self.coder reverseGeocodeLocation:loc
+                         completionHandler:^(NSArray *placemarks, NSError *error) {
+                             if(!error){
+                                 
+                                 CLPlacemark *placemark = [placemarks objectAtIndex:0];
+                                 
+                                 [self.savedLocations addObject:placemark];
+                                 
+                                 currentCountry = placemark.country;
+                                 currentCity = placemark.locality;
+                                 
+                                 if (currentCity == nil) {
+                                     currentCity = placemark.administrativeArea;
+                                 }
+                                 
+                                 displayCountry = currentCountry;
+                                 displayCity = currentCity;
+                                 
+                                 [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:loc.coordinate.latitude andLongitude:loc.coordinate.longitude];
+                                 
+                                 keyCountry = [[currentCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                                 keyCity = [[currentCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                                 
+                                 //                                     NSData* imageData = [NSData dataWithData:UIImageJPEGRepresentation(img, .8)];
+                                 //                             [self setUpImageForDb:img withName:imgFileName];
+                                 [self setUpTableValues];
+                                 [self reinitializeCountriesAndCities];
+                                 
+                                 //                                         NSLog(@"%@",[placemarks objectAtIndex:0]);
+                                 
+                             } else {
+                                 NSLog(@"%@",[error description]);
+                             }
+                         }];
+    }else{
+        
+        [countryAlert show];
+    }
+    
     
 }
 
@@ -350,35 +310,51 @@
         {
             NSString *place = [NSString stringWithFormat:@"%@ %@",currentCity, currentCountry];
             
-            [self.coder geocodeAddressString:place
-                           completionHandler:^(NSArray *placemarks, NSError *error) {
-                               if(!error){
-                                   
-                                   CLPlacemark *placemark = [placemarks objectAtIndex:0];
-                                   [self.savedLocations addObject:placemark];
-                                   NSLog(@"%@", placemark);
-                                   displayCountry = placemark.country;
-                                   displayCity = placemark.locality;
-                                   
-                                   if (displayCity == nil) {
-                                       displayCity = placemark.administrativeArea;
+            if (mVc.internetActive && mVc.locationAvail) {
+               
+                [self.coder geocodeAddressString:place
+                               completionHandler:^(NSArray *placemarks, NSError *error) {
+                                   if(!error){
+                                       
+                                       CLPlacemark *placemark = [placemarks objectAtIndex:0];
+                                       [self.savedLocations addObject:placemark];
+                                       NSLog(@"%@", placemark);
+                                       displayCountry = placemark.country;
+                                       displayCity = placemark.locality;
+                                       
+                                       if (displayCity == nil) {
+                                           displayCity = placemark.administrativeArea;
+                                       }
+                                       
+                                       [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:placemark.location.coordinate.latitude andLongitude:placemark.location.coordinate.longitude];
+                                       
+                                       keyCountry = [[displayCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                                       keyCity = [[displayCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                                       [self setUpTableValues];
+                                       [self reinitializeCountriesAndCities];
+                                       
+                                   } else {
+                                       
+                                       NSLog(@"%@",[error description]);
+                                       countryAlert.message = @"Invalid location please re-enter location";
+                                       [countryAlert show];
+                                       
                                    }
-                                   
-                                   [self insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:placemark.location.coordinate.latitude andLongitude:placemark.location.coordinate.longitude];
-                                   
-                                   keyCountry = [[displayCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
-                                   keyCity = [[displayCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
-                                   [self setUpTableValues];
-                                   [self reinitializeCountriesAndCities];
-                                   
-                               } else {
-                                   
-                                   NSLog(@"%@",[error description]);
-                                   countryAlert.message = @"Invalid location please re-enter location";
-                                   [countryAlert show];
-                                   
-                               }
-                           }];
+                               }];
+            }else{
+                
+                displayCountry = [currentCountry capitalizedString];
+                displayCity = [currentCity capitalizedString];
+                
+                [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:0 andLongitude:0];
+                
+                keyCountry = [[displayCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                keyCity = [[displayCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                [self setUpTableValues];
+                [self reinitializeCountriesAndCities];
+
+            }
+            
 
         }else{
             
@@ -411,7 +387,7 @@
                 //set dictionary with changes
                 [self.countries setObject:tempDict forKey:keyCountry];
                 
-                NSArray *fetchedObjects = [cds updateEntity:@"City" whereAttribute:@"cityKey" isEqualTo:keyCity];
+                NSArray *fetchedObjects = [dbh updateEntity:@"City" whereAttribute:@"cityKey" isEqualTo:keyCity];
                 
                 if (fetchedObjects == nil) {
                     NSLog(@"Error");
@@ -421,17 +397,17 @@
                     NSString *imgString = cityGrabbed.images;
                     cityGrabbed.images = [imgString stringByAppendingString:[NSString stringWithFormat:@"%@,",imgFileName]];
                     
-                    [cds saveContext];
+                    [dbh.cds saveContext];
                 }
                 
-                [self insertImageForDb:img withName:imgFileName];
+                [dbh insertImageForDb:img withName:imgFileName];
                 
             }
         }
         //if city for country does not exist
         else{
             
-            City *insertCity = [NSEntityDescription insertNewObjectForEntityForName:@"City" inManagedObjectContext:cds.managedObjectContext];
+            City *insertCity = [NSEntityDescription insertNewObjectForEntityForName:@"City" inManagedObjectContext:dbh.cds.managedObjectContext];
             
             insertCity.name = displayCity;
             insertCity.cityKey = keyCity;
@@ -439,7 +415,7 @@
 
             NSError *error = nil;
             
-            NSArray *fetchedObjects = [cds updateEntity:@"Country" whereAttribute:@"countryKey" isEqualTo:keyCountry];
+            NSArray *fetchedObjects = [dbh updateEntity:@"Country" whereAttribute:@"countryKey" isEqualTo:keyCountry];
             if (fetchedObjects == nil) {
                 NSLog(@"%@", error);
             }else {
@@ -448,12 +424,12 @@
                 NSString *cityString = countryGrabbed.cities;
                 countryGrabbed.cities = [cityString stringByAppendingString:[NSString stringWithFormat:@"%@,",keyCity]];
                 
-                [cds saveContext];
+                [dbh.cds saveContext];
                 
 //                NSLog(@"%@", countryGrabbed.cities);
             }
             
-            [self insertImageForDb:img withName:imgFileName];
+            [dbh insertImageForDb:img withName:imgFileName];
             
             //get dictionary for current country
             NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithDictionary:[self getDictForCountry:keyCountry]];
@@ -500,20 +476,20 @@
         
         [self.countries setObject:countryAttr forKey:keyCountry];
         
-        [self insertImageForDb:img withName:imgFileName];
+        [dbh insertImageForDb:img withName:imgFileName];
         
-        Country *insertCountry = [NSEntityDescription insertNewObjectForEntityForName:@"Country" inManagedObjectContext:cds.managedObjectContext];
+        Country *insertCountry = [NSEntityDescription insertNewObjectForEntityForName:@"Country" inManagedObjectContext:dbh.cds.managedObjectContext];
         insertCountry.countryKey = keyCountry;
         insertCountry.name = displayCountry;
         insertCountry.cities = [NSString stringWithFormat:@"%@,",keyCity];
         
-        City *insertCity = [NSEntityDescription insertNewObjectForEntityForName:@"City" inManagedObjectContext:cds.managedObjectContext];
+        City *insertCity = [NSEntityDescription insertNewObjectForEntityForName:@"City" inManagedObjectContext:dbh.cds.managedObjectContext];
         
         insertCity.name = displayCity;
         insertCity.cityKey = keyCity;
         insertCity.images = [NSString stringWithFormat:@"%@,",imgFileName];
         
-        [cds saveContext];
+        [dbh.cds saveContext];
         
         UIAlertView *alertLoc = [[UIAlertView alloc] initWithTitle:@"New Location!" message:[NSString stringWithFormat:@"Country: %@\nCity: %@", displayCountry, displayCity] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
         
@@ -523,33 +499,6 @@
     [self getAllNamesFromDB];
     
 }
-
-
--(void)insertImageForDb:(UIImage *)imgToInsert withName:(NSString *)name{
-    
-    Image *image = [NSEntityDescription insertNewObjectForEntityForName:@"Image" inManagedObjectContext:cds.managedObjectContext];
-    
-    image.image = imgToInsert;
-    image.imageName = name;
-    
-    [cds saveContext];
-    
-}
-
--(void)insertMapLocationForCountry:(NSString *)country andCity:(NSString *)city withLatitude:(CLLocationDegrees)lat andLongitude:(CLLocationDegrees)lo{
-    
-    MapLocation *loc = [NSEntityDescription insertNewObjectForEntityForName:@"MapLocation" inManagedObjectContext:cds.managedObjectContext];
-    
-    loc.countryName = country;
-    loc.cityName = city;
-    loc.latitude = [NSNumber numberWithDouble:lat];
-    loc.longitude = [NSNumber numberWithDouble:lo];
-    
-    [cds saveContext];
-}
-
-
-
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
@@ -624,51 +573,60 @@
     
     //51 204 204
 
-            return [[self.countries objectForKey:[sortedCountryNames objectAtIndex:section]] objectForKey:@"name"];
+    return [[self.countries objectForKey:[sortedCountryNames objectAtIndex:section]] objectForKey:@"name"];
     
 //    return @"section";
 }
 
 -(void)setUpImage:(UIImage *)image andLocation:(CLLocation *)loc{
 
-    [self.coder reverseGeocodeLocation:loc
-                     completionHandler:^(NSArray *placemarks, NSError *error) {
-                         if(!error){
-                             
-                             CLPlacemark *placemark = [placemarks objectAtIndex:0];
-                             
-                             [self.savedLocations addObject:placemark];
-                             
-                             currentCountry = placemark.country;
-                             currentCity = placemark.locality;
-                             
-                             if (currentCity == nil) {
-                                 currentCity = placemark.administrativeArea;
+    if (mVc.internetActive && mVc.locationAvail) {
+        
+        [self.coder reverseGeocodeLocation:loc
+                         completionHandler:^(NSArray *placemarks, NSError *error) {
+                             if(!error){
+                                 
+                                 CLPlacemark *placemark = [placemarks objectAtIndex:0];
+                                 
+                                 [self.savedLocations addObject:placemark];
+                                 
+                                 currentCountry = placemark.country;
+                                 currentCity = placemark.locality;
+                                 
+                                 if (currentCity == nil) {
+                                     currentCity = placemark.administrativeArea;
+                                 }
+                                 
+                                 displayCountry = currentCountry;
+                                 displayCity = currentCity;
+                                 
+                                 [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:placemark.location.coordinate.latitude andLongitude:placemark.location.coordinate.longitude];
+                                 
+                                 keyCountry = [[currentCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                                 keyCity = [[currentCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                                 
+                                 img = image;
+                                 
+                                 UIImageWriteToSavedPhotosAlbum(image,self,nil,nil);
+                                 
+                                 [self setUpTableValues];
+                                 [self reinitializeCountriesAndCities];
+                                 
+                                 //                                         NSLog(@"%@",[placemarks objectAtIndex:0]);
+                                 
+                                 
+                             } else {
+                                 NSLog(@"%@",[error description]);
                              }
-                             
-                             displayCountry = currentCountry;
-                             displayCity = currentCity;
-                             
-                             [self insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:placemark.location.coordinate.latitude andLongitude:placemark.location.coordinate.longitude];
-                             
-                             keyCountry = [[currentCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
-                             keyCity = [[currentCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
-                             
-                             img = image;
-                             
-                             UIImageWriteToSavedPhotosAlbum(image,self,nil,nil);
-                             
-                             [self setUpTableValues];
-                             [self reinitializeCountriesAndCities];
-                             
-                             //                                         NSLog(@"%@",[placemarks objectAtIndex:0]);
-                             
-                             
-                         } else {
-                             NSLog(@"%@",[error description]);
-                         }
-                     }];
+                         }];
 
+    }else{
+
+        img = image;
+        
+        [countryAlert show];
+    }
+    
     
     self.cameraImage = nil;
     self.cameraLocation = nil;

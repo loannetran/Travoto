@@ -40,6 +40,9 @@
 		69E514CF1BA28492007F52D6 /* LocationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E514CE1BA28492007F52D6 /* LocationTableViewController.m */; };
 		69E514D31BA2857A007F52D6 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69E514D21BA2857A007F52D6 /* AssetsLibrary.framework */; };
 		69E514D61BA285C0007F52D6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69E514D51BA285C0007F52D6 /* MapKit.framework */; };
+		69EE64671BA63A08003EF65A /* DBHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 69EE64661BA63A08003EF65A /* DBHandler.m */; };
+		69EE646A1BA64030003EF65A /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 69EE64691BA64030003EF65A /* Reachability.m */; };
+		69EE646E1BA651CF003EF65A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69EE646D1BA651CF003EF65A /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +111,11 @@
 		69E514CE1BA28492007F52D6 /* LocationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationTableViewController.m; sourceTree = "<group>"; };
 		69E514D21BA2857A007F52D6 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		69E514D51BA285C0007F52D6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		69EE64651BA63A08003EF65A /* DBHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBHandler.h; sourceTree = "<group>"; };
+		69EE64661BA63A08003EF65A /* DBHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBHandler.m; sourceTree = "<group>"; };
+		69EE64681BA64030003EF65A /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		69EE64691BA64030003EF65A /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		69EE646D1BA651CF003EF65A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +123,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69EE646E1BA651CF003EF65A /* SystemConfiguration.framework in Frameworks */,
 				691EDC471BA4A4AB00BF17F4 /* CoreData.framework in Frameworks */,
 				69E514D61BA285C0007F52D6 /* MapKit.framework in Frameworks */,
 				69E514D31BA2857A007F52D6 /* AssetsLibrary.framework in Frameworks */,
@@ -230,7 +239,8 @@
 		69E514A01BA2843B007F52D6 /* Travoto */ = {
 			isa = PBXGroup;
 			children = (
-				691EDC8A1BA4AC7300BF17F4 /* Models */,
+				69EE646C1BA64040003EF65A /* Database */,
+				69EE646B1BA64037003EF65A /* Connectivity */,
 				697055A91BA4217D00B5ACCF /* Camera */,
 				697055A81BA4213300B5ACCF /* Main */,
 				697055A71BA4211D00B5ACCF /* AlbumView */,
@@ -239,9 +249,6 @@
 				69E514AE1BA2843B007F52D6 /* Images.xcassets */,
 				69E514B01BA2843B007F52D6 /* LaunchScreen.xib */,
 				69E514A11BA2843B007F52D6 /* Supporting Files */,
-				691EDC841BA4A98700BF17F4 /* Travoto.xcdatamodeld */,
-				691EDC871BA4AB3300BF17F4 /* CoreDataStack.h */,
-				691EDC881BA4AB3300BF17F4 /* CoreDataStack.m */,
 			);
 			path = Travoto;
 			sourceTree = "<group>";
@@ -281,12 +288,35 @@
 		69E514D41BA2857F007F52D6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				69EE646D1BA651CF003EF65A /* SystemConfiguration.framework */,
 				691EDC461BA4A4AB00BF17F4 /* CoreData.framework */,
 				69E514D51BA285C0007F52D6 /* MapKit.framework */,
 				69E514D21BA2857A007F52D6 /* AssetsLibrary.framework */,
 			);
 			name = Frameworks;
 			path = Travoto;
+			sourceTree = "<group>";
+		};
+		69EE646B1BA64037003EF65A /* Connectivity */ = {
+			isa = PBXGroup;
+			children = (
+				69EE64681BA64030003EF65A /* Reachability.h */,
+				69EE64691BA64030003EF65A /* Reachability.m */,
+			);
+			name = Connectivity;
+			sourceTree = "<group>";
+		};
+		69EE646C1BA64040003EF65A /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				691EDC8A1BA4AC7300BF17F4 /* Models */,
+				691EDC841BA4A98700BF17F4 /* Travoto.xcdatamodeld */,
+				691EDC871BA4AB3300BF17F4 /* CoreDataStack.h */,
+				691EDC881BA4AB3300BF17F4 /* CoreDataStack.m */,
+				69EE64651BA63A08003EF65A /* DBHandler.h */,
+				69EE64661BA63A08003EF65A /* DBHandler.m */,
+			);
+			name = Database;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -406,6 +436,7 @@
 				691EDC891BA4AB3300BF17F4 /* CoreDataStack.m in Sources */,
 				69330D7F1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m in Sources */,
 				691EDC861BA4A98700BF17F4 /* Travoto.xcdatamodeld in Sources */,
+				69EE64671BA63A08003EF65A /* DBHandler.m in Sources */,
 				691EDC961BA4D89800BF17F4 /* Image.m in Sources */,
 				691EDC901BA4D00E00BF17F4 /* City.m in Sources */,
 				6931151F1BA3C44A00ADF1F3 /* MapAnnotation.m in Sources */,
@@ -414,6 +445,7 @@
 				691EDC931BA4D00E00BF17F4 /* Country.m in Sources */,
 				69DF01D51BA6126900AD6746 /* MapLocation.m in Sources */,
 				697055A11BA3FFFE00B5ACCF /* CameraImageViewController.m in Sources */,
+				69EE646A1BA64030003EF65A /* Reachability.m in Sources */,
 				6931151C1BA3B70500ADF1F3 /* MapViewController.m in Sources */,
 				691EDC991BA52DE200BF17F4 /* ScrollImagesViewController.m in Sources */,
 				69E514A71BA2843B007F52D6 /* AppDelegate.m in Sources */,

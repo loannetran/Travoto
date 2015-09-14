@@ -101,42 +101,6 @@ static CoreDataStack *dataStack;
     }
 }
 
-//crud methods
--(NSArray *)fetchAllItemsFromEntityNamed:(NSString *)entityName sortByAttribute:(NSString *)attr{
-    
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    
-    NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:dataStack.managedObjectContext];
-    [fetchRequest setEntity:entity];
-    
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:attr ascending:YES];
-    [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, nil]];
-    
-    
-    NSError *error = nil;
-    NSArray *fetchedObjects = [dataStack.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-
-    return fetchedObjects;
-}
-
-
--(NSArray *)updateEntity:(NSString *)entity whereAttribute:(NSString *)attr isEqualTo:(NSString *)value{
-    
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    [fetchRequest setEntity:[NSEntityDescription entityForName:entity inManagedObjectContext:dataStack.managedObjectContext]];
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"%@ == \"%@\"",attr,value]];
-    [fetchRequest setPredicate:predicate];
-    
-    NSError *error = nil;
-    
-    NSArray *fetchedObjects = [dataStack.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedObjects == nil) {
-        NSLog(@"%@", error);
-    }
-    
-    return fetchedObjects;
-}
 
 
 @end

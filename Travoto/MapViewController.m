@@ -9,29 +9,27 @@
 #import "MapViewController.h"
 
 @interface MapViewController ()
-
 @end
 
 @implementation MapViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
+    //------------------------------------
+    
+    //setting up variables
     self.manager = [[CLLocationManager alloc] init];
     self.coder = [[CLGeocoder alloc]init];
-    cds = [CoreDataStack dataStack];
+    dbh = [[DBHandler alloc] init];
     
     self.manager.delegate = self;
     [self.userImg.layer setCornerRadius:60];
     [self.userImg setClipsToBounds:YES];
     
-    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    //----------getting user defaults for image and name
     
-//    if (![[def objectForKey:@"login"] isEqualToString:@"done"]) {
-//        
-//        [self performSegueWithIdentifier:@"login" sender:self];
-//    }
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     
     if ([def objectForKey:@"userImage"]) {
         
@@ -44,11 +42,34 @@
         self.welcomeLbl.text = [NSString stringWithFormat:@"Welcome %@",[def objectForKey:@"name"]];
     }
     
+    //------------------------------------
+
+    
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    self.internetActive = appDelegate.internetActive;
+    self.hostActive = appDelegate.hostActive;
+    
+    //----setting up gestures for profile image
+    UITapGestureRecognizer *lblGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changePhoto)];
+    
+    [self.changePhotoLbl addGestureRecognizer:lblGesture];
+    UITapGestureRecognizer *photoGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changePhoto)];
+    [self.userImg addGestureRecognizer:photoGesture];
+    
+    //-------------------------------------
+    
+    //if internet is active, ask for user's location permission
+    
     if([self.manager respondsToSelector:@selector(requestWhenInUseAuthorization)]){
         [[UIApplication sharedApplication] sendAction:@selector(requestWhenInUseAuthorization)
                                                    to:self.manager
                                                  from:self
                                              forEvent:nil];
+            [self setUpMapView];
     } else {
         self.mapView.showsUserLocation = YES;
         MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.manager.location.coordinate, 800, 800);
@@ -56,43 +77,70 @@
         [self.manager startUpdatingLocation];
     }
     
-    UITapGestureRecognizer *lblGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changePhoto)];
-    
-    [self.changePhotoLbl addGestureRecognizer:lblGesture];
-    UITapGestureRecognizer *photoGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changePhoto)];
-    [self.userImg addGestureRecognizer:photoGesture];
-    
-    
+    if (self.internetActive) {
+
+    }
+
 }
 
--(void)viewDidAppear:(BOOL)animated{
-
-    NSFetchRequest *req = [cds.managedObjectModel fetchRequestTemplateForName:@"allMapLocations"];
+-(void)setUpMapView{
     
-    NSError *error = nil;
-    NSArray *fetchedObjects = [cds.managedObjectContext executeFetchRequest:req error:&error];
-    if (fetchedObjects == nil) {
-        NSLog(@"Error");
-    } else {
-        for (MapLocation *loc in fetchedObjects) {
-            
-//            NSLog(@"%@",loc.countryName);
-                        CLLocation *location = [[CLLocation alloc] initWithLatitude:[loc.latitude doubleValue] longitude:[loc.longitude doubleValue]];
-            
-                        [self previousLocations:location atCountry:loc.countryName andCity:loc.cityName];
-            
+
+        NSArray *fetchedObjects = [dbh fetchAllItemsFromEntityNamed:@"MapLocation"];
+        if (fetchedObjects == nil) {
+            NSLog(@"Error");
+        } else {
+            for (MapLocation *loc in fetchedObjects) {
+                
+                if ([loc.latitude doubleValue] == 0 && [loc.longitude doubleValue] == 0) {
+                    
+                    if (self.internetActive) {
+                        
+                        NSString *place = [NSString stringWithFormat:@"%@ %@",loc.countryName, loc.cityName];
+                        
+                        [self.coder geocodeAddressString:place
+                                       completionHandler:^(NSArray *placemarks, NSError *error) {
+                                           if(!error){
+                                               
+                                               CLPlacemark *placemark = [placemarks objectAtIndex:0];
+                                               NSArray *fetchedObjects = [dbh updateEntity:@"MapLocation" whereAttribute:@"cityName" isEqualTo:loc.cityName];
+                                               
+                                               MapLocation *locationGrabbed = [fetchedObjects objectAtIndex:0];
+                                               locationGrabbed.latitude = [NSNumber numberWithDouble:placemark.location.coordinate.latitude];
+                                               locationGrabbed.longitude = [NSNumber numberWithDouble:placemark.location.coordinate.longitude];
+                                               
+                                               [dbh.cds saveContext];
+                                               
+                                           } else {
+                                               
+                                               NSLog(@"%@",[error description]);
+                                               
+                                               
+                                           }
+                                       }];
+                        
+                    }
+                    
+                }else{
+                    //            NSLog(@"%@",loc.countryName);
+                    CLLocation *location = [[CLLocation alloc] initWithLatitude:[loc.latitude doubleValue] longitude:[loc.longitude doubleValue]];
+                    
+                    [self previousLocations:location atCountry:loc.countryName andCity:loc.cityName];
+
+                }
+                
+            }
         }
-    }
-
-    
-    if (self.places != 0) {
         
-        for (CLPlacemark *place in self.places) {
 
-            [self drawThisOnMapAt:place];
-        }
+        if (self.places != 0) {
+            
+            for (CLPlacemark *place in self.places) {
+                
+                [self drawThisOnMapAt:place];
+            }
+        
     }
-
 
 }
 
@@ -162,59 +210,43 @@
     
 }
 
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(MapAnnotation *)annotation {
     
     if([annotation isKindOfClass:[MKUserLocation class]]){
         return nil;
     }
     
     CustomPinView *pin = [[CustomPinView alloc] initWithAnnotation:annotation reuseIdentifier:@"pin"];
-    
     pin.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeSystem];
     
     return pin;
     
-    
-    //default pins
-    //    MKPinAnnotationView *view = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"pin"];
-    //
-    //    view.pinColor = MKPinAnnotationColorPurple;
-    //    view.enabled = YES;
-    //    view.canShowCallout = YES;
-    //
-    //    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"img7.png"]];
-    //    view.leftCalloutAccessoryView = imageView;
-    //
-    //    view.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-    //    
-    //    return view;
-    
 }
-//
-//- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
-//    
-//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hello" message:@"Hello Again" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles: nil];
-//    [alert show];
-//    
-//}
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
     if (status == kCLAuthorizationStatusAuthorizedWhenInUse) {
-
-//        MKCoordinateSpan span;
-//        span.latitudeDelta = 1;
-//        span.longitudeDelta = 1;
-//        
-//        MKCoordinateRegion region;
-//        region.center = self.manager.location.coordinate;
-//        region.span = span;
-//
-//        [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
         
-        [self.manager setDistanceFilter:10.0f];
         [self.manager startUpdatingLocation];
+        self.locationAvail = YES;
+    }else{
+        
+        self.locationAvail = NO;
     }
     
+}
+
+- (void)mapView:(MKMapView *)aMapView didUpdateUserLocation:(MKUserLocation *)aUserLocation {
+    
+            MKCoordinateRegion theRegion = self.mapView.region;
+            theRegion.center = aUserLocation.location.coordinate;
+    
+            theRegion.span.longitudeDelta *= 1.0;
+            theRegion.span.latitudeDelta *= 1.0;
+    
+            [self.mapView setRegion:theRegion animated:YES];
+
+    
+    [self.manager stopUpdatingLocation];
 }
 
 
@@ -222,6 +254,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 /*
 #pragma mark - Navigation

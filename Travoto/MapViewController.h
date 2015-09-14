@@ -11,20 +11,26 @@
 #import <MapKit/MKAnnotation.h>
 #import "MapAnnotation.h"
 #import "CustomPinView.h"
-#import "CoreDataStack.h"
+#import "DBHandler.h"
 #import "MapLocation.h"
+#import "AppDelegate.h"
+
 
 @interface MapViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate,MKMapViewDelegate,CLLocationManagerDelegate>{
     
-        CoreDataStack *cds;
+        DBHandler *dbh;
+        AppDelegate *appD;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *welcomeLbl;
 @property (nonatomic,strong) CLLocationManager *manager;
 @property (nonatomic, strong) CLGeocoder *coder;
 @property (nonatomic, strong) NSArray *places;
+@property (nonatomic, assign) BOOL internetActive;
+@property (nonatomic, assign) BOOL hostActive;
+@property (nonatomic, assign) BOOL locationAvail;
 @property (weak, nonatomic) IBOutlet UIImageView *userImg;
 @property (weak, nonatomic) IBOutlet UILabel *changePhotoLbl;
-
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
+
 @end

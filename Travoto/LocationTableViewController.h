@@ -18,6 +18,7 @@
 #import "City.h"
 #import "Image.h"
 #import "MapLocation.h"
+#import "DBHandler.h"
 
 @interface LocationTableViewController : UITableViewController <UIAlertViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,MKMapViewDelegate,CLLocationManagerDelegate>{
     
@@ -42,7 +43,8 @@
     NSString *selectedCountry;
     NSDictionary *selectedCity;
     UIAlertView *countryAlert;
-    CoreDataStack *cds;
+    DBHandler *dbh;
+    MapViewController *mVc;
     NSString *imgFileName;
     NSMutableArray *reqCountries;
     NSMutableArray *reqCities;

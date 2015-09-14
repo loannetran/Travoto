@@ -25,20 +25,16 @@
     [self.skipBtn.layer setCornerRadius:10];
     
     UITapGestureRecognizer *lblGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changePhoto)];
-    
     [self.imgLbl addGestureRecognizer:lblGesture];
 
     UITapGestureRecognizer *photoGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changePhoto)];
     [self.profileImgView addGestureRecognizer:photoGesture];
-
-    
-    // Do any additional setup after loading the view.
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     
     [UIView animateWithDuration:05 animations:^{
-            [self.scrollView setContentOffset:CGPointMake(0.0, self.nameTxt.frame.origin.y-270) animated:YES];
+        [self.scrollView setContentOffset:CGPointMake(0.0, self.nameTxt.frame.origin.y-270) animated:YES];
     }];
     
 }
@@ -101,9 +97,6 @@
 
 
 // - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-//
-//    
-//
 // 
 // }
 

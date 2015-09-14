@@ -19,6 +19,8 @@
         self.image = [UIImage imageNamed:@"pin_blue.png"];
         self.enabled = YES;
         self.canShowCallout = YES;
+        
+        
     }
     return self;
 }
