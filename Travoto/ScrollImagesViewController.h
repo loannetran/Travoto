@@ -19,7 +19,7 @@
 @property (nonatomic, strong) NSArray *pageImages;
 @property (nonatomic, strong) NSMutableArray *pageViews;
 @property (nonatomic, strong) NSArray *imageArray;
-@property (nonatomic, assign) int currentImage;
+@property (nonatomic, assign) long currentImage;
 
 - (void)loadVisiblePages;
 - (void)loadPage:(NSInteger)page;

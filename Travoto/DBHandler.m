@@ -98,6 +98,101 @@
     return fetchedObjects;
 }
 
+-(void)bulkInsertCountries:(NSArray *)countries{
+    
+    for (Country *c in countries) {
+        
+        Country *insertCountry = [NSEntityDescription insertNewObjectForEntityForName:@"Country" inManagedObjectContext:self.cds.managedObjectContext];
+        
+        insertCountry.countryKey = c.countryKey;
+        insertCountry.name = c.name;
+        insertCountry.cities = c.cities;
 
+    }
+    
+    [self.cds saveContext];
+    
+}
+
+-(void)bulkInsertCities:(NSArray *)cities{
+    
+    for (City *ci in cities) {
+        City *insertCity = [NSEntityDescription insertNewObjectForEntityForName:@"City" inManagedObjectContext:self.cds.managedObjectContext];
+        
+        insertCity.name = ci.name;
+        insertCity.cityKey = ci.cityKey;
+        insertCity.images = ci.images;
+
+    }
+    
+    [self.cds saveContext];
+}
+
+-(void)bulkInsertImages:(NSArray *)images{
+    
+    for (Image *im in images) {
+        Image *insertImage = [NSEntityDescription insertNewObjectForEntityForName:@"Image" inManagedObjectContext:self.cds.managedObjectContext];
+        insertImage.image = im.image;
+        insertImage.imageName = im.imageName;
+
+    }
+    
+    [self.cds saveContext];
+    
+}
+
+-(NSDictionary *)createDictionaryFromCountries:(NSArray *)countries andCities:(NSArray *)cities andImages:(NSArray *)images{
+    
+    NSMutableDictionary *returnedDict = [[NSMutableDictionary alloc] init];
+    
+    for (Country *country in countries) {
+        
+        NSMutableDictionary *tempAttr = [[NSMutableDictionary alloc]init];
+        
+        NSArray *tempCityArray = [[country.cities componentsSeparatedByString:@","] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+        
+        NSMutableDictionary *tempCity = [[NSMutableDictionary alloc] init];
+        
+        for (NSString *c in tempCityArray) {
+            
+            for (int i=0; i<cities.count; i++) {
+                
+                City *cityGrabbed = [cities objectAtIndex:i];
+                
+                if ([cityGrabbed.cityKey isEqualToString:c]) {
+                    NSMutableDictionary *tempCityAttr = [[NSMutableDictionary alloc]init];
+                    [tempCityAttr setObject:cityGrabbed.name forKey:@"name"];
+                    
+                    NSArray *tempImgArray = [cityGrabbed.images componentsSeparatedByString:@","];
+                    NSMutableArray *tempImages = [[NSMutableArray alloc] init];
+                    
+                    for (NSString *imgName in tempImgArray) {
+                        
+                        for (int j=0; j<images.count; j++) {
+                            
+                            Image *imgGrabbed = [images objectAtIndex:j];
+                            
+                            if ([imgGrabbed.imageName isEqualToString:imgName]) {
+                                [tempImages addObject:imgGrabbed.image];
+                            }
+                        }
+                        
+                    }
+                    
+                    [tempCityAttr setObject:tempImages forKey:@"images"];
+                    [tempCity setObject:tempCityAttr forKey:cityGrabbed.cityKey];
+                }
+            }
+        }
+        
+        [tempAttr setObject:country.name forKey:@"name"];
+        [tempAttr setObject:tempCity forKey:@"cities"];
+        [returnedDict setObject:tempAttr forKey:country.countryKey];
+        
+    }
+    
+    return returnedDict;
+    
+}
 
 @end

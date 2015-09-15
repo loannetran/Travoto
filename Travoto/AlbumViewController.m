@@ -13,7 +13,7 @@
     NSArray *arrayOfImages;
     UIImage *currentImage;
     EnlargeImageView *enlargeImg;
-    int currentPath;
+    long currentPath;
 
 }
 
