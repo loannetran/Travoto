@@ -24,7 +24,7 @@
     dbh = [[DBHandler alloc] init];
     
     self.manager.delegate = self;
-    [self.userImg.layer setCornerRadius:60];
+    [self.userImg.layer setCornerRadius:65];
     [self.userImg setClipsToBounds:YES];
     
     //----------getting user defaults for image and name

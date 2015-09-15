@@ -48,6 +48,8 @@
     NSMutableArray *reqCountries;
     NSMutableArray *reqCities;
     NSMutableArray *reqImages;
+    UIActivityIndicatorView *progressView;
+    BOOL inProgress;
 }
 
 @property (nonatomic,strong) NSMutableDictionary *countries;

@@ -163,15 +163,31 @@
 
     }
     
-    [self.tableView reloadData];
+    inProgress = NO;
+    NSInvocationOperation *mainOP = [[NSInvocationOperation alloc] initWithTarget:self.tableView selector:@selector(reloadData) object:nil];
+    
+    [[NSOperationQueue mainQueue] addOperation:mainOP];
+    
+//    [self.tableView reloadData];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     
     [self.tabBarController.tabBar setHidden:NO];
+
     if (self.cameraImage != nil) {
+    
+        inProgress = YES;
+        [self.tableView reloadData];
+        
+        if (self.cameraLocation == nil) {
+            CLLocation *loc = [[CLLocation alloc] initWithLatitude:0 longitude:0];
+            
+            self.cameraLocation = loc;
+        }
         
         [self setUpImage:self.cameraImage andLocation:self.cameraLocation];
+        
     }
 
 }
@@ -183,6 +199,7 @@
     controller.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     controller.delegate = self;
     
+    inProgress = YES;
     [self presentViewController:controller animated:YES completion:nil];
 }
 
@@ -236,7 +253,10 @@
                    resultBlock:resultblock
                   failureBlock:failureblock];
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        inProgress = YES;
+        [self.tableView reloadData];
+    }];
     
 }
 
@@ -259,10 +279,12 @@
     
     if (mVc.internetActive && mVc.locationAvail) {
         
+        NSBlockOperation *searchLocationForImage = [NSBlockOperation blockOperationWithBlock:^{
+        
         [self.coder reverseGeocodeLocation:loc
                          completionHandler:^(NSArray *placemarks, NSError *error) {
                              if(!error){
-                                 
+
                                  CLPlacemark *placemark = [placemarks objectAtIndex:0];
                                  
                                  [self.savedLocations addObject:placemark];
@@ -293,6 +315,10 @@
                                  NSLog(@"%@",[error description]);
                              }
                          }];
+        }];
+        
+        [theQueue addOperation:searchLocationForImage];
+        
     }else{
         
         [countryAlert show];
@@ -320,7 +346,8 @@
             NSString *place = [NSString stringWithFormat:@"%@ %@",currentCity, currentCountry];
             
             if (mVc.internetActive && mVc.locationAvail) {
-               
+                
+               NSBlockOperation *searchLocationForImage = [NSBlockOperation blockOperationWithBlock:^{
                 [self.coder geocodeAddressString:place
                                completionHandler:^(NSArray *placemarks, NSError *error) {
                                    if(!error){
@@ -350,22 +377,26 @@
                                        
                                    }
                                }];
+               }];
+                
+                [theQueue addOperation:searchLocationForImage];
+                
             }else{
                 
-                self.imgFileName = [NSString stringWithFormat:@"%@",keyCity];
-                displayCountry = [currentCountry capitalizedString];
-                displayCity = [currentCity capitalizedString];
                 
-                [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:0 andLongitude:0];
+                    self.imgFileName = [NSString stringWithFormat:@"%@",keyCity];
+                    displayCountry = [currentCountry capitalizedString];
+                    displayCity = [currentCity capitalizedString];
                 
-                keyCountry = [[displayCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
-                keyCity = [[displayCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
-                [self setUpTableValues];
-                [self reinitializeCountriesAndCities];
+                    [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:0 andLongitude:0];
+                
+                    keyCountry = [[displayCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                    keyCity = [[displayCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                    [self setUpTableValues];
+                    [self reinitializeCountriesAndCities];
 
             }
             
-
         }else{
             
             countryAlert.message = @"Please enter a location";
@@ -392,7 +423,6 @@
             //if there are images in city
             if ([[[self.countries objectForKey:keyCountry] objectForKey:@"cities"] objectForKey:keyCity] != 0) {
                 
-
                 NSMutableArray *tempImages = [[[tempDict objectForKey:@"cities"] objectForKey:keyCity] objectForKey:@"images"];
                 
                 NSData *newImg = UIImagePNGRepresentation(img);
@@ -409,6 +439,8 @@
                 }
                 
                 if (!imgExists) {
+                    
+                    
                     [[[[tempDict objectForKey:@"cities"] objectForKey:keyCity] objectForKey:@"images"] addObject:img];
                     
                     //set dictionary with changes
@@ -445,6 +477,7 @@
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add Image" message:@"Image already exists within collection" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
                     
                     [alert show];
+                    inProgress = NO;
                 }
                 
             }
@@ -583,12 +616,25 @@
     //sort array
     NSArray *tempArray = [temp sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
     
+    progressView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(259, 12, 20, 20)];
+    progressView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
+    
     //set label for each cell according to each section and row
     cell.textLabel.text = [[[[self.countries objectForKey:[sortedCountryNames objectAtIndex:indexPath.section]] objectForKey:@"cities"] objectForKey:[tempArray objectAtIndex:indexPath.row]] objectForKey:@"name"];
     
+    if (inProgress) {
+        cell.accessoryView = progressView;
+        [progressView startAnimating];
+    }else{
+        
+        [progressView stopAnimating];
+        cell.accessoryView = nil;
+    }
+
+    
     [cell.textLabel setFont:[UIFont fontWithName:@"HeitiTC" size:10]];
     [cell.textLabel setTextColor:[UIColor whiteColor]];
-    cell.multipleTouchEnabled = NO;
+    
     
     return cell;
 
@@ -628,46 +674,52 @@
 -(void)setUpImage:(UIImage *)image andLocation:(CLLocation *)loc{
 
     if (mVc.internetActive && mVc.locationAvail) {
-    
-        [self.coder reverseGeocodeLocation:loc
-                         completionHandler:^(NSArray *placemarks, NSError *error) {
-                             if(!error){
-                                 
-                                 CLPlacemark *placemark = [placemarks objectAtIndex:0];
-                                 
-                                 [self.savedLocations addObject:placemark];
-                                 
-                                 currentCountry = placemark.country;
-                                 currentCity = placemark.locality;
-                                 
-                                 if (currentCity == nil) {
-                                     currentCity = placemark.administrativeArea;
+        
+        NSBlockOperation *searchLocationForImage = [NSBlockOperation blockOperationWithBlock:^{
+            
+            [self.coder reverseGeocodeLocation:loc
+                             completionHandler:^(NSArray *placemarks, NSError *error) {
+                                 if(!error){
+                                     
+                                     CLPlacemark *placemark = [placemarks objectAtIndex:0];
+                                     
+                                     [self.savedLocations addObject:placemark];
+                                     
+                                     currentCountry = placemark.country;
+                                     currentCity = placemark.locality;
+                                     
+                                     if (currentCity == nil) {
+                                         currentCity = placemark.administrativeArea;
+                                     }
+                                     
+                                     displayCountry = currentCountry;
+                                     displayCity = currentCity;
+                                     
+                                     keyCountry = [[currentCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                                     keyCity = [[currentCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                                     
+                                     img = image;
+                                     self.imgFileName = [NSString stringWithFormat:@"%@",keyCity];
+                                     UIImageWriteToSavedPhotosAlbum(image,self,nil,nil);
+                                     
+                                     [self setUpTableValues];
+                                     [self reinitializeCountriesAndCities];
+                                    
+                                     [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:placemark.location.coordinate.latitude andLongitude:placemark.location.coordinate.longitude];
+                                     
+                                     //                                         NSLog(@"%@",[placemarks objectAtIndex:0]);
+                                     
+                                 } else {
+                                     NSLog(@"%@",[error description]);
                                  }
-                                 
-                                 displayCountry = currentCountry;
-                                 displayCity = currentCity;
-                                 
-                                 [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:placemark.location.coordinate.latitude andLongitude:placemark.location.coordinate.longitude];
-                                 
-                                 keyCountry = [[currentCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
-                                 keyCity = [[currentCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
-                                 
-                                 img = image;
-                                 self.imgFileName = [NSString stringWithFormat:@"%@",keyCity];
-                                 UIImageWriteToSavedPhotosAlbum(image,self,nil,nil);
-                                 
-                                
-                                 [self setUpTableValues];
-                                 [self reinitializeCountriesAndCities];
-                                 
-                                 //                                         NSLog(@"%@",[placemarks objectAtIndex:0]);
-                                 
-                             
-                             } else {
-                                 NSLog(@"%@",[error description]);
-                             }
-                         }];
+                             }];
+    
+        }];
+        
 
+        [theQueue addOperation:searchLocationForImage];
+        
+        
     }else{
 
         img = image;
@@ -720,7 +772,12 @@
 //    
 //    mVc.places = self.savedLocations;
     
-    [self.tableView reloadData];
+    inProgress = NO;
+    NSInvocationOperation *mainOP = [[NSInvocationOperation alloc] initWithTarget:self.tableView selector:@selector(reloadData) object:nil];
+    
+    [[NSOperationQueue mainQueue] addOperation:mainOP];
+    
+//    [self.tableView reloadData];
 
     
 }

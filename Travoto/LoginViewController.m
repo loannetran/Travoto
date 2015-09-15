@@ -19,7 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.profileImgView.layer setCornerRadius:60];
+    [self.profileImgView.layer setCornerRadius:65];
     [self.profileImgView setClipsToBounds:YES];
     [self.doneBtn.layer setCornerRadius:10];
     [self.skipBtn.layer setCornerRadius:10];
