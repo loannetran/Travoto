@@ -1,4 +1,4 @@
-//
+    //
 //  LocationTableViewController.m
 //  Travoto
 //
@@ -27,88 +27,38 @@
     self.coder = [[CLGeocoder alloc]init];
     dbh = [[DBHandler alloc] init];
     mVc = [[self.tabBarController viewControllers] objectAtIndex:0];
+    pre = [[PretableSetUp alloc]init];
     appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    
     theQueue = [[NSOperationQueue alloc] init];
+    inProgress = NO;
     
     //for sequential threading
 //    theQueue.maxConcurrentOperationCount = 1;
 
     [self setUpAlertForLocation];
-
-//    [self removeEverythingFromDB];
-    NSLog(@"view loaded");
-//    dateDict = [[NSMutableDictionary alloc] init];
-
-    [self getAllEntitiesFromDB];
-    [self reinitializeCountriesAndCities];
-    
-}
-
-
--(void)removeEverythingFromDB{
-    
-    [dbh deleteAllObjectsIn:@"Country"];
-    [dbh deleteAllObjectsIn:@"City"];
-    [dbh deleteAllObjectsIn:@"Image"];
-    [dbh deleteAllObjectsIn:@"MapLocation"];
-
-}
-
--(void)getAllEntitiesFromDB{
-    
-    //get all data from database and put in array
-    NSArray *fetchedObjects = [dbh fetchAllItemsFromEntityNamed:@"Country"];
-    if (fetchedObjects == nil) {
-        NSLog(@"Error");
-    } else {
-        
-        reqCountries = [[NSMutableArray alloc] initWithArray:fetchedObjects];
-        
-    }
-    
-    fetchedObjects = [dbh fetchAllItemsFromEntityNamed:@"City"];
-    if (fetchedObjects == nil) {
-        NSLog(@"Error");
-    } else {
-        reqCities = [[NSMutableArray alloc] initWithArray:fetchedObjects];
-
-    }
-    
-    fetchedObjects = [dbh fetchAllItemsFromEntityNamed:@"Image"];
-    if (fetchedObjects == nil) {
-        NSLog(@"Error");
-    } else {
-        
-        reqImages = [[NSMutableArray alloc] initWithArray:fetchedObjects];
-        
-    }
-    
-    self.countries = [[dbh createDictionaryFromCountries:reqCountries andCities:reqCities andImages:reqImages] mutableCopy];
-    
+    self.countries = [[pre getAllEntitiesFromDB] mutableCopy];
+    [pre reinitializeCountries:self.countries];
+    self.countryNames = pre.sortedCountryNames;
+    self.cityNames = pre.sortedCityNames;
+    [self.tableView reloadData];
+//    [pre removeEverythingFromDB];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     
     [self.tabBarController.tabBar setHidden:NO];
-    
-//    NSLog(@"%s, %s",appDelegate.internetActive ? "t" : "f", mVc.locationAvail ? "t" : "f");
-
     if (self.cameraImage != nil) {
-    
         inProgress = YES;
         [self.tableView reloadData];
-        
+
         if (self.cameraLocation == nil) {
             CLLocation *loc = [[CLLocation alloc] initWithLatitude:0 longitude:0];
-            
             self.cameraLocation = loc;
         }
         
         [self setUpImage:self.cameraImage andLocation:self.cameraLocation];
         
     }
-
 }
 
 - (IBAction)addPhotos:(id)sender {
@@ -124,12 +74,9 @@
     
     NSURL *url = [info objectForKey:@"UIImagePickerControllerReferenceURL"];
     
-//    [countryAlert textFieldAtIndex:0].text = @"";
-//    [countryAlert textFieldAtIndex:1].text = @"";
-    
     ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset)
     {
-        creationDate = [myasset valueForProperty:ALAssetPropertyDate];
+//        creationDate = [myasset valueForProperty:ALAssetPropertyDate];
         location = [myasset valueForProperty:ALAssetPropertyLocation];
         //set image to be original image
         img = info[UIImagePickerControllerOriginalImage];
@@ -138,15 +85,11 @@
         //set image file name
         self.imgFileName = [imageRep filename];
         
-        //        NSLog(@"[imageRep filename] : %@", [imageRep filename]);
-        
         //if location is not detected in image
         if (location == nil) {
             
             //show manual entry for location
             [countryAlert show];
-            
-            //            [self setUpImageForDb:img withName:imgFileName];
             
         }else{
             
@@ -154,7 +97,6 @@
             [self lookUpLocationWithCLLocation:location];
         }
         
-        //        NSLog(@"%@", [myasset valueForProperty:ALAssetPropertyLocation]);
     };
     // This block will handle errors:
     ALAssetsLibraryAccessFailureBlock failureblock  = ^(NSError *myerror)
@@ -171,6 +113,7 @@
                   failureBlock:failureblock];
     
     [self dismissViewControllerAnimated:YES completion:^{
+        
         inProgress = YES;
         [self.tableView reloadData];
     }];
@@ -193,7 +136,6 @@
 
 -(void)lookUpLocationWithCLLocation:(CLLocation *)loc{
     
-    
     if (appDelegate.internetActive && mVc.locationAvail) {
         
         NSBlockOperation *searchLocationForImage = [NSBlockOperation blockOperationWithBlock:^{
@@ -215,18 +157,20 @@
                                  
                                  displayCountry = currentCountry;
                                  displayCity = currentCity;
-                                 
-                                 [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:loc.coordinate.latitude andLongitude:loc.coordinate.longitude];
-                                 
                                  keyCountry = [[currentCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
                                  keyCity = [[currentCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
                                  
-                                 //                                     NSData* imageData = [NSData dataWithData:UIImageJPEGRepresentation(img, .8)];
-                                 //                             [self setUpImageForDb:img withName:imgFileName];
-                                 [self setUpTableValues];
-                                 [self reinitializeCountriesAndCities];
+                                 self.countries = [pre setUpTableValuesForDictionary:self.countries countryName:keyCountry withCountryDisplay:displayCountry cityName:keyCity withCityDisplay:displayCity imgName:self.imgFileName andImage:img];
+                                 [pre reinitializeCountries:self.countries];
+                                 self.countryNames = pre.sortedCountryNames;
+                                 self.cityNames = pre.sortedCityNames;
+                                 [self.tableView reloadData];
                                  
-                                 //                                         NSLog(@"%@",[placemarks objectAtIndex:0]);
+                                 NSBlockOperation *insertIntoDB = [NSBlockOperation blockOperationWithBlock:^{
+                                     [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:loc.coordinate.latitude andLongitude:loc.coordinate.longitude];
+                                 }];
+                                 
+                                 [theQueue addOperation:insertIntoDB];
                                  
                              } else {
                                  NSLog(@"%@",[error description]);
@@ -241,7 +185,6 @@
         [countryAlert show];
     }
     
-    
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -250,8 +193,6 @@
         
         currentCountry = [alertView textFieldAtIndex:0].text;
         currentCity = [alertView textFieldAtIndex:1].text;
-        
-        //        NSLog(@"%@ %@", currentCountry, currentCity);
         
     }else{
         
@@ -277,7 +218,6 @@
                                        
                                        CLPlacemark *placemark = [placemarks objectAtIndex:0];
                                        [self.savedLocations addObject:placemark];
-//                                       NSLog(@"%@", placemark);
                                        displayCountry = placemark.country;
                                        displayCity = placemark.locality;
                                        
@@ -285,13 +225,24 @@
                                            displayCity = placemark.administrativeArea;
                                        }
                                        
-                                       [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:placemark.location.coordinate.latitude andLongitude:placemark.location.coordinate.longitude];
-                                       
                                        keyCountry = [[displayCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
                                        keyCity = [[displayCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
-                                       [self setUpTableValues];
-                                       [self reinitializeCountriesAndCities];
                                        
+                                        self.countries = [pre setUpTableValuesForDictionary:self.countries countryName:keyCountry withCountryDisplay:displayCountry cityName:keyCity withCityDisplay:displayCity imgName:self.imgFileName andImage:img];
+                                       
+                                        [pre reinitializeCountries:self.countries];
+                                        self.countryNames = pre.sortedCountryNames;
+                                        self.cityNames = pre.sortedCityNames;
+                                       inProgress = NO;
+                                        [self.tableView reloadData];
+
+                                       NSBlockOperation *insertIntoDB = [NSBlockOperation blockOperationWithBlock:^{
+                                           [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:placemark.location.coordinate.latitude andLongitude:placemark.location.coordinate.longitude];
+                                           
+                                       }];
+                                       
+                                       [theQueue addOperation:insertIntoDB];
+
                                    } else {
                                        
                                        NSLog(@"%@",[error description]);
@@ -302,22 +253,28 @@
                                }];
                }];
                 
-                [theQueue addOperation:searchLocationForImage];
-                
-            }else{
-                
-                
-                    self.imgFileName = [NSString stringWithFormat:@"%@",keyCity];
-                    displayCountry = [currentCountry capitalizedString];
-                    displayCity = [currentCity capitalizedString];
-                
-                    [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:0 andLongitude:0];
-                
-                    keyCountry = [[displayCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
-                    keyCity = [[displayCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
-                    [self setUpTableValues];
-                    [self reinitializeCountriesAndCities];
 
+                [theQueue addOperation:searchLocationForImage];
+            
+            }else{
+            
+                self.imgFileName = [NSString stringWithFormat:@"%@",keyCity];
+                displayCountry = [currentCountry capitalizedString];
+                displayCity = [currentCity capitalizedString];
+                keyCountry = [[displayCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                keyCity = [[displayCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                self.countries = [pre setUpTableValuesForDictionary:self.countries countryName:keyCountry withCountryDisplay:displayCountry cityName:keyCity withCityDisplay:displayCity imgName:self.imgFileName andImage:img];
+                [pre reinitializeCountries:self.countries];
+                self.countryNames = pre.sortedCountryNames;
+                self.cityNames = pre.sortedCityNames;
+                inProgress = NO;
+                [self.tableView reloadData];
+                
+                NSBlockOperation *insertIntoDB = [NSBlockOperation blockOperationWithBlock:^{
+                    [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:0 andLongitude:0];
+                }];
+                
+                [theQueue addOperation:insertIntoDB];
             }
             
         }else{
@@ -327,175 +284,6 @@
         }
 
     }
-}
-
-
--(void)setUpTableValues{
-    
-    //if country exists
-    if ([self.countries objectForKey:keyCountry]) {
-        //        NSLog(@"country exists");
-        
-        //if city for country exists
-        if ([[[self.countries objectForKey:keyCountry] objectForKey:@"cities"] objectForKey:keyCity]) {
-            //            NSLog(@"city exists");
-            
-            //get dictionary for current country
-            NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithDictionary:[self getDictForCountry:keyCountry]];
-            
-            //if there are images in city
-            if ([[[self.countries objectForKey:keyCountry] objectForKey:@"cities"] objectForKey:keyCity] != 0) {
-                
-                NSMutableArray *tempImages = [[[tempDict objectForKey:@"cities"] objectForKey:keyCity] objectForKey:@"images"];
-                
-                NSData *newImg = UIImagePNGRepresentation(img);
-                BOOL imgExists = NO;
-                
-                for (int i = 0; i<tempImages.count; i++) {
-                
-                    NSData *oldImg = UIImagePNGRepresentation([tempImages objectAtIndex:i]);
-                    
-                    if ([newImg isEqual:oldImg]) {
-                        
-                        imgExists = YES;
-                    }
-                }
-                
-                if (!imgExists) {
-                    
-                    
-                    [[[[tempDict objectForKey:@"cities"] objectForKey:keyCity] objectForKey:@"images"] addObject:img];
-                    
-                    //set dictionary with changes
-                    [self.countries setObject:tempDict forKey:keyCountry];
-                    
-                    
-                    NSArray *currentImageArray = [[[[self.countries objectForKey:keyCountry] objectForKey:@"cities"] objectForKey:keyCity] objectForKey:@"images"];
-                    
-                    long imgCount = currentImageArray.count;
-
-                    self.imgFileName = [NSString stringWithFormat:@"%@_%li",self.imgFileName,imgCount];
-                    
-                    [dbh insertImageForDb:img withName:self.imgFileName];
-
-                    
-                    NSArray *fetchedObjects = [dbh updateEntity:@"City" whereAttribute:@"cityKey" isEqualTo:keyCity];
-                    
-                    if (fetchedObjects == nil) {
-                        NSLog(@"Error");
-                    } else {
-                        
-                        City *cityGrabbed = [fetchedObjects objectAtIndex:0];
-                        NSString *imgString = cityGrabbed.images;
-                        cityGrabbed.images = [imgString stringByAppendingString:[NSString stringWithFormat:@"%@,",self.imgFileName]];
-                        
-                        [dbh.cds saveContext];
-                    }
-                    
-                    inProgress = NO;
-    
-                }else{
-                    
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add Image" message:@"Image already exists within collection" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-                    
-                    [alert show];
-                    inProgress = NO;
-                }
-                
-            }
-        }
-        //if city for country does not exist
-        else{
-            
-            //get dictionary for current country
-            NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithDictionary:[self getDictForCountry:keyCountry]];
-            
-            //create image array
-            NSMutableArray *tempArray = [[NSMutableArray alloc] init];
-            [tempArray addObject:img];
-            
-            //create cityAttr dictionary and images and name
-            NSMutableDictionary *tempAttrDict = [[NSMutableDictionary alloc] init];
-            [tempAttrDict setObject:displayCity forKey:@"name"];
-            [tempAttrDict setObject:tempArray forKey:@"images"];
-            
-            //add city with attribute array
-            [[tempDict objectForKey:@"cities"] setValue:tempAttrDict forKey:keyCity];
-            
-            //set dictionary with changes
-            [self.countries setObject:tempDict forKey:keyCountry];
-            
-            NSError *error = nil;
-            
-            NSArray *fetchedObjects = [dbh updateEntity:@"Country" whereAttribute:@"countryKey" isEqualTo:keyCountry];
-            if (fetchedObjects == nil) {
-                NSLog(@"%@", error);
-            }else {
-                
-                Country *countryGrabbed = [fetchedObjects objectAtIndex:0];
-                NSString *cityString = countryGrabbed.cities;
-                countryGrabbed.cities = [cityString stringByAppendingString:[NSString stringWithFormat:@"%@,",keyCity]];
-                
-                //                NSLog(@"%@", countryGrabbed.cities);
-            }
-            
-                City *insertCity = [NSEntityDescription insertNewObjectForEntityForName:@"City" inManagedObjectContext:dbh.cds.managedObjectContext];
-                insertCity.name = displayCity;
-                insertCity.cityKey = keyCity;
-                insertCity.images = [NSString stringWithFormat:@"%@,",self.imgFileName];
-                
-                [dbh insertImageForDb:img withName:self.imgFileName];
-                [dbh.cds saveContext];
-
-            
-            UIAlertView *alertLoc = [[UIAlertView alloc] initWithTitle:@"New Location!" message:[NSString stringWithFormat:@"Country: %@\nCity: %@", displayCountry, displayCity] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-            
-            [alertLoc show];
-            
-        }
-        
-    }else{
-        
-        //if country does not exist
-        
-        images = [[NSMutableArray alloc] init];
-        [images addObject:img];
-        
-        cityAttr = [[NSMutableDictionary alloc] init];
-        [cityAttr setObject:displayCity forKey:@"name"];
-        [cityAttr setObject:images forKey:@"images"];
-        
-        cityDict = [[NSMutableDictionary alloc] init];
-        [cityDict setObject:cityAttr forKey:keyCity];
-        
-        countryAttr = [[NSMutableDictionary alloc] init];
-        
-        [countryAttr setObject:displayCountry forKey:@"name"];
-        [countryAttr setObject:cityDict forKey:@"cities"];
-        
-        [self.countries setObject:countryAttr forKey:keyCountry];
-                        
-            [dbh insertImageForDb:img withName:self.imgFileName];
-                        
-            Country *insertCountry = [NSEntityDescription insertNewObjectForEntityForName:@"Country" inManagedObjectContext:dbh.cds.managedObjectContext];
-            insertCountry.countryKey = keyCountry;
-            insertCountry.name = displayCountry;
-            insertCountry.cities = [NSString stringWithFormat:@"%@,",keyCity];
-                        
-                        
-            City *insertCity = [NSEntityDescription insertNewObjectForEntityForName:@"City" inManagedObjectContext:dbh.cds.managedObjectContext];
-                        
-            insertCity.name = displayCity;
-            insertCity.cityKey = keyCity;
-            insertCity.images = [NSString stringWithFormat:@"%@,",self.imgFileName];
-                        
-            [dbh.cds saveContext];
-        
-        UIAlertView *alertLoc = [[UIAlertView alloc] initWithTitle:@"New Location!" message:[NSString stringWithFormat:@"Country: %@\nCity: %@", displayCountry, displayCity] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-        
-        [alertLoc show];
-    }
-    
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -508,11 +296,11 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     //loop through countries to get each number of city count
-    for (int i=0; i<sortedCountryNames.count; i++) {
+    for (int i=0; i<self.countryNames.count; i++) {
         
         if (section == i) {
             
-            NSDictionary *temp = [[NSDictionary alloc] initWithDictionary:[[self.countries objectForKey:[sortedCountryNames objectAtIndex:i]] objectForKey:@"cities"]];
+            NSDictionary *temp = [[NSDictionary alloc] initWithDictionary:[[self.countries objectForKey:[self.countryNames objectAtIndex:i]] objectForKey:@"cities"]];
             return temp.count;
         }
     }
@@ -528,19 +316,19 @@
     //temp array to add all cities in current country/section
     NSMutableArray *temp = [[NSMutableArray alloc] init];
     
-    for (NSString *s in [[self.countries objectForKey:[sortedCountryNames objectAtIndex:indexPath.section]] objectForKey:@"cities"]) {
+    for (NSString *city in [[self.countries objectForKey:[self.countryNames objectAtIndex:indexPath.section]] objectForKey:@"cities"]) {
         
-        [temp addObject:s];
+        [temp addObject:city];
     }
     
     //sort array
     NSArray *tempArray = [temp sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
-    
     progressView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(259, 12, 20, 20)];
     progressView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
     
     //set label for each cell according to each section and row
-    cell.textLabel.text = [[[[self.countries objectForKey:[sortedCountryNames objectAtIndex:indexPath.section]] objectForKey:@"cities"] objectForKey:[tempArray objectAtIndex:indexPath.row]] objectForKey:@"name"];
+    cell.textLabel.text = [[[[self.countries objectForKey:[self.countryNames objectAtIndex:indexPath.section]] objectForKey:@"cities"] objectForKey:[tempArray objectAtIndex:indexPath.row]] objectForKey:@"name"];
+
     
     if (inProgress) {
         cell.accessoryView = progressView;
@@ -550,14 +338,11 @@
         [progressView stopAnimating];
         cell.accessoryView = nil;
     }
-
     
     [cell.textLabel setFont:[UIFont fontWithName:@"HeitiTC" size:10]];
     [cell.textLabel setTextColor:[UIColor whiteColor]];
     
-    
     return cell;
-
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -570,25 +355,17 @@
     // Background color
     view.tintColor = [UIColor colorWithRed:54.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:0.8];
     
-    // Text Color
     UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
     [header.textLabel setTextColor:[UIColor darkGrayColor]];
     [header.textLabel setFont:[UIFont fontWithName:@"HeitiTC-Medium" size:19]];
-//    [header.textLabel setShadowColor: [UIColor darkGrayColor]];
-//    [header.textLabel setShadowOffset: CGSizeMake(0, -1.0)];
-    
-    // Another way to set the background color
-    // Note: does not preserve gradient effect of original header
-    //     header.contentView.backgroundColor = [UIColor blackColor];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     
     //51 204 204
+//    NSLog(@"%@",[self.countries objectForKey:[self.countryNames objectAtIndex:section]]);
 
-    return [[self.countries objectForKey:[sortedCountryNames objectAtIndex:section]] objectForKey:@"name"];
-    
-//    return @"section";
+    return [[self.countries objectForKey:[self.countryNames objectAtIndex:section]] objectForKey:@"name"];
 }
 
 -(void)setUpImage:(UIImage *)image andLocation:(CLLocation *)loc{
@@ -620,14 +397,22 @@
                                      
                                      img = image;
                                      self.imgFileName = [NSString stringWithFormat:@"%@",keyCity];
-                                     UIImageWriteToSavedPhotosAlbum(image,self,nil,nil);
-                                     
-                                     [self setUpTableValues];
-                                     [self reinitializeCountriesAndCities];
+
+                                     self.countries = [pre setUpTableValuesForDictionary:self.countries countryName:keyCountry withCountryDisplay:displayCountry cityName:keyCity withCityDisplay:displayCity imgName:self.imgFileName andImage:img];
+                                     [pre reinitializeCountries:self.countries];
+                                     self.countryNames = [pre.sortedCountryNames mutableCopy];
+                                     self.cityNames = [pre.sortedCityNames mutableCopy];
+                                     inProgress = NO;
+                                     [self.tableView reloadData];
                                     
-                                     [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:placemark.location.coordinate.latitude andLongitude:placemark.location.coordinate.longitude];
+                                     NSBlockOperation *insertIntoDB = [NSBlockOperation blockOperationWithBlock:^{
+
+                                         UIImageWriteToSavedPhotosAlbum(image,self,nil,nil);
+                                         
+                                         [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:placemark.location.coordinate.latitude andLongitude:placemark.location.coordinate.longitude];
+                                     }];
                                      
-                                     //                                         NSLog(@"%@",[placemarks objectAtIndex:0]);
+                                     [theQueue addOperation:insertIntoDB];
                                      
                                  } else {
                                      NSLog(@"%@",[error description]);
@@ -636,7 +421,6 @@
     
         }];
         
-
         [theQueue addOperation:searchLocationForImage];
         
         
@@ -648,57 +432,9 @@
         
     }
     
-    
     self.cameraImage = nil;
     self.cameraLocation = nil;
     self.imgFileName = nil;
-    
-}
-
--(NSDictionary *)getDictForCountry:(NSString *)country{
-    
-    NSMutableDictionary *temp = [[NSMutableDictionary alloc]init];
-    
-    for (NSDictionary *d in self.countries) {
-        
-        if ([[self.countries objectForKey:country] isEqual:[self.countries objectForKey:d]]) {
-            
-            temp = [self.countries objectForKey:d];
-        }
-    }
-    
-    return temp;
-}
-
--(void)reinitializeCountriesAndCities{
-    
-    countryNames = [[NSMutableArray alloc] init];
-    cityNames = [[NSMutableArray alloc] init];
-    
-    for (NSString *country in self.countries) {
-        [countryNames addObject:country];
-        for (NSString *city in [[self.countries objectForKey:country] objectForKey:@"cities"]) {
-            [cityNames addObject:city];
-        }
-    }
-    
-    sortedCountryNames = [countryNames sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
-    sortedCityNames = [cityNames sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
-    
-    //        NSLog(@"%@", sortedCountryNames);
-    //        NSLog(@"%@", sortedCityNames);
-    
-//    MapViewController *mVc = [[self.tabBarController viewControllers] objectAtIndex:0];
-//    
-//    mVc.places = self.savedLocations;
-    
-    inProgress = NO;
-    NSInvocationOperation *mainOP = [[NSInvocationOperation alloc] initWithTarget:self.tableView selector:@selector(reloadData) object:nil];
-    
-    [[NSOperationQueue mainQueue] addOperation:mainOP];
-    
-//    [self.tableView reloadData];
-
     
 }
 
@@ -718,7 +454,7 @@
     
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     
-    selectedCountry = [sortedCountryNames objectAtIndex:indexPath.section];
+    selectedCountry = [self.countryNames objectAtIndex:indexPath.section];
     
     NSMutableArray *temp = [[NSMutableArray alloc] init];
     
@@ -730,20 +466,13 @@
     //sort array
     NSArray *tempArray = [temp sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
     
-    //set label for each cell according to each section and row
-    selectedCity = [[[self.countries objectForKey:[sortedCountryNames objectAtIndex:indexPath.section]] objectForKey:@"cities"] objectForKey:[tempArray objectAtIndex:indexPath.row]];
-    
-    
-    //    NSLog(@"%@", selectedCity);
-    
+    selectedCity = [[[self.countries objectForKey:[self.countryNames objectAtIndex:indexPath.section]] objectForKey:@"cities"] objectForKey:[tempArray objectAtIndex:indexPath.row]];
     
     AlbumViewController *aVc = segue.destinationViewController;
     
     aVc.country = [[self.countries objectForKey:selectedCountry] objectForKey:@"name"];
     aVc.city = selectedCity;
     
-    
-    //     NSLog(@"%@ %@", aVc.country, aVc.city);
 }
 
 @end

@@ -22,6 +22,7 @@
 		693115261BA3E05B00ADF1F3 /* pin_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 693115251BA3E05B00ADF1F3 /* pin_blue.png */; };
 		693115281BA3E36C00ADF1F3 /* defaultPerson.png in Resources */ = {isa = PBXBuildFile; fileRef = 693115271BA3E36C00ADF1F3 /* defaultPerson.png */; };
 		69330D7F1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69330D7E1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m */; };
+		6949CA651BA86EC30049F7ED /* PretableSetUp.m in Sources */ = {isa = PBXBuildFile; fileRef = 6949CA641BA86EC30049F7ED /* PretableSetUp.m */; };
 		6970559A1BA3F93C00B5ACCF /* photo-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 697055981BA3F93C00B5ACCF /* photo-7.png */; };
 		6970559B1BA3F93C00B5ACCF /* camera-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 697055991BA3F93C00B5ACCF /* camera-7.png */; };
 		697055A11BA3FFFE00B5ACCF /* CameraImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 697055A01BA3FFFE00B5ACCF /* CameraImageViewController.m */; };
@@ -84,6 +85,8 @@
 		693115271BA3E36C00ADF1F3 /* defaultPerson.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultPerson.png; sourceTree = "<group>"; };
 		69330D7D1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumHeaderCollectionReusableView.h; sourceTree = "<group>"; };
 		69330D7E1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumHeaderCollectionReusableView.m; sourceTree = "<group>"; };
+		6949CA631BA86EC30049F7ED /* PretableSetUp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PretableSetUp.h; sourceTree = "<group>"; };
+		6949CA641BA86EC30049F7ED /* PretableSetUp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PretableSetUp.m; sourceTree = "<group>"; };
 		697055981BA3F93C00B5ACCF /* photo-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo-7.png"; sourceTree = "<group>"; };
 		697055991BA3F93C00B5ACCF /* camera-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-7.png"; sourceTree = "<group>"; };
 		6970559F1BA3FFFE00B5ACCF /* CameraImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraImageViewController.h; sourceTree = "<group>"; };
@@ -179,6 +182,8 @@
 			children = (
 				69E514CD1BA28492007F52D6 /* LocationTableViewController.h */,
 				69E514CE1BA28492007F52D6 /* LocationTableViewController.m */,
+				6949CA631BA86EC30049F7ED /* PretableSetUp.h */,
+				6949CA641BA86EC30049F7ED /* PretableSetUp.m */,
 			);
 			name = LocationAlbums;
 			sourceTree = "<group>";
@@ -487,6 +492,7 @@
 				69E514C91BA28459007F52D6 /* PhotoCollectionViewCell.m in Sources */,
 				69E514CF1BA28492007F52D6 /* LocationTableViewController.m in Sources */,
 				69E514A41BA2843B007F52D6 /* main.m in Sources */,
+				6949CA651BA86EC30049F7ED /* PretableSetUp.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
