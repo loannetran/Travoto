@@ -15,8 +15,6 @@
     self = [super init];
     if (self) {
         self.countries = [[NSMutableDictionary alloc] init];
-        self.savedLocations = [[NSMutableArray alloc] init];
-        self.coder = [[CLGeocoder alloc]init];
         dbh = [[DBHandler alloc] init];
         countryNames = [[NSMutableArray alloc] init];
         cityNames = [[NSMutableArray alloc] init];
@@ -236,7 +234,7 @@
             
             [dbh.cds saveContext];
             
-            UIAlertView *alertLoc = [[UIAlertView alloc] initWithTitle:@"New Location!" message:[NSString stringWithFormat:@"Country: %@\nCity: %@", displayCountry, displayCity] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            UIAlertView *alertLoc = [[UIAlertView alloc] initWithTitle:@"New Location!" message:[NSString stringWithFormat:@"Country: %@\nCity: %@", displayCountry, displayCity] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
             
             [alertLoc show];
             
@@ -308,7 +306,7 @@
         
         
         
-        UIAlertView *alertLoc = [[UIAlertView alloc] initWithTitle:@"New Location!" message:[NSString stringWithFormat:@"Country: %@\nCity: %@", displayCountry, displayCity] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        UIAlertView *alertLoc = [[UIAlertView alloc] initWithTitle:@"New Location!" message:[NSString stringWithFormat:@"Country: %@\nCity: %@", displayCountry, displayCity] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
         
         
         
@@ -386,7 +384,6 @@
     self.sortedCityNames = [cityNames sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
     
 }
-
 
 
 @end

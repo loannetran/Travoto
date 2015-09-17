@@ -22,6 +22,7 @@
     self.manager = [[CLLocationManager alloc] init];
     self.coder = [[CLGeocoder alloc]init];
     dbh = [[DBHandler alloc] init];
+    downloader = [[DataDownloader alloc]init];
     
     self.manager.delegate = self;
     [self.userImg.layer setCornerRadius:65];
@@ -81,60 +82,57 @@
 -(void)setUpMapView{
     
 
+    if (self.internetActive) {
+                        
+            [downloader downloadJSONDataForMapsAndUpdateDB];
+        
         NSArray *fetchedObjects = [dbh fetchAllItemsFromEntityNamed:@"MapLocation"];
+        
         if (fetchedObjects == nil) {
             NSLog(@"Error");
-        } else {
+        }
+        else
+        {
             for (MapLocation *loc in fetchedObjects) {
                 
-                if ([loc.latitude doubleValue] == 0 && [loc.longitude doubleValue] == 0) {
-                    
-                    if (self.internetActive) {
-                        
-                        NSString *place = [NSString stringWithFormat:@"%@ %@",loc.countryName, loc.cityName];
-                        
-                        [self.coder geocodeAddressString:place
-                                       completionHandler:^(NSArray *placemarks, NSError *error) {
-                                           if(!error){
-                                               
-                                               CLPlacemark *placemark = [placemarks objectAtIndex:0];
-                                               NSArray *fetchedObjects = [dbh updateEntity:@"MapLocation" whereAttribute:@"cityName" isEqualTo:loc.cityName];
-                                               
-                                               MapLocation *locationGrabbed = [fetchedObjects objectAtIndex:0];
-                                               locationGrabbed.latitude = [NSNumber numberWithDouble:placemark.location.coordinate.latitude];
-                                               locationGrabbed.longitude = [NSNumber numberWithDouble:placemark.location.coordinate.longitude];
-                                               
-                                               [dbh.cds saveContext];
-                                               
-                                           } else {
-                                               
-                                               NSLog(@"%@",[error description]);
-                                               
-                                               
-                                           }
-                                       }];
-                        
-                    }
-                    
-                }else{
-                    //            NSLog(@"%@",loc.countryName);
-                    CLLocation *location = [[CLLocation alloc] initWithLatitude:[loc.latitude doubleValue] longitude:[loc.longitude doubleValue]];
-                    
-                    [self previousLocations:location atCountry:loc.countryName andCity:loc.cityName];
-
-                }
+                CLLocation *location = [[CLLocation alloc] initWithLatitude:[loc.latitude doubleValue] longitude:[loc.longitude doubleValue]];
+                
+                [self previousLocations:location atCountry:loc.countryName andCity:loc.cityName];
                 
             }
-        }
-        
-
-        if (self.places != 0) {
             
-            for (CLPlacemark *place in self.places) {
-                
-                [self drawThisOnMapAt:place];
+        }
+
+    }
+    else
+    {
+                    
+        NSArray *fetchedObjects = [dbh fetchAllItemsFromEntityNamed:@"MapLocation"];
+        
+        if (fetchedObjects == nil) {
+                NSLog(@"Error");
+        }
+        else
+        {
+            for (MapLocation *loc in fetchedObjects) {
+                            
+            CLLocation *location = [[CLLocation alloc] initWithLatitude:[loc.latitude doubleValue] longitude:[loc.longitude doubleValue]];
+            
+            [self previousLocations:location atCountry:loc.countryName andCity:loc.cityName];
+            
             }
         
+        }
+    
+    }
+    
+     if (self.places != 0) {
+        
+        for (CLPlacemark *place in self.places) {
+            
+            [self drawThisOnMapAt:place];
+        }
+
     }
 
 }

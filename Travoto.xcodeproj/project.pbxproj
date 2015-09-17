@@ -28,6 +28,7 @@
 		697055A11BA3FFFE00B5ACCF /* CameraImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 697055A01BA3FFFE00B5ACCF /* CameraImageViewController.m */; };
 		69738AB91BA3E948003EA7C5 /* home-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 69738AB81BA3E948003EA7C5 /* home-7.png */; };
 		69738ABB1BA3E972003EA7C5 /* paper-map-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 69738ABA1BA3E972003EA7C5 /* paper-map-7.png */; };
+		69BEC3E31BAA916700687B35 /* DataDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BEC3E21BAA916700687B35 /* DataDownloader.m */; };
 		69DF01D51BA6126900AD6746 /* MapLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DF01D41BA6126900AD6746 /* MapLocation.m */; };
 		69E514A41BA2843B007F52D6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E514A31BA2843B007F52D6 /* main.m */; };
 		69E514A71BA2843B007F52D6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E514A61BA2843B007F52D6 /* AppDelegate.m */; };
@@ -93,6 +94,8 @@
 		697055A01BA3FFFE00B5ACCF /* CameraImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraImageViewController.m; sourceTree = "<group>"; };
 		69738AB81BA3E948003EA7C5 /* home-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home-7.png"; sourceTree = "<group>"; };
 		69738ABA1BA3E972003EA7C5 /* paper-map-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paper-map-7.png"; sourceTree = "<group>"; };
+		69BEC3E11BAA916700687B35 /* DataDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataDownloader.h; sourceTree = "<group>"; };
+		69BEC3E21BAA916700687B35 /* DataDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataDownloader.m; sourceTree = "<group>"; };
 		69DF01D31BA6126900AD6746 /* MapLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapLocation.h; path = ../MapLocation.h; sourceTree = "<group>"; };
 		69DF01D41BA6126900AD6746 /* MapLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapLocation.m; path = ../MapLocation.m; sourceTree = "<group>"; };
 		69E5149E1BA2843B007F52D6 /* Travoto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Travoto.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -171,6 +174,8 @@
 				693115231BA3DE4100ADF1F3 /* CustomPinView.m */,
 				6931151D1BA3C44A00ADF1F3 /* MapAnnotation.h */,
 				6931151E1BA3C44A00ADF1F3 /* MapAnnotation.m */,
+				69BEC3E11BAA916700687B35 /* DataDownloader.h */,
+				69BEC3E21BAA916700687B35 /* DataDownloader.m */,
 				6931151A1BA3B70500ADF1F3 /* MapViewController.h */,
 				6931151B1BA3B70500ADF1F3 /* MapViewController.m */,
 			);
@@ -474,6 +479,7 @@
 				69EE64751BA67584003EF65A /* MainTabBarViewController.m in Sources */,
 				693115241BA3DE4100ADF1F3 /* CustomPinView.m in Sources */,
 				691EDC891BA4AB3300BF17F4 /* CoreDataStack.m in Sources */,
+				69BEC3E31BAA916700687B35 /* DataDownloader.m in Sources */,
 				69330D7F1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m in Sources */,
 				691EDC861BA4A98700BF17F4 /* Travoto.xcdatamodeld in Sources */,
 				69EE64671BA63A08003EF65A /* DBHandler.m in Sources */,

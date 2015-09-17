@@ -10,10 +10,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <MapKit/MapKit.h>
 #import "AlbumViewController.h"
-#import <MapKit/MKAnnotation.h>
-#import "MapAnnotation.h"
 #import "MapViewController.h"
-#import "CoreDataStack.h"
 #import "Country.h"
 #import "City.h"
 #import "Image.h"
@@ -24,7 +21,7 @@
 @interface LocationTableViewController : UITableViewController <UIAlertViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,MKMapViewDelegate,CLLocationManagerDelegate>{
     
     CLLocation *location; //location of image
-    NSDate *creationDate; //creation date of image
+//    NSDate *creationDate; //creation date of image
     NSString *currentCountry; //original text of entered country
     NSString *currentCity; //original text of entered city
     NSString *displayCountry; //how country name should be displayed formatted
@@ -33,23 +30,13 @@
     NSString *keyCity; //dictionary key of city
     UIImage *img; //current image selected
     //    NSMutableDictionary *dateDict;
-    NSMutableDictionary *cityDict; //dictionary of cities
-    NSMutableArray *images; //dictionary of images
-    NSMutableDictionary *countryAttr; //country attributes
-    NSMutableDictionary *cityAttr; //city attributes
-//    NSArray *sortedCountryNames; //sorted country names
-//    NSArray *sortedCityNames; //sorted city names
     NSString *selectedCountry;
     NSDictionary *selectedCity;
     UIAlertView *countryAlert;
     DBHandler *dbh;
     MapViewController *mVc;
     PretableSetUp *pre;
-    NSMutableArray *reqCountries;
-    NSMutableArray *reqCities;
-    NSMutableArray *reqImages;
     UIActivityIndicatorView *progressView;
-    BOOL inProgress;
 }
 
 @property (nonatomic,strong) NSDictionary *countries;
@@ -60,6 +47,7 @@
 @property (nonatomic,strong) NSString *imgFileName;
 @property (nonatomic,strong) NSArray *countryNames; //country names
 @property (nonatomic,strong) NSArray *cityNames; //city names
+@property (nonatomic,assign) BOOL inProgress; //city names
 
 
 - (IBAction)addPhotos:(id)sender;

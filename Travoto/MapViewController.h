@@ -14,12 +14,13 @@
 #import "DBHandler.h"
 #import "MapLocation.h"
 #import "AppDelegate.h"
-
+#import "DataDownloader.h"
 
 @interface MapViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate,MKMapViewDelegate,CLLocationManagerDelegate>{
     
         DBHandler *dbh;
         AppDelegate *appD;
+        DataDownloader *downloader;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *welcomeLbl;

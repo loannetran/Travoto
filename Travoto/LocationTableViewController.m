@@ -30,7 +30,7 @@
     pre = [[PretableSetUp alloc]init];
     appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     theQueue = [[NSOperationQueue alloc] init];
-    inProgress = NO;
+    self.inProgress = NO;
     
     //for sequential threading
 //    theQueue.maxConcurrentOperationCount = 1;
@@ -47,10 +47,18 @@
 -(void)viewDidAppear:(BOOL)animated{
     
     [self.tabBarController.tabBar setHidden:NO];
+    
     if (self.cameraImage != nil) {
-        inProgress = YES;
+        
+        if([self.countries count] == 0)
+        {
+            self.inProgress = NO;
+        }else{
+            self.inProgress = YES;
+        }
+        
         [self.tableView reloadData];
-
+        
         if (self.cameraLocation == nil) {
             CLLocation *loc = [[CLLocation alloc] initWithLatitude:0 longitude:0];
             self.cameraLocation = loc;
@@ -58,7 +66,13 @@
         
         [self setUpImage:self.cameraImage andLocation:self.cameraLocation];
         
+    }else{
+        
+//        self.inProgress = NO;
+//        [self.tableView reloadData];
+       
     }
+
 }
 
 - (IBAction)addPhotos:(id)sender {
@@ -67,7 +81,11 @@
     controller.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     controller.delegate = self;
     
-    [self presentViewController:controller animated:YES completion:nil];
+    [self presentViewController:controller animated:YES completion:^{
+        
+        self.inProgress = YES;
+        [self.tableView reloadData];
+    }];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
@@ -113,9 +131,8 @@
                   failureBlock:failureblock];
     
     [self dismissViewControllerAnimated:YES completion:^{
-        
-        inProgress = YES;
-        [self.tableView reloadData];
+//            self.inProgress = YES;
+//        [self.tableView reloadData];
     }];
     
 }
@@ -164,6 +181,7 @@
                                  [pre reinitializeCountries:self.countries];
                                  self.countryNames = pre.sortedCountryNames;
                                  self.cityNames = pre.sortedCityNames;
+                                 self.inProgress = NO;
                                  [self.tableView reloadData];
                                  
                                 [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:loc.coordinate.latitude andLongitude:loc.coordinate.longitude];
@@ -190,13 +208,10 @@
         
         currentCountry = [alertView textFieldAtIndex:0].text;
         currentCity = [alertView textFieldAtIndex:1].text;
-        
     }else{
         
-        if (inProgress) {
-            inProgress = NO;
-            [self.tableView reloadData];
-        }
+        self.inProgress = NO;
+        [self.tableView reloadData];
     }
 }
 
@@ -230,7 +245,7 @@
                                         [pre reinitializeCountries:self.countries];
                                         self.countryNames = pre.sortedCountryNames;
                                         self.cityNames = pre.sortedCityNames;
-                                       inProgress = NO;
+                                        self.inProgress = NO;
                                         [self.tableView reloadData];
 
                                         [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:placemark.location.coordinate.latitude andLongitude:placemark.location.coordinate.longitude];
@@ -259,7 +274,7 @@
                 [pre reinitializeCountries:self.countries];
                 self.countryNames = pre.sortedCountryNames;
                 self.cityNames = pre.sortedCityNames;
-                inProgress = NO;
+//                self.inProgress = NO;
                 [self.tableView reloadData];
                 
                 [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:0 andLongitude:0];
@@ -317,11 +332,14 @@
     
     //set label for each cell according to each section and row
     cell.textLabel.text = [[[[self.countries objectForKey:[self.countryNames objectAtIndex:indexPath.section]] objectForKey:@"cities"] objectForKey:[tempArray objectAtIndex:indexPath.row]] objectForKey:@"name"];
-
     
-    if (inProgress) {
+    if (self.inProgress) {
         cell.accessoryView = progressView;
         [progressView startAnimating];
+        if(indexPath.section == (self.countries.count -1) && indexPath.row == (tempArray.count -1))
+        {
+            self.inProgress = NO;
+        }
     }else{
         
         [progressView stopAnimating];
@@ -363,6 +381,7 @@
         
         NSBlockOperation *searchLocationForImage = [NSBlockOperation blockOperationWithBlock:^{
             
+            
             [self.coder reverseGeocodeLocation:loc
                              completionHandler:^(NSArray *placemarks, NSError *error) {
                                  if(!error){
@@ -376,35 +395,46 @@
                                      
                                      if (currentCity == nil) {
                                          currentCity = placemark.administrativeArea;
+                                         
                                      }
                                      
-                                     displayCountry = currentCountry;
-                                     displayCity = currentCity;
-                                     
-                                     keyCountry = [[currentCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
-                                     keyCity = [[currentCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
-                                     
-                                     img = image;
-                                     self.imgFileName = [NSString stringWithFormat:@"%@",keyCity];
-
-                                     self.countries = [pre setUpTableValuesForDictionary:self.countries countryName:keyCountry withCountryDisplay:displayCountry cityName:keyCity withCityDisplay:displayCity imgName:self.imgFileName andImage:img];
-                                     [pre reinitializeCountries:self.countries];
-                                     self.countryNames = [pre.sortedCountryNames mutableCopy];
-                                     self.cityNames = [pre.sortedCityNames mutableCopy];
-                                     inProgress = NO;
-                                     [self.tableView reloadData];
-                                    
+                                     if(currentCountry == nil || currentCity == nil)
+                                     {
+                                         [countryAlert setMessage:@"Oops! You lost internet temporarily or have disabled network connection and/or location services, please enter your location manually"];
+                                         img = image;
+                                         UIImageWriteToSavedPhotosAlbum(image,self,nil,nil);
+                                         [countryAlert show];
+                                     }else{
+                                         
+                                         displayCountry = currentCountry;
+                                         displayCity = currentCity;
+                                         
+                                         keyCountry = [[currentCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                                         keyCity = [[currentCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                                         
+                                         img = image;
+                                         self.imgFileName = [NSString stringWithFormat:@"%@",keyCity];
+                                         
+                                         self.countries = [pre setUpTableValuesForDictionary:self.countries countryName:keyCountry withCountryDisplay:displayCountry cityName:keyCity withCityDisplay:displayCity imgName:self.imgFileName andImage:img];
+                                         [pre reinitializeCountries:self.countries];
+                                         self.countryNames = [pre.sortedCountryNames mutableCopy];
+                                         self.cityNames = [pre.sortedCityNames mutableCopy];
+                                         self.inProgress = NO;
+                                         [self.tableView reloadData];
+                                         
                                          UIImageWriteToSavedPhotosAlbum(image,self,nil,nil);
                                          
                                          [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:placemark.location.coordinate.latitude andLongitude:placemark.location.coordinate.longitude];
-                                    
-                                     
+                                         
+                                     }
+ 
                                  } else {
                                      NSLog(@"%@",[error description]);
                                  }
                              }];
     
         }];
+            
         
         [theQueue addOperation:searchLocationForImage];
         
@@ -413,6 +443,8 @@
 
         img = image;
         UIImageWriteToSavedPhotosAlbum(image,self,nil,nil);
+        [countryAlert setMessage:@"Network connection and/or location services is turned off, please enter your location manually"];
+
         [countryAlert show];
         
     }
@@ -425,7 +457,11 @@
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+        self.inProgress = NO;
+        [self.tableView reloadData];
+    }];
     
 }
 
@@ -458,6 +494,12 @@
     aVc.country = [[self.countries objectForKey:selectedCountry] objectForKey:@"name"];
     aVc.city = selectedCity;
     
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    
+    self.inProgress = NO;
+    [self.tableView reloadData];
 }
 
 @end
