@@ -76,7 +76,7 @@
     NSInteger pageCount = self.pageImages.count;
     
     // 2
-    self.pageControl.currentPage = self.currentImage;
+    self.pageControl.currentPage = (int)self.currentImage;
     self.pageControl.numberOfPages = pageCount;
     
     // 3

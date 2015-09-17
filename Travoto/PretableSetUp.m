@@ -64,7 +64,7 @@
     }
     
     if (reqCountries != nil) {
-        self.countries = [[dbh createDictionaryFromCountries:reqCountries andCities:reqCities andImages:reqImages]mutableCopy];
+        self.countries = [[dbh createDictionaryFromCountries:reqCountries andCities:reqCities andImages:reqImages] mutableCopy];
     }
     
     
@@ -155,7 +155,7 @@
                         
                         NSString *imgString = cityGrabbed.images;
                         
-                        cityGrabbed.images = [imgString stringByAppendingString:[NSString stringWithFormat:@"%@,",self.imgFileName]];
+                        cityGrabbed.images = [imgString stringByAppendingString:[NSString stringWithFormat:@",%@",self.imgFileName]];
                         
                         [dbh.cds saveContext];
                         
@@ -173,8 +173,6 @@
         }
         //if city for country does not exist
         else{
-            
-            
             
             //get dictionary for current country
             
@@ -216,7 +214,7 @@
                 
                 NSString *cityString = countryGrabbed.cities;
                 
-                countryGrabbed.cities = [cityString stringByAppendingString:[NSString stringWithFormat:@"%@,",cityName]];
+                countryGrabbed.cities = [cityString stringByAppendingString:[NSString stringWithFormat:@",%@",cityName]];
                 
                 //                NSLog(@"%@", countryGrabbed.cities);
                 
@@ -230,11 +228,11 @@
             
             insertCity.cityKey = cityName;
             
-            insertCity.images = [NSString stringWithFormat:@"%@,",imgName];
+            insertCity.images = [NSString stringWithFormat:@"%@",imgName];
             
             
             
-            [dbh insertImageForDb:img withName:imgName];
+            [dbh insertImageForDb:image withName:imgName];
             
             [dbh.cds saveContext];
             
@@ -249,8 +247,6 @@
         images = [[NSMutableArray alloc] init];
         
         [images addObject:image];
-        
-        
         
         cityAttr = [[NSMutableDictionary alloc] init];
         
@@ -290,7 +286,7 @@
         
         insertCountry.name = displayCountry;
         
-        insertCountry.cities = [NSString stringWithFormat:@"%@,",cityName];
+        insertCountry.cities = [NSString stringWithFormat:@"%@",cityName];
         
         
         
@@ -304,7 +300,7 @@
         
         insertCity.cityKey = cityName;
         
-        insertCity.images = [NSString stringWithFormat:@"%@,",imgName];
+        insertCity.images = [NSString stringWithFormat:@"%@",imgName];
         
         
         

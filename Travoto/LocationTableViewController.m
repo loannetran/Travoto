@@ -166,11 +166,8 @@
                                  self.cityNames = pre.sortedCityNames;
                                  [self.tableView reloadData];
                                  
-                                 NSBlockOperation *insertIntoDB = [NSBlockOperation blockOperationWithBlock:^{
-                                     [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:loc.coordinate.latitude andLongitude:loc.coordinate.longitude];
-                                 }];
-                                 
-                                 [theQueue addOperation:insertIntoDB];
+                                [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:loc.coordinate.latitude andLongitude:loc.coordinate.longitude];
+                            
                                  
                              } else {
                                  NSLog(@"%@",[error description]);
@@ -236,12 +233,7 @@
                                        inProgress = NO;
                                         [self.tableView reloadData];
 
-                                       NSBlockOperation *insertIntoDB = [NSBlockOperation blockOperationWithBlock:^{
-                                           [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:placemark.location.coordinate.latitude andLongitude:placemark.location.coordinate.longitude];
-                                           
-                                       }];
-                                       
-                                       [theQueue addOperation:insertIntoDB];
+                                        [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:placemark.location.coordinate.latitude andLongitude:placemark.location.coordinate.longitude];
 
                                    } else {
                                        
@@ -270,11 +262,8 @@
                 inProgress = NO;
                 [self.tableView reloadData];
                 
-                NSBlockOperation *insertIntoDB = [NSBlockOperation blockOperationWithBlock:^{
-                    [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:0 andLongitude:0];
-                }];
-                
-                [theQueue addOperation:insertIntoDB];
+                [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:0 andLongitude:0];
+
             }
             
         }else{
@@ -405,14 +394,10 @@
                                      inProgress = NO;
                                      [self.tableView reloadData];
                                     
-                                     NSBlockOperation *insertIntoDB = [NSBlockOperation blockOperationWithBlock:^{
-
                                          UIImageWriteToSavedPhotosAlbum(image,self,nil,nil);
                                          
                                          [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:placemark.location.coordinate.latitude andLongitude:placemark.location.coordinate.longitude];
-                                     }];
-                                     
-                                     [theQueue addOperation:insertIntoDB];
+                                    
                                      
                                  } else {
                                      NSLog(@"%@",[error description]);
