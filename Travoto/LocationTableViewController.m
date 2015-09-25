@@ -12,6 +12,7 @@
     
     NSOperationQueue *theQueue;
     AppDelegate *appDelegate;
+    BOOL isFiltered;
 }
 
 @end
@@ -325,6 +326,13 @@
         [temp addObject:city];
     }
     
+//    if(isFiltered)
+//    {
+//        
+//    }else{
+//        
+//    }
+    
     //sort array
     NSArray *tempArray = [temp sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
     progressView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(259, 12, 20, 20)];
@@ -494,6 +502,39 @@
     aVc.country = [[self.countries objectForKey:selectedCountry] objectForKey:@"name"];
     aVc.city = selectedCity;
     
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    
+//    UITextField *textField = [searchBar valueForKey:@"_searchField"];
+//    textField.clearButtonMode = UITextFieldViewModeNever;
+//    
+//    if(searchText.length == 0)
+//    {
+//        isFiltered = NO;
+//        
+//    }else
+//    {
+//        isFiltered = YES;
+//        
+//        self.filteredCountriesArray = [[NSMutableArray alloc] init];
+//        
+//        for (NSString *country in self.countryNames)
+//        {
+//            NSString *currentCountryName = [NSString stringWithFormat:@"%@", country];
+//            
+//            NSRange countryRange = [name rangeOfString:searchBar.text options:NSCaseInsensitiveSearch];
+//            
+//            if(countryRange.location != NSNotFound)
+//            {
+//                [self.filteredCountryArray addObject:champ];
+//            }
+//        }
+//        
+//    }
+//    
+//    [self.tableView reloadData];
+
 }
 
 -(void)viewDidDisappear:(BOOL)animated{

@@ -13,7 +13,7 @@
     NSArray *arrayOfImages;
     UIImage *currentImage;
     EnlargeImageView *enlargeImg;
-    long currentPath;
+    int currentPath;
 
 }
 
@@ -45,10 +45,17 @@
 
 }
 
+//-(void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath{
+//    
+//    
+//}
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    currentImage = [arrayOfImages objectAtIndex:indexPath.row];
-    currentPath = indexPath.row;
+    currentImage = [arrayOfImages objectAtIndex:indexPath.row];;
+    
+    currentPath = (int)indexPath.row;
+    
     [self performSegueWithIdentifier:@"slideshow" sender:self];
     
 //    [self animateView];
@@ -146,7 +153,7 @@
      ScrollImagesViewController *sVc = segue.destinationViewController;
      
      sVc.imageArray = arrayOfImages;
-     sVc.currentImage = currentPath;
+     sVc.currentImage = currentPath+1;
      
  }
 

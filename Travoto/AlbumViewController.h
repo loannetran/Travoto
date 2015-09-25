@@ -16,5 +16,6 @@
 
 @property (nonatomic, strong) NSString *country;
 @property (nonatomic, strong) NSDictionary *city;
+@property (weak, nonatomic) IBOutlet UICollectionView *imageCollectionView;
 
 @end

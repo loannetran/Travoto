@@ -18,7 +18,7 @@
 #import "DBHandler.h"
 #import "PretableSetUp.h"
 
-@interface LocationTableViewController : UITableViewController <UIAlertViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,MKMapViewDelegate,CLLocationManagerDelegate>{
+@interface LocationTableViewController : UITableViewController <UIAlertViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,MKMapViewDelegate,CLLocationManagerDelegate,UISearchBarDelegate, UISearchDisplayDelegate>{
     
     CLLocation *location; //location of image
 //    NSDate *creationDate; //creation date of image
@@ -47,7 +47,9 @@
 @property (nonatomic,strong) NSString *imgFileName;
 @property (nonatomic,strong) NSArray *countryNames; //country names
 @property (nonatomic,strong) NSArray *cityNames; //city names
-@property (nonatomic,assign) BOOL inProgress; //city names
+@property (nonatomic,assign) BOOL inProgress;
+//@property (nonatomic,strong) NSMutableArray *filteredCountriesArray;
+//@property IBOutlet UISearchBar *searchBar;
 
 
 - (IBAction)addPhotos:(id)sender;

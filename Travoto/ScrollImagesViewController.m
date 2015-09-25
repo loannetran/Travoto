@@ -39,6 +39,7 @@
     // First, determine which page is currently visible
     CGFloat pageWidth = self.scrollView.frame.size.width;
     NSInteger page = (NSInteger)floor((self.scrollView.contentOffset.x * 2.0f + pageWidth) / (pageWidth * 2.0f));
+
     
     // Update the page control
     self.pageControl.currentPage = page;
@@ -53,7 +54,7 @@
     }
     
     // Load pages in our range
-    for (NSInteger i=firstPage; i<=lastPage; i++) {
+    for (NSInteger i=page; i<=lastPage; i++) {
         [self loadPage:i];
     }
     
@@ -76,7 +77,7 @@
     NSInteger pageCount = self.pageImages.count;
     
     // 2
-    self.pageControl.currentPage = (int)self.currentImage;
+    self.pageControl.currentPage = self.currentImage+1;
     self.pageControl.numberOfPages = pageCount;
     
     // 3
