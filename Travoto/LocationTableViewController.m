@@ -43,6 +43,20 @@
     self.cityNames = pre.sortedCityNames;
     [self.tableView reloadData];
 //    [pre removeEverythingFromDB];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self
+                                   action:@selector(dismissKeyboard)];
+    tap.cancelsTouchesInView = NO;
+    
+    [self.view addGestureRecognizer:tap];
+}
+
+-(void)dismissKeyboard {
+    
+    if ([self.searchBar canResignFirstResponder]) {
+            [self.searchBar resignFirstResponder];
+    }
+
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -546,8 +560,8 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
     
-    UITextField *textField = [searchBar valueForKey:@"_searchField"];
-    textField.clearButtonMode = UITextFieldViewModeNever;
+//    UITextField *textField = [searchBar valueForKey:@"_searchField"];
+//    textField.clearButtonMode = UITextFieldViewModeNever;
     
     if(searchText.length == 0)
     {
@@ -581,6 +595,11 @@
     
     [self.tableView reloadData];
 
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
+    
+    [self.searchBar resignFirstResponder];
 }
 
 -(void)viewDidDisappear:(BOOL)animated{

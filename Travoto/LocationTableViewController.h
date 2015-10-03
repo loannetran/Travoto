@@ -18,7 +18,7 @@
 #import "DBHandler.h"
 #import "PretableSetUp.h"
 
-@interface LocationTableViewController : UITableViewController <UIAlertViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,MKMapViewDelegate,CLLocationManagerDelegate,UISearchBarDelegate, UISearchDisplayDelegate>{
+@interface LocationTableViewController : UITableViewController <UIAlertViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,MKMapViewDelegate,CLLocationManagerDelegate,UISearchBarDelegate>{
     
     CLLocation *location; //location of image
 //    NSDate *creationDate; //creation date of image
