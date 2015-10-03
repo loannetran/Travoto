@@ -16,7 +16,7 @@
     self = [super init];
     if (self) {
         
-        self.image = [UIImage imageNamed:@"pin_blue.png"];
+        self.image = [UIImage imageNamed:@"pin.png"];
         self.enabled = YES;
         self.canShowCallout = YES;
         

@@ -48,8 +48,10 @@
 @property (nonatomic,strong) NSArray *countryNames; //country names
 @property (nonatomic,strong) NSArray *cityNames; //city names
 @property (nonatomic,assign) BOOL inProgress;
-//@property (nonatomic,strong) NSMutableArray *filteredCountriesArray;
-//@property IBOutlet UISearchBar *searchBar;
+@property (nonatomic,strong) NSMutableDictionary *filteredCountriesDict;
+@property (nonatomic,strong) NSMutableArray *filteredCountryNames;
+@property (nonatomic,strong) NSArray *sortedFilteredCountryNames;
+@property IBOutlet UISearchBar *searchBar;
 
 
 - (IBAction)addPhotos:(id)sender;
