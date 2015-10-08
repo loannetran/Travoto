@@ -43,6 +43,20 @@
     self.cityNames = pre.sortedCityNames;
     [self.tableView reloadData];
 //    [pre removeEverythingFromDB];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self
+                                   action:@selector(dismissKeyboard)];
+    tap.cancelsTouchesInView = NO;
+    
+    [self.view addGestureRecognizer:tap];
+}
+
+-(void)dismissKeyboard {
+    
+    if ([self.searchBar canResignFirstResponder]) {
+            [self.searchBar resignFirstResponder];
+    }
+
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -294,20 +308,41 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
     //number of sections depends on number of countries
-    return self.countries.count;
+    if (isFiltered) {
+        return self.filteredCountriesDict.count;
+    }else{
+         return self.countries.count;
+    }
 
+    return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    //loop through countries to get each number of city count
-    for (int i=0; i<self.countryNames.count; i++) {
+    if (isFiltered) {
         
-        if (section == i) {
+        //loop through countries to get each number of city count
+        for (int i=0; i<self.sortedFilteredCountryNames.count; i++) {
             
-            NSDictionary *temp = [[NSDictionary alloc] initWithDictionary:[[self.countries objectForKey:[self.countryNames objectAtIndex:i]] objectForKey:@"cities"]];
-            return temp.count;
+            if (section == i) {
+                
+                NSDictionary *temp = [[NSDictionary alloc] initWithDictionary:[[self.filteredCountriesDict objectForKey:[self.sortedFilteredCountryNames objectAtIndex:i]] objectForKey:@"cities"]];
+                return temp.count;
+            }
         }
+        
+    }else{
+        
+        //loop through countries to get each number of city count
+        for (int i=0; i<self.countryNames.count; i++) {
+            
+            if (section == i) {
+                
+                NSDictionary *temp = [[NSDictionary alloc] initWithDictionary:[[self.countries objectForKey:[self.countryNames objectAtIndex:i]] objectForKey:@"cities"]];
+                return temp.count;
+            }
+        }
+        
     }
     
     return 0;
@@ -320,26 +355,39 @@
     
     //temp array to add all cities in current country/section
     NSMutableArray *temp = [[NSMutableArray alloc] init];
+    NSArray *tempArray;
     
-    for (NSString *city in [[self.countries objectForKey:[self.countryNames objectAtIndex:indexPath.section]] objectForKey:@"cities"]) {
+    if(isFiltered)
+    {
+        for (NSString *city in [[self.filteredCountriesDict objectForKey:[self.sortedFilteredCountryNames objectAtIndex:indexPath.section]] objectForKey:@"cities"]) {
+            
+            [temp addObject:city];
+        }
         
-        [temp addObject:city];
+        tempArray = [temp sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+        progressView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(259, 12, 20, 20)];
+        progressView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
+        
+        //set label for each cell according to each section and row
+        cell.textLabel.text = [[[[self.filteredCountriesDict objectForKey:[self.sortedFilteredCountryNames objectAtIndex:indexPath.section]] objectForKey:@"cities"] objectForKey:[tempArray objectAtIndex:indexPath.row]] objectForKey:@"name"];
+
+        
+    }else{
+        
+        for (NSString *city in [[self.countries objectForKey:[self.countryNames objectAtIndex:indexPath.section]] objectForKey:@"cities"]) {
+            
+            [temp addObject:city];
+        }
+        
+        //sort array
+        tempArray = [temp sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+        progressView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(259, 12, 20, 20)];
+        progressView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
+        
+        //set label for each cell according to each section and row
+        cell.textLabel.text = [[[[self.countries objectForKey:[self.countryNames objectAtIndex:indexPath.section]] objectForKey:@"cities"] objectForKey:[tempArray objectAtIndex:indexPath.row]] objectForKey:@"name"];
+
     }
-    
-//    if(isFiltered)
-//    {
-//        
-//    }else{
-//        
-//    }
-    
-    //sort array
-    NSArray *tempArray = [temp sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
-    progressView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(259, 12, 20, 20)];
-    progressView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
-    
-    //set label for each cell according to each section and row
-    cell.textLabel.text = [[[[self.countries objectForKey:[self.countryNames objectAtIndex:indexPath.section]] objectForKey:@"cities"] objectForKey:[tempArray objectAtIndex:indexPath.row]] objectForKey:@"name"];
     
     if (self.inProgress) {
         cell.accessoryView = progressView;
@@ -380,7 +428,13 @@
     //51 204 204
 //    NSLog(@"%@",[self.countries objectForKey:[self.countryNames objectAtIndex:section]]);
 
-    return [[self.countries objectForKey:[self.countryNames objectAtIndex:section]] objectForKey:@"name"];
+    if (isFiltered) {
+        return [[self.filteredCountriesDict objectForKey:[self.sortedFilteredCountryNames objectAtIndex:section]] objectForKey:@"name"];
+
+    }else{
+        return [[self.countries objectForKey:[self.countryNames objectAtIndex:section]] objectForKey:@"name"];
+    }
+    
 }
 
 -(void)setUpImage:(UIImage *)image andLocation:(CLLocation *)loc{
@@ -508,33 +562,44 @@
     
 //    UITextField *textField = [searchBar valueForKey:@"_searchField"];
 //    textField.clearButtonMode = UITextFieldViewModeNever;
-//    
-//    if(searchText.length == 0)
-//    {
-//        isFiltered = NO;
-//        
-//    }else
-//    {
-//        isFiltered = YES;
-//        
-//        self.filteredCountriesArray = [[NSMutableArray alloc] init];
-//        
-//        for (NSString *country in self.countryNames)
-//        {
-//            NSString *currentCountryName = [NSString stringWithFormat:@"%@", country];
-//            
-//            NSRange countryRange = [name rangeOfString:searchBar.text options:NSCaseInsensitiveSearch];
-//            
-//            if(countryRange.location != NSNotFound)
-//            {
-//                [self.filteredCountryArray addObject:champ];
-//            }
-//        }
-//        
-//    }
-//    
-//    [self.tableView reloadData];
+    
+    if(searchText.length == 0)
+    {
+        isFiltered = NO;
+        
+    }else
+    {
+        isFiltered = YES;
+        
+        self.filteredCountriesDict = [[NSMutableDictionary alloc] init];
+        self.filteredCountryNames = [[NSMutableArray alloc] init];
+        
+        for (NSString *country in self.countries)
+        {
+            NSString *currentCountryName = [NSString stringWithFormat:@"%@", country];
+            
+            NSRange countryRange = [currentCountryName rangeOfString:searchBar.text options:NSCaseInsensitiveSearch];
+            
+            if(countryRange.location != NSNotFound)
+            {
+                [self.filteredCountryNames addObject:currentCountryName];
+                
+                [self.filteredCountriesDict setObject:[self.countries objectForKey:currentCountryName] forKey:currentCountryName];
+            }
+        }
+        
+        self.sortedFilteredCountryNames = [self.filteredCountryNames sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+        
+    }
+    
+    
+    [self.tableView reloadData];
 
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
+    
+    [self.searchBar resignFirstResponder];
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
