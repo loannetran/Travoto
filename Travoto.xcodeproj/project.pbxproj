@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		691300A01BC6CF7E00D34BC7 /* travAlbum.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6913009A1BC6CF7E00D34BC7 /* travAlbum.jpg */; };
+		691300A11BC6CF7E00D34BC7 /* travImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6913009B1BC6CF7E00D34BC7 /* travImage.jpg */; };
+		691300A21BC6CF7E00D34BC7 /* travLocAlbum.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6913009C1BC6CF7E00D34BC7 /* travLocAlbum.jpg */; };
+		691300A31BC6CF7E00D34BC7 /* travLogin.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6913009D1BC6CF7E00D34BC7 /* travLogin.jpg */; };
+		691300A41BC6CF7E00D34BC7 /* travMap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6913009E1BC6CF7E00D34BC7 /* travMap.jpg */; };
+		691300A51BC6CF7E00D34BC7 /* travNewLoc.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6913009F1BC6CF7E00D34BC7 /* travNewLoc.jpg */; };
 		691EDC471BA4A4AB00BF17F4 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 691EDC461BA4A4AB00BF17F4 /* CoreData.framework */; };
 		691EDC861BA4A98700BF17F4 /* Travoto.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 691EDC841BA4A98700BF17F4 /* Travoto.xcdatamodeld */; };
 		691EDC891BA4AB3300BF17F4 /* CoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 691EDC881BA4AB3300BF17F4 /* CoreDataStack.m */; };
@@ -60,6 +66,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6913009A1BC6CF7E00D34BC7 /* travAlbum.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = travAlbum.jpg; sourceTree = "<group>"; };
+		6913009B1BC6CF7E00D34BC7 /* travImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = travImage.jpg; sourceTree = "<group>"; };
+		6913009C1BC6CF7E00D34BC7 /* travLocAlbum.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = travLocAlbum.jpg; sourceTree = "<group>"; };
+		6913009D1BC6CF7E00D34BC7 /* travLogin.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = travLogin.jpg; sourceTree = "<group>"; };
+		6913009E1BC6CF7E00D34BC7 /* travMap.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = travMap.jpg; sourceTree = "<group>"; };
+		6913009F1BC6CF7E00D34BC7 /* travNewLoc.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = travNewLoc.jpg; sourceTree = "<group>"; };
 		691EDC461BA4A4AB00BF17F4 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		691EDC851BA4A98700BF17F4 /* Travoto.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Travoto.xcdatamodel; sourceTree = "<group>"; };
 		691EDC871BA4AB3300BF17F4 /* CoreDataStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataStack.h; sourceTree = "<group>"; };
@@ -253,6 +265,12 @@
 		69E514A01BA2843B007F52D6 /* Travoto */ = {
 			isa = PBXGroup;
 			children = (
+				6913009A1BC6CF7E00D34BC7 /* travAlbum.jpg */,
+				6913009B1BC6CF7E00D34BC7 /* travImage.jpg */,
+				6913009C1BC6CF7E00D34BC7 /* travLocAlbum.jpg */,
+				6913009D1BC6CF7E00D34BC7 /* travLogin.jpg */,
+				6913009E1BC6CF7E00D34BC7 /* travMap.jpg */,
+				6913009F1BC6CF7E00D34BC7 /* travNewLoc.jpg */,
 				697055A81BA4213300B5ACCF /* Main */,
 				69EE64701BA67315003EF65A /* Login */,
 				697055A51BA420FB00B5ACCF /* Home */,
@@ -452,12 +470,18 @@
 				69EE64801BA68602003EF65A /* icon120.png in Resources */,
 				69E514AD1BA2843B007F52D6 /* Main.storyboard in Resources */,
 				69E514B21BA2843B007F52D6 /* LaunchScreen.xib in Resources */,
+				691300A41BC6CF7E00D34BC7 /* travMap.jpg in Resources */,
 				6970559B1BA3F93C00B5ACCF /* camera-7.png in Resources */,
 				6970559A1BA3F93C00B5ACCF /* photo-7.png in Resources */,
+				691300A31BC6CF7E00D34BC7 /* travLogin.jpg in Resources */,
 				69738ABB1BA3E972003EA7C5 /* paper-map-7.png in Resources */,
 				69EE64811BA68602003EF65A /* icon180.png in Resources */,
 				69F4FFD71BC01FDA0074B79B /* pin.png in Resources */,
+				691300A01BC6CF7E00D34BC7 /* travAlbum.jpg in Resources */,
+				691300A21BC6CF7E00D34BC7 /* travLocAlbum.jpg in Resources */,
+				691300A11BC6CF7E00D34BC7 /* travImage.jpg in Resources */,
 				69E514AF1BA2843B007F52D6 /* Images.xcassets in Resources */,
+				691300A51BC6CF7E00D34BC7 /* travNewLoc.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
