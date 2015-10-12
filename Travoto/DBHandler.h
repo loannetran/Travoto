@@ -20,6 +20,7 @@
 
 -(NSArray *)fetchAllItemsFromEntityNamed:(NSString *)entityName;
 -(void)deleteAllObjectsIn:(NSString *)entity;
+-(void)deleteObjectIn:(NSString *)entity whereAttribute:(NSString *)attr isEqualTo:(NSString *)value;
 -(void)insertImageForDb:(UIImage *)imgToInsert withName:(NSString *)name;
 -(void)insertMapLocationForCountry:(NSString *)country andCity:(NSString *)city withLatitude:(CLLocationDegrees)lat andLongitude:(CLLocationDegrees)lo;
 -(NSArray *)updateEntity:(NSString *)entity whereAttribute:(NSString *)attr isEqualTo:(NSString *)value;

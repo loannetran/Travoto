@@ -8,13 +8,7 @@
 
 #import "AlbumViewController.h"
 
-@interface AlbumViewController (){
-    
-    NSArray *arrayOfImages;
-    UIImage *currentImage;
-    int currentPath;
-
-}
+@interface AlbumViewController ()
 
 @end
 
@@ -25,6 +19,7 @@
     // Do any additional setup after loading the view.
     
     [self.tabBarController.tabBar setHidden:YES];
+    dbh = [[DBHandler alloc] init];
     
 //    NSLog(@"%@",self.country);
 //    NSLog(@"%@",self.city);
@@ -36,11 +31,6 @@
 
 //    [self.cityLbl setText:[self.city objectForKey:@"name"]];
 }
-
-//-(void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath{
-//    
-//    
-//}
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -94,6 +84,120 @@
     return reusableview;
 }
 
+
+- (IBAction)deleteItems:(id)sender {
+    
+    UIAlertController *deleteAlert = [UIAlertController alertControllerWithTitle:@"" message:@"Items will be deleted, this action cannot be undone" preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *del = [UIAlertAction actionWithTitle:@"Delete" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+        NSMutableArray *deleteCells = [[NSMutableArray alloc] init];
+        
+        for (UICollectionViewCell *cell in self.imageCollectionView.visibleCells) {
+            if (cell.alpha == 1) {
+                NSIndexPath *indexPath = [self.imageCollectionView indexPathForCell:cell];
+                [deleteCells addObject:indexPath];
+                
+            }
+        }
+        
+        NSArray *temp = [dbh fetchAllItemsFromEntityNamed:@"Image"];
+        NSMutableArray *deleteImageNames = [[NSMutableArray alloc] init];
+        
+        NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
+        for (NSIndexPath *itemPath  in deleteCells) {
+            [indexSet addIndex:itemPath.row];
+            NSData *newImg = UIImagePNGRepresentation([arrayOfImages objectAtIndex:itemPath.row]);
+            
+            BOOL imgExists = NO;
+            NSString *imgName;
+            
+            for (int i = 0; i<temp.count; i++) {
+                
+                Image *img = [temp objectAtIndex:i];
+                
+                NSData *oldImg = UIImagePNGRepresentation(img.image);
+                
+                if ([newImg isEqual:oldImg]) {
+                    
+                    imgName = img.imageName;
+                    [deleteImageNames addObject:imgName];
+                    break;
+                    
+                }else{
+                    imgExists = NO;
+                }
+                
+            }
+            
+        }
+        
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+            
+            for (NSString *name in deleteImageNames) {
+                [dbh deleteObjectIn:@"Image" whereAttribute:@"imageName" isEqualTo:name];
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                [arrayOfImages removeObjectsAtIndexes:indexSet];
+                [self.imageCollectionView deleteItemsAtIndexPaths:deleteCells];
+                
+                isSelected = NO;
+                self.selectBtn.title = @"Select";
+                for (UICollectionViewCell *cell in self.imageCollectionView.visibleCells) {
+                    cell.alpha = 1;
+                }
+                [self.deleteToolbar setHidden:YES];
+                
+            });
+        });
+
+    }];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:nil];
+    
+    [deleteAlert addAction:del];
+    [deleteAlert addAction:cancel];
+    [self presentViewController:deleteAlert animated:YES completion:nil];
+}
+
+- (IBAction)selectItems:(id)sender {
+    
+    if (isSelected) {
+        isSelected = NO;
+        self.selectBtn.title = @"Select";
+        for (UICollectionViewCell *cell in self.imageCollectionView.visibleCells) {
+            cell.alpha = 1;
+        }
+        [self.deleteToolbar setHidden:YES];
+    }else{
+        isSelected = YES;
+        for (UICollectionViewCell *cell in self.imageCollectionView.visibleCells) {
+            cell.alpha = 0.5;
+        }
+        
+        self.selectBtn.title = @"Cancel";
+    }
+    
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (!isSelected) {
+        return YES;
+    }else{
+        NSLog(@"%@", indexPath);
+        [self.deleteToolbar setHidden:NO];
+        UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+        
+        if (cell.alpha == 0.5) {
+            cell.alpha = 1;
+        }else{
+            [cell setAlpha:0.5];
+        }
+        
+        return NO;
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -107,6 +211,5 @@
      sVc.currentImage = currentPath+1;
      
  }
-
 
 @end

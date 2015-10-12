@@ -10,7 +10,6 @@
 
 @interface LocationTableViewController (){
     
-    NSOperationQueue *theQueue;
     AppDelegate *appDelegate;
     BOOL isFiltered;
 }
@@ -30,11 +29,7 @@
     mVc = [[self.tabBarController viewControllers] objectAtIndex:0];
     pre = [[PretableSetUp alloc]init];
     appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    theQueue = [[NSOperationQueue alloc] init];
     self.inProgress = NO;
-    
-    //for sequential threading
-//    theQueue.maxConcurrentOperationCount = 1;
 
     [self setUpAlertForLocation];
     self.countries = [[pre getAllEntitiesFromDB] mutableCopy];
@@ -170,45 +165,46 @@
     
     if (appDelegate.internetActive && mVc.locationAvail) {
         
-        NSBlockOperation *searchLocationForImage = [NSBlockOperation blockOperationWithBlock:^{
-        
-        [self.coder reverseGeocodeLocation:loc
-                         completionHandler:^(NSArray *placemarks, NSError *error) {
-                             if(!error){
-
-                                 CLPlacemark *placemark = [placemarks objectAtIndex:0];
-                                 
-                                 [self.savedLocations addObject:placemark];
-                                 
-                                 currentCountry = placemark.country;
-                                 currentCity = placemark.locality;
-                                 
-                                 if (currentCity == nil) {
-                                     currentCity = placemark.administrativeArea;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
+            [self.coder reverseGeocodeLocation:loc
+                             completionHandler:^(NSArray *placemarks, NSError *error) {
+                                 if(!error){
+                                     
+                                     CLPlacemark *placemark = [placemarks objectAtIndex:0];
+                                     
+                                     [self.savedLocations addObject:placemark];
+                                     
+                                     currentCountry = placemark.country;
+                                     currentCity = placemark.locality;
+                                     
+                                     if (currentCity == nil) {
+                                         currentCity = placemark.administrativeArea;
+                                     }
+                                     
+                                     displayCountry = currentCountry;
+                                     displayCity = currentCity;
+                                     keyCountry = [[currentCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                                     keyCity = [[currentCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                                     
+                                     self.countries = [pre setUpTableValuesForDictionary:self.countries countryName:keyCountry withCountryDisplay:displayCountry cityName:keyCity withCityDisplay:displayCity imgName:self.imgFileName andImage:img];
+                                     [pre reinitializeCountries:self.countries];
+                                     self.countryNames = pre.sortedCountryNames;
+                                     self.cityNames = pre.sortedCityNames;
+                                     self.inProgress = NO;
+                                     
+                                     [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:loc.coordinate.latitude andLongitude:loc.coordinate.longitude];
+                                     
+                                     dispatch_async(dispatch_get_main_queue(), ^{
+                                        [self.tableView reloadData];
+                                     });
+                                     
+                                 } else {
+                                     NSLog(@"%@",[error description]);
                                  }
-                                 
-                                 displayCountry = currentCountry;
-                                 displayCity = currentCity;
-                                 keyCountry = [[currentCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
-                                 keyCity = [[currentCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
-                                 
-                                 self.countries = [pre setUpTableValuesForDictionary:self.countries countryName:keyCountry withCountryDisplay:displayCountry cityName:keyCity withCityDisplay:displayCity imgName:self.imgFileName andImage:img];
-                                 [pre reinitializeCountries:self.countries];
-                                 self.countryNames = pre.sortedCountryNames;
-                                 self.cityNames = pre.sortedCityNames;
-                                 self.inProgress = NO;
-                                 [self.tableView reloadData];
-                                 
-                                [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:loc.coordinate.latitude andLongitude:loc.coordinate.longitude];
-                            
-                                 
-                             } else {
-                                 NSLog(@"%@",[error description]);
-                             }
-                         }];
-        }];
-        
-        [theQueue addOperation:searchLocationForImage];
+                             }];
+
+        });
         
     }else{
         
@@ -238,46 +234,50 @@
             
             if (appDelegate.internetActive && mVc.locationAvail) {
                 
-               NSBlockOperation *searchLocationForImage = [NSBlockOperation blockOperationWithBlock:^{
-                [self.coder geocodeAddressString:place
-                               completionHandler:^(NSArray *placemarks, NSError *error) {
-                                   if(!error){
-                                       
-                                       CLPlacemark *placemark = [placemarks objectAtIndex:0];
-                                       [self.savedLocations addObject:placemark];
-                                       displayCountry = placemark.country;
-                                       displayCity = placemark.locality;
-                                       
-                                       if (displayCity == nil) {
-                                           displayCity = placemark.administrativeArea;
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                   
+                    [self.coder geocodeAddressString:place
+                                   completionHandler:^(NSArray *placemarks, NSError *error) {
+                                       if(!error){
+                                           
+                                           CLPlacemark *placemark = [placemarks objectAtIndex:0];
+                                           [self.savedLocations addObject:placemark];
+                                           displayCountry = placemark.country;
+                                           displayCity = placemark.locality;
+                                           
+                                           if (displayCity == nil) {
+                                               displayCity = placemark.administrativeArea;
+                                           }
+                                           
+                                           keyCountry = [[displayCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                                           keyCity = [[displayCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
+                                           
+                                           self.countries = [pre setUpTableValuesForDictionary:self.countries countryName:keyCountry withCountryDisplay:displayCountry cityName:keyCity withCityDisplay:displayCity imgName:self.imgFileName andImage:img];
+                                           
+                                           [pre reinitializeCountries:self.countries];
+                                           self.countryNames = pre.sortedCountryNames;
+                                           self.cityNames = pre.sortedCityNames;
+                                           self.inProgress = NO;
+                                           [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:placemark.location.coordinate.latitude andLongitude:placemark.location.coordinate.longitude];
+
+                                           dispatch_async(dispatch_get_main_queue(), ^{
+                                                [self.tableView reloadData];
+                                           });
+                                           
+                                       } else {
+                                           
+                                           dispatch_async(dispatch_get_main_queue(), ^{
+                                               NSLog(@"%@",[error description]);
+                                               countryAlert.message = @"Invalid location please re-enter location";
+                                               [countryAlert show];
+
+                                           });
                                        }
-                                       
-                                       keyCountry = [[displayCountry stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
-                                       keyCity = [[displayCity stringByReplacingOccurrencesOfString:@" " withString:@""] lowercaseString];
-                                       
-                                        self.countries = [pre setUpTableValuesForDictionary:self.countries countryName:keyCountry withCountryDisplay:displayCountry cityName:keyCity withCityDisplay:displayCity imgName:self.imgFileName andImage:img];
-                                       
-                                        [pre reinitializeCountries:self.countries];
-                                        self.countryNames = pre.sortedCountryNames;
-                                        self.cityNames = pre.sortedCityNames;
-                                        self.inProgress = NO;
-                                        [self.tableView reloadData];
+                                   }];
 
-                                        [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:placemark.location.coordinate.latitude andLongitude:placemark.location.coordinate.longitude];
-
-                                   } else {
-                                       
-                                       NSLog(@"%@",[error description]);
-                                       countryAlert.message = @"Invalid location please re-enter location";
-                                       [countryAlert show];
-                                       
-                                   }
-                               }];
-               }];
+                });
                 
-
-                [theQueue addOperation:searchLocationForImage];
-            
+                
             }else{
             
                 self.imgFileName = [NSString stringWithFormat:@"%@",keyCity];
@@ -441,9 +441,7 @@
 
     if (appDelegate.internetActive && mVc.locationAvail) {
         
-        NSBlockOperation *searchLocationForImage = [NSBlockOperation blockOperationWithBlock:^{
-            
-            
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [self.coder reverseGeocodeLocation:loc
                              completionHandler:^(NSArray *placemarks, NSError *error) {
                                  if(!error){
@@ -482,23 +480,22 @@
                                          self.countryNames = [pre.sortedCountryNames mutableCopy];
                                          self.cityNames = [pre.sortedCityNames mutableCopy];
                                          self.inProgress = NO;
-                                         [self.tableView reloadData];
                                          
                                          UIImageWriteToSavedPhotosAlbum(image,self,nil,nil);
                                          
                                          [dbh insertMapLocationForCountry:displayCountry andCity:displayCity withLatitude:placemark.location.coordinate.latitude andLongitude:placemark.location.coordinate.longitude];
                                          
+                                         dispatch_async(dispatch_get_main_queue(), ^{
+                                             [self.tableView reloadData];
+                                         });
+                                         
                                      }
- 
+                                     
                                  } else {
                                      NSLog(@"%@",[error description]);
                                  }
                              }];
-    
-        }];
-            
-        
-        [theQueue addOperation:searchLocationForImage];
+        });
         
         
     }else{

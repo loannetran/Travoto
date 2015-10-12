@@ -10,11 +10,25 @@
 #import "PhotoCollectionViewCell.h"
 #import "AlbumHeaderCollectionReusableView.h"
 #import "ScrollImagesViewController.h"
+#import "DBHandler.h"
+#import "Image.h"
 
-@interface AlbumViewController : UIViewController <UICollectionViewDataSource,UICollectionViewDelegate>
+@interface AlbumViewController : UIViewController <UICollectionViewDataSource,UICollectionViewDelegate>{
+    
+    NSMutableArray *arrayOfImages;
+    UIImage *currentImage;
+    int currentPath;
+    BOOL isSelected;
+    DBHandler *dbh;
+    
+}
 
 @property (nonatomic, strong) NSString *country;
 @property (nonatomic, strong) NSDictionary *city;
 @property (weak, nonatomic) IBOutlet UICollectionView *imageCollectionView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *selectBtn;
+@property (weak, nonatomic) IBOutlet UIToolbar *deleteToolbar;
+- (IBAction)deleteItems:(id)sender;
 
+- (IBAction)selectItems:(id)sender;
 @end

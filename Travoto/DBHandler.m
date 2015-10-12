@@ -57,6 +57,30 @@
     [self.cds saveContext];
 }
 
+-(void)deleteObjectIn:(NSString *)entity whereAttribute:(NSString *)attr isEqualTo:(NSString *)value{
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    
+    NSEntityDescription *ent = [NSEntityDescription entityForName:entity inManagedObjectContext:self.cds.managedObjectContext];
+    [fetchRequest setEntity:ent];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"%@ == \"%@\"",attr,value]];
+    [fetchRequest setPredicate:predicate];
+    
+    NSError *error = nil;
+    NSArray *fetchedObjects = [self.cds.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    if (fetchedObjects == nil) {
+        NSLog(@"Error");
+    } else {
+        for (NSManagedObject *obj in fetchedObjects) {
+            [self.cds.managedObjectContext deleteObject:obj];
+        }
+    }
+    
+    [self.cds saveContext];
+}
+
 -(void)insertMapLocationForCountry:(NSString *)country andCity:(NSString *)city withLatitude:(CLLocationDegrees)lat andLongitude:(CLLocationDegrees)lo{
     
     MapLocation *loc = [NSEntityDescription insertNewObjectForEntityForName:@"MapLocation" inManagedObjectContext:self.cds.managedObjectContext];

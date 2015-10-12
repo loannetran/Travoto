@@ -166,7 +166,7 @@
                                     </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cityHeader" id="yk5-DU-eOO" customClass="AlbumHeaderCollectionReusableView">
-                                    <rect key="frame" x="0.0" y="64" width="288" height="50"/>
+                                    <rect key="frame" x="0.0" y="64" width="320" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KmA-Xp-Mxa">
@@ -187,12 +187,32 @@
                                     <outlet property="delegate" destination="Cq2-1z-iAT" id="kT6-fV-Ght"/>
                                 </connections>
                             </collectionView>
+                            <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A4P-ok-8iX">
+                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                                <items>
+                                    <barButtonItem title="Delete" id="PmW-zx-nfH">
+                                        <connections>
+                                            <action selector="deleteItems:" destination="Cq2-1z-iAT" id="O0v-vH-QCQ"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" red="0.99607843137254903" green="0.98039215686274506" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" id="3MA-dV-bt5"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="3MA-dV-bt5">
+                        <barButtonItem key="rightBarButtonItem" title="Select" id="9aC-aj-7Wt">
+                            <connections>
+                                <action selector="selectItems:" destination="Cq2-1z-iAT" id="F6h-Kh-V7D"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="deleteToolbar" destination="A4P-ok-8iX" id="qVw-KN-6qa"/>
                         <outlet property="imageCollectionView" destination="Fsy-7k-Sut" id="K2U-ib-vuD"/>
+                        <outlet property="selectBtn" destination="9aC-aj-7Wt" id="1vR-9T-vGz"/>
                         <segue destination="gMP-7y-O0y" kind="modal" identifier="slideshow" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="wr9-5Z-jWT"/>
                     </connections>
                 </viewController>
@@ -228,6 +248,15 @@
                                 </state>
                                 <connections>
                                     <action selector="goBack:" destination="gMP-7y-O0y" eventType="touchUpInside" id="pvz-1a-GK9"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bAN-94-II2">
+                                <rect key="frame" x="5" y="534" width="66" height="30"/>
+                                <state key="normal" title="Delete">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="deleteImage:" destination="gMP-7y-O0y" eventType="touchUpInside" id="KIl-Dr-PGu"/>
                                 </connections>
                             </button>
                         </subviews>

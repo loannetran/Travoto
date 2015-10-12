@@ -35,6 +35,13 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)deleteImage:(id)sender {
+    
+    UIAlertView *deleteAlert = [[UIAlertView alloc] initWithTitle:@"Delete Image" message:@"Are you sure you want to delete this image?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+    
+    [deleteAlert show];
+}
+
 - (void)loadVisiblePages {
     // First, determine which page is currently visible
     CGFloat pageWidth = self.scrollView.frame.size.width;
@@ -123,6 +130,14 @@
         [self.scrollView addSubview:newPageView];
         // 4
         [self.pageViews replaceObjectAtIndex:page withObject:newPageView];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (buttonIndex == 1) {
+        
+        
     }
 }
 

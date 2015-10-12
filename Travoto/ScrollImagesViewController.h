@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ScrollImagesViewController : UIViewController<UIScrollViewDelegate>
+@interface ScrollImagesViewController : UIViewController<UIScrollViewDelegate,UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 //@property (nonatomic, strong) UIImageView *imageView;
 //
@@ -26,4 +26,6 @@
 - (void)purgePage:(NSInteger)page;
 
 - (IBAction)goBack:(id)sender;
+- (IBAction)deleteImage:(id)sender;
+
 @end
