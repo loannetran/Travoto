@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		691300A01BC6CF7E00D34BC7 /* travAlbum.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6913009A1BC6CF7E00D34BC7 /* travAlbum.jpg */; };
 		691300A11BC6CF7E00D34BC7 /* travImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6913009B1BC6CF7E00D34BC7 /* travImage.jpg */; };
 		691300A21BC6CF7E00D34BC7 /* travLocAlbum.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6913009C1BC6CF7E00D34BC7 /* travLocAlbum.jpg */; };
 		691300A31BC6CF7E00D34BC7 /* travLogin.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6913009D1BC6CF7E00D34BC7 /* travLogin.jpg */; };
@@ -21,7 +20,6 @@
 		691EDC961BA4D89800BF17F4 /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 691EDC951BA4D89800BF17F4 /* Image.m */; };
 		691EDC991BA52DE200BF17F4 /* ScrollImagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 691EDC981BA52DE200BF17F4 /* ScrollImagesViewController.m */; };
 		691EDC9C1BA5405E00BF17F4 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 691EDC9B1BA5405E00BF17F4 /* LoginViewController.m */; };
-		693115191BA39F5400ADF1F3 /* EnlargeImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 693115181BA39F5400ADF1F3 /* EnlargeImageView.m */; };
 		6931151C1BA3B70500ADF1F3 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6931151B1BA3B70500ADF1F3 /* MapViewController.m */; };
 		6931151F1BA3C44A00ADF1F3 /* MapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6931151E1BA3C44A00ADF1F3 /* MapAnnotation.m */; };
 		693115241BA3DE4100ADF1F3 /* CustomPinView.m in Sources */ = {isa = PBXBuildFile; fileRef = 693115231BA3DE4100ADF1F3 /* CustomPinView.m */; };
@@ -31,6 +29,7 @@
 		6970559A1BA3F93C00B5ACCF /* photo-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 697055981BA3F93C00B5ACCF /* photo-7.png */; };
 		6970559B1BA3F93C00B5ACCF /* camera-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 697055991BA3F93C00B5ACCF /* camera-7.png */; };
 		697055A11BA3FFFE00B5ACCF /* CameraImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 697055A01BA3FFFE00B5ACCF /* CameraImageViewController.m */; };
+		6970D5621BCC52C100681DEB /* travAlbum.png in Resources */ = {isa = PBXBuildFile; fileRef = 6970D5611BCC52C100681DEB /* travAlbum.png */; };
 		69738AB91BA3E948003EA7C5 /* home-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 69738AB81BA3E948003EA7C5 /* home-7.png */; };
 		69738ABB1BA3E972003EA7C5 /* paper-map-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 69738ABA1BA3E972003EA7C5 /* paper-map-7.png */; };
 		69BEC3E31BAA916700687B35 /* DataDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 69BEC3E21BAA916700687B35 /* DataDownloader.m */; };
@@ -66,7 +65,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6913009A1BC6CF7E00D34BC7 /* travAlbum.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = travAlbum.jpg; sourceTree = "<group>"; };
 		6913009B1BC6CF7E00D34BC7 /* travImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = travImage.jpg; sourceTree = "<group>"; };
 		6913009C1BC6CF7E00D34BC7 /* travLocAlbum.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = travLocAlbum.jpg; sourceTree = "<group>"; };
 		6913009D1BC6CF7E00D34BC7 /* travLogin.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = travLogin.jpg; sourceTree = "<group>"; };
@@ -86,8 +84,6 @@
 		691EDC981BA52DE200BF17F4 /* ScrollImagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollImagesViewController.m; sourceTree = "<group>"; };
 		691EDC9A1BA5405E00BF17F4 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		691EDC9B1BA5405E00BF17F4 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
-		693115171BA39F5400ADF1F3 /* EnlargeImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnlargeImageView.h; sourceTree = "<group>"; };
-		693115181BA39F5400ADF1F3 /* EnlargeImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnlargeImageView.m; sourceTree = "<group>"; };
 		6931151A1BA3B70500ADF1F3 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		6931151B1BA3B70500ADF1F3 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		6931151D1BA3C44A00ADF1F3 /* MapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapAnnotation.h; sourceTree = "<group>"; };
@@ -103,6 +99,7 @@
 		697055991BA3F93C00B5ACCF /* camera-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-7.png"; sourceTree = "<group>"; };
 		6970559F1BA3FFFE00B5ACCF /* CameraImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraImageViewController.h; sourceTree = "<group>"; };
 		697055A01BA3FFFE00B5ACCF /* CameraImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraImageViewController.m; sourceTree = "<group>"; };
+		6970D5611BCC52C100681DEB /* travAlbum.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = travAlbum.png; sourceTree = "<group>"; };
 		69738AB81BA3E948003EA7C5 /* home-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home-7.png"; sourceTree = "<group>"; };
 		69738ABA1BA3E972003EA7C5 /* paper-map-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paper-map-7.png"; sourceTree = "<group>"; };
 		69BEC3E11BAA916700687B35 /* DataDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataDownloader.h; sourceTree = "<group>"; };
@@ -215,8 +212,6 @@
 				69330D7E1BA34ABB005D0E9F /* AlbumHeaderCollectionReusableView.m */,
 				69E514C71BA28459007F52D6 /* PhotoCollectionViewCell.h */,
 				69E514C81BA28459007F52D6 /* PhotoCollectionViewCell.m */,
-				693115171BA39F5400ADF1F3 /* EnlargeImageView.h */,
-				693115181BA39F5400ADF1F3 /* EnlargeImageView.m */,
 			);
 			name = AlbumView;
 			sourceTree = "<group>";
@@ -265,7 +260,7 @@
 		69E514A01BA2843B007F52D6 /* Travoto */ = {
 			isa = PBXGroup;
 			children = (
-				6913009A1BC6CF7E00D34BC7 /* travAlbum.jpg */,
+				6970D5611BCC52C100681DEB /* travAlbum.png */,
 				6913009B1BC6CF7E00D34BC7 /* travImage.jpg */,
 				6913009C1BC6CF7E00D34BC7 /* travLocAlbum.jpg */,
 				6913009D1BC6CF7E00D34BC7 /* travLogin.jpg */,
@@ -468,6 +463,7 @@
 				69738AB91BA3E948003EA7C5 /* home-7.png in Resources */,
 				693115281BA3E36C00ADF1F3 /* defaultPerson.png in Resources */,
 				69EE64801BA68602003EF65A /* icon120.png in Resources */,
+				6970D5621BCC52C100681DEB /* travAlbum.png in Resources */,
 				69E514AD1BA2843B007F52D6 /* Main.storyboard in Resources */,
 				69E514B21BA2843B007F52D6 /* LaunchScreen.xib in Resources */,
 				691300A41BC6CF7E00D34BC7 /* travMap.jpg in Resources */,
@@ -477,7 +473,6 @@
 				69738ABB1BA3E972003EA7C5 /* paper-map-7.png in Resources */,
 				69EE64811BA68602003EF65A /* icon180.png in Resources */,
 				69F4FFD71BC01FDA0074B79B /* pin.png in Resources */,
-				691300A01BC6CF7E00D34BC7 /* travAlbum.jpg in Resources */,
 				691300A21BC6CF7E00D34BC7 /* travLocAlbum.jpg in Resources */,
 				691300A11BC6CF7E00D34BC7 /* travImage.jpg in Resources */,
 				69E514AF1BA2843B007F52D6 /* Images.xcassets in Resources */,
@@ -499,7 +494,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				693115191BA39F5400ADF1F3 /* EnlargeImageView.m in Sources */,
 				69EE64751BA67584003EF65A /* MainTabBarViewController.m in Sources */,
 				693115241BA3DE4100ADF1F3 /* CustomPinView.m in Sources */,
 				691EDC891BA4AB3300BF17F4 /* CoreDataStack.m in Sources */,

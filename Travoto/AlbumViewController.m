@@ -12,7 +12,6 @@
     
     NSArray *arrayOfImages;
     UIImage *currentImage;
-    EnlargeImageView *enlargeImg;
     int currentPath;
 
 }
@@ -26,7 +25,6 @@
     // Do any additional setup after loading the view.
     
     [self.tabBarController.tabBar setHidden:YES];
-    [self setUpDisplayView];
     
 //    NSLog(@"%@",self.country);
 //    NSLog(@"%@",self.city);
@@ -37,12 +35,6 @@
     [self setTitle:self.country];
 
 //    [self.cityLbl setText:[self.city objectForKey:@"name"]];
-}
-
--(void)setUpDisplayView{
-    
-    enlargeImg = [[EnlargeImageView alloc] init];
-
 }
 
 //-(void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -60,47 +52,6 @@
     
 //    [self animateView];
     
-}
-
--(void) animateView{
-
-    enlargeImg.bigImgView.image = currentImage;
-    
-    [UIView animateWithDuration:0.5
-            animations:^{
-                            enlargeImg.frame = CGRectMake(15, 90, 290, 450);
-                            enlargeImg.backgroundColor = [UIColor colorWithRed:98.0/255.0 green:98.0/255.0 blue:98.0/255.0 alpha:0.6];
-                            [enlargeImg.layer setCornerRadius:10];
-            }completion:^(BOOL finished) {
-                
-                [UIView animateWithDuration:0.5
-                        animations:^{
-                            [enlargeImg.bigImgView setAlpha:1];
-                            [enlargeImg addSubview:enlargeImg.bigImgView];
-                            [enlargeImg addSubview:enlargeImg.closeBtn];
-                            [enlargeImg addSubview:enlargeImg.commentView];
-                            [enlargeImg addSubview:enlargeImg.commentTxt];
-                        }];
-                
-            }];
-    
-    [enlargeImg.closeBtn addTarget:self action:@selector(closeView) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:enlargeImg];
-
-}
-
--(void)closeView{
-    
-    [UIView animateWithDuration:0.5
-                     animations:^{
-                         [enlargeImg.bigImgView setAlpha:0];
-                         [enlargeImg.closeBtn removeFromSuperview];
-                         [enlargeImg.commentTxt removeFromSuperview];
-                         [enlargeImg.commentView removeFromSuperview];
-
-                         enlargeImg.frame = CGRectMake(15, 90, 0, 0);
-    }];
-
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
