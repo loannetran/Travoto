@@ -136,8 +136,8 @@
                 [dbh deleteObjectIn:@"Image" whereAttribute:@"imageName" isEqualTo:name];
             }
             
+            [arrayOfImages removeObjectsAtIndexes:indexSet];
             dispatch_async(dispatch_get_main_queue(), ^(void){
-                [arrayOfImages removeObjectsAtIndexes:indexSet];
                 [self.imageCollectionView deleteItemsAtIndexPaths:deleteCells];
                 
                 isSelected = NO;
