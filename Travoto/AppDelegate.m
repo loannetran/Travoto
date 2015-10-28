@@ -10,6 +10,7 @@
 #import "LoginViewController.h"
 #import "MapViewController.h"
 #import "Reachability.h"
+#import <Parse/Parse.h>
 
 @interface AppDelegate ()
 
@@ -20,6 +21,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    // [Optional] Power your app with Local Datastore. For more info, go to
+    // https://parse.com/docs/ios_guide#localdatastore/iOS
+    [Parse enableLocalDatastore];
+    
+    // Initialize Parse.
+    [Parse setApplicationId:@"5a6BdBwFWZZDDi5RjymduI4EqOXfZpvbsmGUTzcB"
+                  clientKey:@"vlSkeCZDz1MsHhUdKYfQwRVdsDDl9c9hqr07Wmsc"];
+    
+    // [Optional] Track statistics around application opens.
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     

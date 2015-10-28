@@ -7,6 +7,7 @@
 //
 
 #import "LocationTableViewController.h"
+#import <Parse/Parse.h>
 
 @interface LocationTableViewController (){
     
@@ -75,6 +76,7 @@
         }
         
         [self setUpImage:self.cameraImage andLocation:self.cameraLocation];
+        
         
     }else{
         
@@ -490,6 +492,32 @@
                                          });
                                          
                                      }
+                                     
+                                    //test photo upload
+                                     //file name will be replaced by a number that amounts to the amount of images for that city in the database
+                                     NSData* data = UIImageJPEGRepresentation(img, 0.5f);
+                                     PFFile *imageFile = [PFFile fileWithName:@"001.jpg" data:data];
+                                     
+                                     // Save the image to Parse
+                                     //objects will be named by country with image and city aggregates
+                                     [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                         if (!error) {
+                                             // The image has now been uploaded to Parse. Associate it with a new object
+                                             PFObject* newPhotoObject = [PFObject objectWithClassName:[displayCountry stringByReplacingOccurrencesOfString:@" " withString:@""]];
+                                             newPhotoObject[@"city"] = displayCity;
+                                             [newPhotoObject setObject:imageFile forKey:@"image"];
+                                             
+                                             [newPhotoObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                                 if (!error) {
+                                                     NSLog(@"Saved");
+                                                 }
+                                                 else{
+                                                     // Error
+                                                     NSLog(@"Error: %@ %@", error, [error userInfo]);
+                                                 }
+                                             }];
+                                         }
+                                     }];
                                      
                                  } else {
                                      NSLog(@"%@",[error description]);
